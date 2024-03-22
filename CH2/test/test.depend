@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1710378445 source:c:\users\jon00\onedrive\문서\workspace\codeblock\test\test\untitled1.cpp
+	<iostream>
+	<cstring>
+	<windows.h>
+	"check_error.h"
+
+1709907583 c:\users\jon00\onedrive\문서\workspace\codeblock\test\test\check_error.h
+	<fstream>
+	<sstream>
+	<vector>
+	<algorithm>
+	<dirent.h>
+	<cstring>
+

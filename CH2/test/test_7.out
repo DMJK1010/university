@@ -1,0 +1,27 @@
+
++++++++++++++++++++++ Person Structure Test Menu +++++++++++++++++++++
++ 0.Exit 1.printlnTest 2.initTest 3.getter 4.setter 5.isSameTest     +
++ 6.whatAreYouDoingTest 7.NoBoolAlphaOutput 8.BoolAlphaOutput        +
++ 9.NoBoolAlphaInputPerson 10.BoolAlphaInputPerson 11.DataTypeSize() +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Menu item number? 7
+ 0 0 0 ::
+LeeSoonShin 0 70.1 1 :Gangnam Seoul:
+Hong,gildong 1 60.2 0 :Jongno-gu, Busan:
+Hong 1 61.1 1 :Seoul Jongno-gu Nam-ro 123:
+init(u1 10 60 0 :Jongno-gu, Seoul:)
+init(u2 1 61.1 1 :Seoul Jongno-gu Nam-ro 123:)
+Hong 1 61.1 1 :Seoul Jongno-gu Nam-ro 123:
+name:Hong, id:1, weight:61.1, married:1, address:Seoul Jongno-gu Nam-ro 123
+u 1 61.1 1 :Seoul Jongno-gu Nam-ro 123:
+Hong 1 61.1 1 :Seoul Jongno-gu Nam-ro 123:
+p.isSame(): 1
+Hong is taking a rest.
+
++++++++++++++++++++++ Person Structure Test Menu +++++++++++++++++++++
++ 0.Exit 1.printlnTest 2.initTest 3.getter 4.setter 5.isSameTest     +
++ 6.whatAreYouDoingTest 7.NoBoolAlphaOutput 8.BoolAlphaOutput        +
++ 9.NoBoolAlphaInputPerson 10.BoolAlphaInputPerson 11.DataTypeSize() +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Menu item number? 0
+Good bye!!
