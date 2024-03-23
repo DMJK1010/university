@@ -13,7 +13,6 @@
  *     객체의 동적 할당과 소멸 그리고 객체의 포인터를 이용한 객체 접근
  *  + MultiManager: CurrentUser(...).run() 생성시 함수인자로 포인터 넘겨 주도록 변환
  */
-//test
 
 #include <iostream>
 #include <cstring>
