@@ -1,0 +1,18 @@
+
++++++++++++++++++++++ Person Structure Test Menu +++++++++++++++++++++
++ 0.Exit 1.printlnTest 2.initTest 3.getter 4.setter 5.isSameTest     +
++ 6.whatAreYouDoingTest 7.NoBoolAlphaOutput 8.BoolAlphaOutput        +
++ 9.NoBoolAlphaInputPerson 10.BoolAlphaInputPerson 11.DataTypeSize() +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Menu item number? 9
+input person information:
+HongGilDong 0 71.5 1 :Gwangju Nam-gu Bongseon-dong 21:
+HongGilDong 0 71.5 1 :Gwangju Nam-gu Bongseon-dong 21:
+
++++++++++++++++++++++ Person Structure Test Menu +++++++++++++++++++++
++ 0.Exit 1.printlnTest 2.initTest 3.getter 4.setter 5.isSameTest     +
++ 6.whatAreYouDoingTest 7.NoBoolAlphaOutput 8.BoolAlphaOutput        +
++ 9.NoBoolAlphaInputPerson 10.BoolAlphaInputPerson 11.DataTypeSize() +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Menu item number? 0
+Good bye!!
