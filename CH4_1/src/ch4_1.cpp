@@ -1,7 +1,7 @@
 /*
- * CH3_1: ch3_2.cpp
+ * CH4_1: ch4_1.cpp
  *
- *  Created on: 2024. 3.20.
+ *  Created on: 2024. 3.23.(11:10)
  *      Author: Junha Kim
  *
  *
@@ -43,14 +43,14 @@ public:
     Person(const string name, int id, double weight, bool married, const char *address);
     ~Person();
 
-    void set(const string name, int pid, double pweight, bool pmarried, const char *paddress);
+    void set(const string name, int id, double weight, bool married, const char *address);
     void setName(const string name)       { this->name = name; }
-    void setId(int pid)                   { id = pid; }
-    void setWeight(double pweight)        { weight = pweight; }
-    void setMarried(bool pmarried)        { married = pmarried; }
-    void setAddress(const char* paddress) { strcpy(address, paddress); }
+    void setId(int id)                    { this->id = id; }
+    void setWeight(double weight)        { this->weight = weight; }
+    void setMarried(bool married)        { this->married = married; }
+    void setAddress(const char* address)  { strcpy(this->address, address); }
 
-    string		getName()    { return name; }
+    string 		getName()    { return name; }
     int         getId()      { return id; }
     double      getWeight()  { return weight; }  // 구현 시
     bool        getMarried() { return married; }  // 리턴 값들을
@@ -70,8 +70,7 @@ Person::Person(): name{}, id{}, weight{}, married{}, address{} {
     cout << "Person::Person():"; println();
 }
 
-Person::Person(const string name) : id{}, weight{}, married{}, address{} {
-    setName(name);
+Person::Person(const string name) : name(name), id{}, weight{}, married{}, address{} {
     cout << "Person::Person(\"" << name << "\"):"; println();
 }
 
@@ -95,12 +94,12 @@ void Person::printMembers(ostream* pout)   {
 	*pout<<name <<" "<<id<<" "<<weight<<" "<<married<<" :"<<address<<": ";
 }
 
-void Person::set(const string name, int pid, double pweight, bool pmarried, const char *paddress) {
+void Person::set(const string name, int id, double weight, bool married, const char *address) {
     this->name = name;
-    id = pid;
-    weight = pweight;
-    married = pmarried;
-    setAddress(paddress);
+    this->id = id;
+    this->weight = weight;
+    this->married = married;
+    setAddress(address);  //address도 수정해야하는지?==================================================?
 }
 
 void Person::inputMembers(istream* pin)   {
@@ -205,10 +204,10 @@ int selectMenu(const string menuStr, int menuItemCount) {
 
 class CurrentUser
 {
-    Person user;
+    Person* pUser;
 
 public:
-    CurrentUser(Person u): user(u) { }  // user(u)는 this->user = u 와 동일한 기능
+    CurrentUser(Person* pUser): pUser(pUser) { }
     void display();
     void setter();
     void getter();
@@ -220,45 +219,42 @@ public:
 };
 
 void CurrentUser::display() { // Menu item 1
-    user.println();
+    pUser->println();
 }
 
 void CurrentUser::getter() { // Menu item 2
-    cout << "name:" << user.getName() << ", id:" << user.getId() << ", weight:" <<
-            user.getWeight() << ", married:" << user.getMarried() <<
-            ", address:" << user.getAddress() << endl;
+    cout << "name:" << pUser->getName() << ", id:" << pUser->getId() << ", weight:" << pUser->getWeight() << ", married:" << pUser->getMarried() << ", address:" << pUser->getAddress() << endl;
 }
 
 void CurrentUser::setter() { // Menu item 3
-    Person ps("ps");
-    ps.setName(ps.getName());
-    ps.setId(user.getId());
-    ps.setWeight(user.getWeight());
-    ps.setMarried(user.getMarried());
-    ps.setAddress(user.getAddress());
-    cout << "ps.setMembers():"; ps.println();
+	Person* pp = new Person("pp"); // pp 동적 할당
+    pp->setName(pp->getName());
+    pp->setId(pUser->getId());
+    pp->setWeight(pUser->getWeight());
+    pp->setMarried(pUser->getMarried());
+    pp->setAddress(pUser->getAddress());
+    cout << "pp->setMembers():"; pp->println();
+    delete pp; // pp가 포인터 하는 객체의 메모리를 반환
 }
 
 void CurrentUser::set() { // Menu item 4
-    Person ps("ps");
-    ps.set(ps.getName(), user.getId(), user.getWeight(),
-              !user.getMarried(), user.getAddress());
-    cout << "ps.set():"; ps.println();
+	Person* pp = new Person("pp"); // pp 동적 할당
+    pp->set(pp->getName(), pUser->getId(), pUser->getWeight(), !pUser->getMarried(), pUser->getAddress());
+    cout << "pp->set():"; pp->println();
+    delete pp; // pp 반환
 }
 
 void CurrentUser::whatAreYouDoing() {  // Menu item 5
-    user.whatAreYouDoing();
+	pUser->whatAreYouDoing();
 }
 
 void CurrentUser::isSame() { // Menu item 6
-    user.println();
-    Person ps("user"); ps.setId(1);
-    cout << "user.isSame(): "
-         << user.isSame(ps.getName(), ps.getId()) << endl;
+    pUser->println();
+    cout << "isSame(\"user\", 1): " << pUser->isSame("user", 1) << endl;
 }
 
 void CurrentUser::inputPerson() { // Menu item 7
-    if (UI::inputPerson(&user)) // GilDong 1 70.5 true :Jongno-gu, Seoul:
+    if (UI::inputPerson(pUser)) // GilDong 1 70.5 true :Jongno-gu, Seoul:
         display();              // user 1 71.1 true :Gwangju Nam-ro 21:
 }
 
@@ -294,7 +290,7 @@ class MultiManager
 
 public:
     void currentUser() {
-        CurrentUser(person).run();
+        CurrentUser(&person).run();
     }
 }; // ch3_2: MultiManager class
 

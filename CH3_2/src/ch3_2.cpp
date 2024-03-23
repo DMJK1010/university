@@ -1,5 +1,5 @@
 /*
- * CH3_1: ch3_2.cpp
+ * CH3_2: ch3_2.cpp
  *
  *  Created on: 2024. 3.17.
  *      Author: Junha Kim
