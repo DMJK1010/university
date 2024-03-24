@@ -296,37 +296,32 @@ class VectorPerson
     void extend_capacity(); /* TODO 문제 [7] */
 
 public:
-    VectorPerson() {  /* TODO 문제 [2]: 위임 생성자로 변환 */
-        allocSize = DEFAULT_SIZE;
-        count = 0;
-        cout << "VectorPerson::VectorPerson(" << allocSize << ")" << endl;
-        pVector = new Person*[allocSize]; // 객체 포인터들의 배열을 위한 동적 메모리 할당
-    }
+    VectorPerson() : VectorPerson(DEFAULT_SIZE) {}
     VectorPerson(int capacity);
     ~VectorPerson();
 
     // 아래 긱 함수이름 뒤의 const는 그 함수가 클래스 멤버 변수들을 수정하지 않고 읽기만 한다는 의미임
     // pVector[index]의 포인터 값을 반환
-    Person* at(int index) const { /* TODO 문제 [1] */ return pVector[index]; }
+    Person* at(int index) const { return pVector[index]; }
 
     // 할당 받의 pVector의 총 배열 원소의 개수를 반환
-    int     capacity()    const { /* TODO 문제 [1] */ return allocSize; }
+    int     capacity()    const { return allocSize; }
 
     // pVector 배열에 현재 삽입된 객체 포인터의 개수를 0으로 설정
-    void    clear()             { /* TODO 문제 [1] */ count = 0; }
+    void    clear()             { count = 0; }
 
     // 현재 삽입된 객체 포인터가 하나도 없으면 true, 있으면 false
-    bool    empty()       const { /* TODO 문제 [1] */ return count == 0; }
+    bool    empty()       const { return count == 0; }
 
     // 현재 삽입된 객체 포인터의 개수를 반환
-    int     size()        const { /* TODO 문제 [1] */ return count; }
+    int     size()        const { return count; }
 
     // pVector 배열에 마지막 삽입된 원소 뒤에 새로운 원소 p를 삽입하고 현재 삽입된 객체 개수를 증가
     void    push_back(Person* p); /* TODO 문제 [4, 7] */
 };
 
 // capacity는 할당해야 할 배열 원소의 개수
-VectorPerson::VectorPerson(int capacity) /* : TODO 문제 [2]: 멤버 초기화 */ {
+VectorPerson::VectorPerson(int capacity) : count{}, allocSize{ capacity } {
     // allocSize = capacity, count = 0; 초기화를 위 함수 서두(위 /* */ 주석 사이)에서 할 것
     // 함수 서두에서 초기화하는 방법은 Person 클래스 참고할 것
     cout << "VectorPerson::VectorPerson(" << allocSize << ")" << endl;
@@ -334,8 +329,8 @@ VectorPerson::VectorPerson(int capacity) /* : TODO 문제 [2]: 멤버 초기화 
 }
 
 VectorPerson::~VectorPerson() {
-    /* TODO 문제 [2]: 동적으로 할당된 배열 pVector 반납: pVector가 배열임을 명심하라. */
-    // cout << "VectorPerson::~VectorPerson(): pVector deleted" << endl;
+	delete [] pVector;
+    cout << "VectorPerson::~VectorPerson(): pVector deleted" << endl;
 }
 
 /******************************************************************************
