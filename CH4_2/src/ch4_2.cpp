@@ -36,8 +36,8 @@ protected:
     void printMembers(ostream* out);
 
 public:
-    Person();
-    Person(const string name);
+    Person() : Person("") {}
+    Person(const string name) : Person(name, 0, 0, 0, "") {}
     Person(const string name, int id, double weight, bool married, const char *address);
     ~Person();
 
@@ -61,15 +61,17 @@ public:
     bool isSame(const string name, int pid);         // ch3_2에서 추가
 };
 
+/*
 Person::Person(): Person("") {
     cout << "Person::Person():"; println();
 }
-
+*/
+/*
 Person::Person(const string name) : Person(name, 0, 0, 0, "") {
 
 	cout << "Person::Person(\"" << name << "\"):"; println();
 }
-
+*/
 Person::Person(const string name, int id, double weight, bool married, const char *address) : name(name), id{id}, weight{weight}, married{married} {
     // 위에서 각 멤버를 초기화하는 {}는 각 매개변수 값을 객체의 상응하는 멤버에 설정하는 것이다. 즉,
     // this->id=id, this->weight=weight, this->married=married와 동일하다.
