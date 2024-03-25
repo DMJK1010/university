@@ -368,6 +368,10 @@ PersonManager::~PersonManager() {
 
 void PersonManager::deleteElemets() {
     /* TODO 문제 [5] */
+	for(int i=0; i<persons.size(); i++){
+		delete persons.at(i);
+	}
+	persons.clear();
 }
 
 void PersonManager::display() { // Menu item 1
