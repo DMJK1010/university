@@ -61,17 +61,6 @@ public:
     bool isSame(const string name, int pid);         // ch3_2에서 추가
 };
 
-/*
-Person::Person(): Person("") {
-    cout << "Person::Person():"; println();
-}
-*/
-/*
-Person::Person(const string name) : Person(name, 0, 0, 0, "") {
-
-	cout << "Person::Person(\"" << name << "\"):"; println();
-}
-*/
 Person::Person(const string name, int id, double weight, bool married, const char *address) : name(name), id{id}, weight{weight}, married{married} {
     // 위에서 각 멤버를 초기화하는 {}는 각 매개변수 값을 객체의 상응하는 멤버에 설정하는 것이다. 즉,
     // this->id=id, this->weight=weight, this->married=married와 동일하다.
@@ -117,8 +106,6 @@ bool Person::isSame(const string name, int pid) {
     else
         return false;
 }
-
-
 
 /******************************************************************************
  * User Interface
@@ -333,6 +320,11 @@ VectorPerson::~VectorPerson() {
     cout << "VectorPerson::~VectorPerson(): pVector deleted" << endl;
 }
 
+void VectorPerson::push_back(Person* p){
+	pVector[count] = p;
+	count++;
+}
+
 /******************************************************************************
  * ch4_2: PersonManager class
  ******************************************************************************/
@@ -358,6 +350,14 @@ public:
 PersonManager::PersonManager(Person* array[], int len) {
     cout << "PersonManager::PersonManager(array[], len)" << endl;
     /* TODO 문제 [4] */
+
+    for(int i=0; i<len; i++){
+    	Person* s = array[i];
+    	Person *n_person = new Person(s->getName(), s->getId(), s->getWeight(), s->getMarried(), s->getAddress());
+    	persons.push_back(n_person);
+    }
+
+
     display();
 }
 
