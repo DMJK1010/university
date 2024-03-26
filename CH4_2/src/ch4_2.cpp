@@ -25,7 +25,8 @@ using namespace std;
 
 class Person
 {
-    string   name;        // 이름
+    string name;       	    // 이름
+    string passwd;          // 비번
     int    id;              // Identifier
     double weight;          // 체중
     bool   married;         // 결혼여부
@@ -43,12 +44,14 @@ public:
 
     void set(const string name, int id, double weight, bool married, const char *address);
     void setName(const string name)       { this->name = name; }
+    void setPasswd(const string passwd)   { this->passwd = passwd; }
     void setId(int id)                    { this->id = id; }
     void setWeight(double weight)        { this->weight = weight; }
     void setMarried(bool married)        { this->married = married; }
     void setAddress(const char* address)  { strcpy(this->address, address); }
 
     string 		getName()    { return name; }
+    string      getPasswd()  { return passwd; }
     int         getId()      { return id; }
     double      getWeight()  { return weight; }  // 구현 시
     bool        getMarried() { return married; }  // 리턴 값들을
@@ -141,6 +144,23 @@ bool inputPerson(Person* p) {
     if (checkDataFormatError(&cin)) return false;
     if (echo_input) p->println(); // 자동체크에서 사용됨
     return true;
+}
+
+// 입력장치에서 하나의 단어로 구성된 문자열을 입력 받음
+string getNext(const string msg) {
+    cout << msg; // 입력용 메시지를 출력
+    cin >> line; // 하나의 단어를 읽어 들임
+    if (echo_input) cout << line << endl; // 자동체크 시 출력됨
+    getline(cin, emptyLine); // 입력받은 한 단어 외 그 행의 나머지 데이타(엔터포함)는 읽어서 버림
+    return line;             // 이유는 여기서 [엔터]를 제거하지 않으면
+}                            // 다음의 getNextLine()에서 엔터만 읽어 들일 수 있기 때문에
+
+// 입력장치에서 한 행을 입력 받음
+string getNextLine(const string msg) {
+    cout << msg; // 입력용 메시지를 출력
+    getline(cin, line); // 한 행을 읽어 들임
+    if (echo_input) cout << line << endl; // 자동체크 시 출력됨
+    return line;
 }
 
 // 하나의 정수를 입력 받음; 정수가 아닌 아닌 문자열 입력시 에러 메시지 출력 후 재입력 받음
@@ -321,9 +341,45 @@ VectorPerson::~VectorPerson() {
 }
 
 void VectorPerson::push_back(Person* p){
-	pVector[count] = p;
-	count++;
+	if(count >= allocSize){
+		extend_capacity();
+	}
+	pVector[count++] = p;
 }
+
+void VectorPerson::extend_capacity(){
+	Person **saved_persons = pVector;
+	allocSize *= 2;
+	pVector = new Person*[allocSize];
+
+	for(int i=0; i<count; i++){
+		pVector[i] = saved_persons[i];
+	}
+
+	delete [] saved_persons;
+	cout << "VectorPerson: capacity extended to " << allocSize << endl;
+}
+
+/******************************************************************************
+ * ch4_2: Factory class
+ ******************************************************************************/
+
+class Factory
+{
+public:
+    // 동적으로 Person 객체를 할당 받은 후 키보드로부터 새로 추가하고자 하는 사람의
+    // 인적정보를 읽어 들여 해당 객체에 저장한 후 그 객체의 포인터를 반환한다.
+    Person* inputPerson(istream* in) {
+        Person* p = new Person();
+        p->input(in);  // 멤버들을 입력 받음
+        if (UI::checkDataFormatError(in)) { // 정수입력할 곳에 일반 문자 입력한 경우
+            delete p;         // 할당한 메모리 반납
+            return nullptr;   // nullptr 반환은 에러가 발생했다는 의미임
+        }
+        if (UI::echo_input) p->println(); // 자동체크에서 사용됨
+        return p;
+    }
+};
 
 /******************************************************************************
  * ch4_2: PersonManager class
@@ -332,6 +388,7 @@ void VectorPerson::push_back(Person* p){
 class PersonManager
 {
     VectorPerson persons;
+    Factory factory;
 
     void deleteElemets();
     void printNotice(const string preMessage, const string postMessage);
@@ -349,15 +406,11 @@ public:
 
 PersonManager::PersonManager(Person* array[], int len) {
     cout << "PersonManager::PersonManager(array[], len)" << endl;
-    /* TODO 문제 [4] */
-
     for(int i=0; i<len; i++){
     	Person* s = array[i];
     	Person *n_person = new Person(s->getName(), s->getId(), s->getWeight(), s->getMarried(), s->getAddress());
     	persons.push_back(n_person);
     }
-
-
     display();
 }
 
@@ -385,7 +438,19 @@ void PersonManager::display() { // Menu item 1
          << ", capacity():" << persons.capacity() << endl;
 }
 
-void PersonManager::append() { /* TODO 문제 [6] */ } // Menu item 2
+void PersonManager::append() { // Menu item 2
+	int count = UI::getPositiveInt("The number of persons to append? ");
+	// to_string(10) 함수: 정수 10을 문자열 "10"으로 변환
+	// stoi("10") 함수: 문자열 "10"을 정수 10으로 변환
+	printNotice("Input "+to_string(count), ":");
+	for (int i = 0; i < count; ++i) {
+	    Person* p = factory.inputPerson(&cin); // 한 사람 정보 입력 받음
+	    if (p) persons.push_back(p); // if (p != nullptr) 와 동일;
+	    // 만약 p가 nullptr이면 이는 입력 시 에러가 발생한 것임
+	    // (즉, 정수를 입력해야 하는 곳에 일반 문자를 입력한 경우)
+	}
+	display();
+}
 
 void PersonManager::clear() { // Menu item 3
     deleteElemets();
@@ -412,6 +477,12 @@ void PersonManager::run() {
         if (menuItem == 0) return;
         (this->*func_arr[menuItem])();
     }
+}
+
+void PersonManager::printNotice(const string preMessage, const string postMessage) {
+    cout << preMessage;
+    cout << " [person information] ";
+    cout << postMessage << endl;
 }
 
 /******************************************************************************
