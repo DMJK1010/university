@@ -485,6 +485,17 @@ void PersonManager::printNotice(const string preMessage, const string postMessag
     cout << postMessage << endl;
 }
 
+Person* PersonManager::findByName(const string name) {
+    for(int i=0; i<persons.size(); i++){
+    	if(name == persons.at(i)->getName()){
+    		return persons.at(i);
+    	}
+
+    }
+    cout << name + ": NOT found" << endl;
+    return nullptr;
+}
+
 /******************************************************************************
  * ch3_2, 4_1, 4_2: MultiManager class
  ******************************************************************************/
