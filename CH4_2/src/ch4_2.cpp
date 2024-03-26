@@ -220,6 +220,7 @@ public:
     void whatAreYouDoing();
     void isSame();
     void inputPerson();
+    void changePasswd();
     void run();
 };
 
@@ -263,19 +264,25 @@ void CurrentUser::inputPerson() { // Menu item 7
         display();              // user 1 71.1 true :Gwangju Nam-ro 21:
 }
 
+void CurrentUser::changePasswd() {
+	string passwd = UI::getNext("New password: ");
+	pUser->setPasswd(passwd);
+    cout << "Password changed" << endl;
+}
+
 void CurrentUser::run() {
     using func_t = void (CurrentUser::*)();
+    using CU = CurrentUser;
     func_t func_arr[] = {
-        nullptr, &CurrentUser::display, &CurrentUser::getter, &CurrentUser::setter,
-        &CurrentUser::set, &CurrentUser::whatAreYouDoing,
-        &CurrentUser::isSame, &CurrentUser::inputPerson,
+        nullptr, &CU::display, &CU::getter, &CU::setter, &CU::set, &CU::whatAreYouDoing, &CU::isSame, &CU::inputPerson, &CU::changePasswd
     };
+
     int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 배열의 길이
     string menuStr =
-        "+++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n"
-        "+ 0.Logout 1.Display 2.Getter 3.Setter 4.Set 5.WhatAreYouDoing +\n"
-        "+ 6.IsSame 7.InputPerson                                       +\n"
-        "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+            "+++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n"
+            "+ 0.Logout 1.Display 2.Getter 3.Setter 4.Set 5.WhatAreYouDoing +\n"
+            "+ 6.IsSame 7.InputPerson 8.ChangePasswd(4_2)                   +\n"
+            "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
     while (true) {
         int menuItem = UI::selectMenu(menuStr, menuCount);
@@ -457,7 +464,14 @@ void PersonManager::clear() { // Menu item 3
     display();
 }
 void PersonManager::login() { // Menu item 4
-    /* TODO 문제 [8] */
+	string name = UI::getNext("user name: ");
+	Person* p = findByName(name); // 해당 사람을 VectorPerson에서 찾는다.
+	if (p == nullptr) return;     // 해당 사람 존재하지 않음
+		string passwd = UI::getNextLine("password: ");
+	if (passwd != p->getPasswd()) // 비번 불일치
+	    cout << "WRONG password!!" << endl;
+	else
+	    CurrentUser(p).run();
 }
 
 void PersonManager::run() {
