@@ -56,7 +56,7 @@ void push(element item){
 	}
 	else stack[++top] = item;
 }
-
+ㅎㅅㄱㅁ죠ㅗㄱ어ㅕㅛ러ㅛㄹ
 element pop(){
 	if(is_empty()){
 		fprintf(stderr, "스택 공백 에러\n");
