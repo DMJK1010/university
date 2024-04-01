@@ -1,7 +1,7 @@
 /*
  * CH4_3: ch4_3.cpp
  *
- *  Created on: 2024. 3.26.(17:25) 프로젝트 시작
+ *  Created on: 2024. 4. 1.(13:57) 3번 해결 완료
  *      Author: Junha Kim
  *
  *
@@ -249,7 +249,10 @@ string Memo::getNext(size_t* ppos) {
           발췌할 단어의 길이는 pos와 end의 간단한 계산으로 구할 수 있다.
     */
     //cout<<mStr.substr(pos, end-pos+1)<<endl;
-    return mStr.substr(pos, end-pos+1);
+    if(pos == mStr.size())
+    	return "";
+    else
+    	return mStr.substr(pos, end-pos);
 }
 
 void Memo::displayMemo() { // Menu item 1
@@ -334,12 +337,10 @@ void Memo::compareWord() {
              ""가 아닌 경우 찾을 단어인 word와 비교(<, >, ==)하여
              적절한 less, same, larger 변수의 값을 증가시킨다.
     */
-    for(size_t pos = 0; getNext(&pos) != ""; pos++){
-    	next = getNext(&pos);
-    	cout<<"next:"<<next<<endl;
-    	if(word > next)
+    for(size_t pos = 0; (next = getNext(&pos)) != "";){
+    	if(next < word)
     		less++;
-    	else if(word == next)
+    	else if(next == word)
     		same++;
     	else
     		larger++;
