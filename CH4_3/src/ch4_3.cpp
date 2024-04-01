@@ -251,6 +251,7 @@ string Memo::get_next_line(size_t* ppos) {
 }
 
 void Memo::dispByLine() {
+	int i = 0;
     cout << "--- Memo by line ---" << endl;
     /*
     아래 pos는 get_next_line(&pos)를 호출할 때 다음 행의 시작 위치임
@@ -259,10 +260,13 @@ void Memo::dispByLine() {
              적절한 행 번호와 함께 해당 행(line)을 출력(행번호 출력은 PersonManager::display() 참조)
              행의 끝에 줄바꾸기 문자 '\n'가 없을 경우 endl 출력 (displayMemo() 참조)
     */
+
     for(size_t pos = 0; pos < mStr.length();){
     	string line = get_next_line(&pos);
-
+    	cout << "[" << i++ << "] "<<line;
     }
+
+
     cout << "--------------------" << endl;
 }
 
