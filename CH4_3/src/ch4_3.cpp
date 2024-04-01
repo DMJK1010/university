@@ -1,22 +1,23 @@
 /*
  * CH4_3: ch4_3.cpp
  *
- *  Created on: 2024. 3.26.(17:25) ÇÁ·ÎÁ§Æ® ½ÃÀÛ
+ *  Created on: 2024. 3.26.(17:25) í”„ë¡œì íŠ¸ ì‹œì‘
  *      Author: Junha Kim
  *
  *
- *  + class Memo Ãß°¡: string Å¬·¡½ºÀÇ ¸â¹öÇÔ¼ö ¹× operator È°¿ë¹ı
- *  + Person::memo_c_str[] ¸â¹ö ¹× set, get ÇÔ¼ö Ãß°¡
- *  + CurrentUser::memo ¸â¹ö, ÇÔ¼ö ¹× ¸Ş´º Ç×¸ñ Ãß°¡
- *  + PersonManager::~PersonManager()¿¡¼­ display() ¹®Àå »èÁ¦
+ *  + class Memo ì¶”ê°€: string í´ë˜ìŠ¤ì˜ ë©¤ë²„í•¨ìˆ˜ ë° operator í™œìš©ë²•
+ *  + Person::memo_c_str[] ë©¤ë²„ ë° set, get í•¨ìˆ˜ ì¶”ê°€
+ *  + CurrentUser::memo ë©¤ë²„, í•¨ìˆ˜ ë° ë©”ë‰´ í•­ëª© ì¶”ê°€
+ *  + PersonManager::~PersonManager()ì—ì„œ display() ë¬¸ì¥ ì‚­ì œ
  */
 
 #include <iostream>
 #include <cstring>
+#include <cctype>
 
 using namespace std;
 
-#define AUTOMATIC_ERROR_CHECK false // false: ÀÚµ¿ ¿À·ù Ã¼Å©, true: Å°º¸µå¿¡¼­ Á÷Á¢ ÀÔ·ÂÇÏ¿© ÇÁ·Î±×·¥ ½ÇÇà
+#define AUTOMATIC_ERROR_CHECK false // false: ìë™ ì˜¤ë¥˜ ì²´í¬, true: í‚¤ë³´ë“œì—ì„œ ì§ì ‘ ì…ë ¥í•˜ì—¬ í”„ë¡œê·¸ë¨ ì‹¤í–‰
 
 /******************************************************************************
  * Person class
@@ -24,12 +25,12 @@ using namespace std;
 
 class Person
 {
-    string name;       	    // ÀÌ¸§
-    string passwd;          // ºñ¹ø
+    string name;       	    // ì´ë¦„
+    string passwd;          // ë¹„ë²ˆ
     int    id;              // Identifier
-    double weight;          // Ã¼Áß
-    bool   married;         // °áÈ¥¿©ºÎ
-    char   address[40];     // ÁÖ¼Ò
+    double weight;          // ì²´ì¤‘
+    bool   married;         // ê²°í˜¼ì—¬ë¶€
+    char   address[40];     // ì£¼ì†Œ
 
 protected:
     void inputMembers(istream* in);
@@ -52,24 +53,24 @@ public:
     string 		getName()    { return name; }
     string      getPasswd()  { return passwd; }
     int         getId()      { return id; }
-    double      getWeight()  { return weight; }  // ±¸Çö ½Ã
-    bool        getMarried() { return married; }  // ¸®ÅÏ °ªµéÀ»
-    const char* getAddress() { return address; } // ¼öÁ¤ÇÏ½Ã¿À.
+    double      getWeight()  { return weight; }  // êµ¬í˜„ ì‹œ
+    bool        getMarried() { return married; }  // ë¦¬í„´ ê°’ë“¤ì„
+    const char* getAddress() { return address; } // ìˆ˜ì •í•˜ì‹œì˜¤.
 
-    void input(istream* pin)  { inputMembers(pin); } // ch3_2¿¡¼­ Ãß°¡
+    void input(istream* pin)  { inputMembers(pin); } // ch3_2ì—ì„œ ì¶”ê°€
     void print(ostream* pout) { printMembers(pout); }
     void println()            { print(&cout); cout << endl; }
-    void whatAreYouDoing();                          // ch3_2¿¡¼­ Ãß°¡
-    bool isSame(const string name, int pid);         // ch3_2¿¡¼­ Ãß°¡
+    void whatAreYouDoing();                          // ch3_2ì—ì„œ ì¶”ê°€
+    bool isSame(const string name, int pid);         // ch3_2ì—ì„œ ì¶”ê°€
 };
 
 Person::Person(const string name, int id, double weight, bool married, const char *address) : name(name), id{id}, weight{weight}, married{married} {
-    // À§¿¡¼­ °¢ ¸â¹ö¸¦ ÃÊ±âÈ­ÇÏ´Â {}´Â °¢ ¸Å°³º¯¼ö °ªÀ» °´Ã¼ÀÇ »óÀÀÇÏ´Â ¸â¹ö¿¡ ¼³Á¤ÇÏ´Â °ÍÀÌ´Ù. Áï,
-    // this->id=id, this->weight=weight, this->married=married¿Í µ¿ÀÏÇÏ´Ù.
-    // ¿©±â¼­ this´Â ÇØ´ç °´Ã¼¸¦ Æ÷ÀÎÅÍÇÏ´Â Æ÷ÀÎÅÍ º¯¼öÀÌ¸ç, (´ÙÀ½ Àå¿¡¼­ ¼³¸íµÉ ¿¹Á¤ÀÓ)
-    // this->id´Â ÇØ´ç °´Ã¼ÀÇ ¸â¹ö id¸¦ ÁöÄªÇÏ¸ç =ÀÇ ¿ìÃøº¯¼ö id´Â ÇÔ¼öÀÇ ¸Å°³º¯¼öÀÌ´Ù.
-    // °ªÀ» °£´ÜÈ÷ ´ëÀÔÇÏ´Â °ÍÀº À§Ã³·³ ÇÏ¸é µÇÁö¸¸ name[], address[]¿Í °°Àº ¹è¿­ º¹»ç ÇÔ¼ö
-    // È£Ãâ ¶Ç´Â ´Ù¸¥ ÇÔ¼ö¸¦ È£ÃâÇÒ ¶§´Â »ı¼ºÀÚ ÇÔ¼öÀÇ ¸öÃ¼ { } ³»¿¡¼­ È£ÃâÇØ¾ß ÇÑ´Ù.
+    // ìœ„ì—ì„œ ê° ë©¤ë²„ë¥¼ ì´ˆê¸°í™”í•˜ëŠ” {}ëŠ” ê° ë§¤ê°œë³€ìˆ˜ ê°’ì„ ê°ì²´ì˜ ìƒì‘í•˜ëŠ” ë©¤ë²„ì— ì„¤ì •í•˜ëŠ” ê²ƒì´ë‹¤. ì¦‰,
+    // this->id=id, this->weight=weight, this->married=marriedì™€ ë™ì¼í•˜ë‹¤.
+    // ì—¬ê¸°ì„œ thisëŠ” í•´ë‹¹ ê°ì²´ë¥¼ í¬ì¸í„°í•˜ëŠ” í¬ì¸í„° ë³€ìˆ˜ì´ë©°, (ë‹¤ìŒ ì¥ì—ì„œ ì„¤ëª…ë  ì˜ˆì •ì„)
+    // this->idëŠ” í•´ë‹¹ ê°ì²´ì˜ ë©¤ë²„ idë¥¼ ì§€ì¹­í•˜ë©° =ì˜ ìš°ì¸¡ë³€ìˆ˜ idëŠ” í•¨ìˆ˜ì˜ ë§¤ê°œë³€ìˆ˜ì´ë‹¤.
+    // ê°’ì„ ê°„ë‹¨íˆ ëŒ€ì…í•˜ëŠ” ê²ƒì€ ìœ„ì²˜ëŸ¼ í•˜ë©´ ë˜ì§€ë§Œ name[], address[]ì™€ ê°™ì€ ë°°ì—´ ë³µì‚¬ í•¨ìˆ˜
+    // í˜¸ì¶œ ë˜ëŠ” ë‹¤ë¥¸ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•  ë•ŒëŠ” ìƒì„±ì í•¨ìˆ˜ì˜ ëª¸ì²´ { } ë‚´ì—ì„œ í˜¸ì¶œí•´ì•¼ í•œë‹¤.
 
 	setAddress(address);
     cout << "Person::Person(...):"; println();
@@ -88,7 +89,7 @@ void Person::set(const string name, int id, double weight, bool married, const c
     this->id = id;
     this->weight = weight;
     this->married = married;
-    setAddress(address);  //addressµµ ¼öÁ¤ÇØ¾ßÇÏ´ÂÁö?==================================================?
+    setAddress(address);  //addressë„ ìˆ˜ì •í•´ì•¼í•˜ëŠ”ì§€?==================================================?
 }
 
 void Person::inputMembers(istream* pin)   {
@@ -112,62 +113,62 @@ bool Person::isSame(const string name, int pid) {
 /******************************************************************************
  * User Interface
  ******************************************************************************/
-// ±âº»ÀûÀÎ ÀÔ·Â°ú °ü·ÃµÈ Àü¿ª ÇÔ¼öµéÀ» UI¶ó´Â ÀÌ¸§°ø°£ ³»ºÎ¿¡ Á¤ÀÇÇÔ
+// ê¸°ë³¸ì ì¸ ì…ë ¥ê³¼ ê´€ë ¨ëœ ì „ì—­ í•¨ìˆ˜ë“¤ì„ UIë¼ëŠ” ì´ë¦„ê³µê°„ ë‚´ë¶€ì— ì •ì˜í•¨
 
 namespace UI {
 
 bool echo_input = false;
 string line, emptyLine;
 
-// ÀÔ·Â¿¡¼­ Á¤¼ö ´ë½Å ÀÏ¹İ ¹®ÀÚ°¡ ÀÔ·ÂµÇ¾ú´ÂÁö Ã¼Å©ÇÏ°í ¿¡·¯ ¹ß»ı½Ã ¿¡·¯ ¸Ş½ÃÁö Ãâ·Â
+// ì…ë ¥ì—ì„œ ì •ìˆ˜ ëŒ€ì‹  ì¼ë°˜ ë¬¸ìê°€ ì…ë ¥ë˜ì—ˆëŠ”ì§€ ì²´í¬í•˜ê³  ì—ëŸ¬ ë°œìƒì‹œ ì—ëŸ¬ ë©”ì‹œì§€ ì¶œë ¥
 bool checkInputError(istream* pin, const string msg) {
-    if (!(*pin)) { // ¿¡·¯°¡ ¹ß»ıÇß´Ù¸é
-        cout << msg;  // ¿¡·¯ ¸Ş½ÃÁö¸¦ Ãâ·Â
-        pin->clear(); // ¿¡·¯ ¹ß»ı »óÅÂÁ¤º¸¸¦ ¸®¼ÂÇÔ; ±×·¡¾ß ´ÙÀ½ ¹®Àå¿¡¼­ ÀĞÀ» ¼ö ÀÖÀ½
-        getline(*pin, emptyLine); // ¿¡·¯°¡ ¹ß»ıÇÑ Çà ÀüÃ¼¸¦ ÀĞ¾î µ¥ÀÌÅÍ¸¦ ¹ö¸²
+    if (!(*pin)) { // ì—ëŸ¬ê°€ ë°œìƒí–ˆë‹¤ë©´
+        cout << msg;  // ì—ëŸ¬ ë©”ì‹œì§€ë¥¼ ì¶œë ¥
+        pin->clear(); // ì—ëŸ¬ ë°œìƒ ìƒíƒœì •ë³´ë¥¼ ë¦¬ì…‹í•¨; ê·¸ë˜ì•¼ ë‹¤ìŒ ë¬¸ì¥ì—ì„œ ì½ì„ ìˆ˜ ìˆìŒ
+        getline(*pin, emptyLine); // ì—ëŸ¬ê°€ ë°œìƒí•œ í–‰ ì „ì²´ë¥¼ ì½ì–´ ë°ì´í„°ë¥¼ ë²„ë¦¼
         return true;
     }
     return false;
 }
 
-// Á¤¼ö³ª ½Ç¼ö¸¦ ÀÔ·ÂÇØ¾ß ÇÏ´Â °÷¿¡ ÀÏ¹İ ¹®ÀÚ¿­À» ÀÔ·ÂÇÑ °æ¿ìÀÇ ¿¡·¯ Ã¼Å©
+// ì •ìˆ˜ë‚˜ ì‹¤ìˆ˜ë¥¼ ì…ë ¥í•´ì•¼ í•˜ëŠ” ê³³ì— ì¼ë°˜ ë¬¸ìì—´ì„ ì…ë ¥í•œ ê²½ìš°ì˜ ì—ëŸ¬ ì²´í¬
 bool checkDataFormatError(istream* pin) {
     return checkInputError(pin, "Input-data format MISMATCHED\n");
 }
 
-// ÇÑ »ç¶÷ÀÇ Á¤º¸ Áï, °¢ ¸â¹ö µ¥ÀÌÅÍ¸¦ ¼ø¼­ÀûÀ¸·Î ÀÔ·Â ¹Ş¾Æ p¿¡ ÀúÀåÇÏ°í
-// ÀÔ·Â Áß ÀÔ·Â µ¥ÀÌÅÍ¿¡ ¿À·ù°¡ ÀÖ´ÂÁö È®ÀÎÇÏ°í ¿À·ù°¡ ÀÖÀ» ½Ã ¿¡·¯ ¸Ş½ÃÁö¸¦ Ãâ·ÂÇÑ´Ù.
+// í•œ ì‚¬ëŒì˜ ì •ë³´ ì¦‰, ê° ë©¤ë²„ ë°ì´í„°ë¥¼ ìˆœì„œì ìœ¼ë¡œ ì…ë ¥ ë°›ì•„ pì— ì €ì¥í•˜ê³ 
+// ì…ë ¥ ì¤‘ ì…ë ¥ ë°ì´í„°ì— ì˜¤ë¥˜ê°€ ìˆëŠ”ì§€ í™•ì¸í•˜ê³  ì˜¤ë¥˜ê°€ ìˆì„ ì‹œ ì—ëŸ¬ ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•œë‹¤.
 bool inputPerson(Person* p) {
     cout << "input person information:" << endl;
     p->input(&cin);
     if (checkDataFormatError(&cin)) return false;
-    if (echo_input) p->println(); // ÀÚµ¿Ã¼Å©¿¡¼­ »ç¿ëµÊ
+    if (echo_input) p->println(); // ìë™ì²´í¬ì—ì„œ ì‚¬ìš©ë¨
     return true;
 }
 
-// ÀÔ·ÂÀåÄ¡¿¡¼­ ÇÏ³ªÀÇ ´Ü¾î·Î ±¸¼ºµÈ ¹®ÀÚ¿­À» ÀÔ·Â ¹ŞÀ½
+// ì…ë ¥ì¥ì¹˜ì—ì„œ í•˜ë‚˜ì˜ ë‹¨ì–´ë¡œ êµ¬ì„±ëœ ë¬¸ìì—´ì„ ì…ë ¥ ë°›ìŒ
 string getNext(const string msg) {
-    cout << msg; // ÀÔ·Â¿ë ¸Ş½ÃÁö¸¦ Ãâ·Â
-    cin >> line; // ÇÏ³ªÀÇ ´Ü¾î¸¦ ÀĞ¾î µéÀÓ
-    if (echo_input) cout << line << endl; // ÀÚµ¿Ã¼Å© ½Ã Ãâ·ÂµÊ
-    getline(cin, emptyLine); // ÀÔ·Â¹ŞÀº ÇÑ ´Ü¾î ¿Ü ±× ÇàÀÇ ³ª¸ÓÁö µ¥ÀÌÅ¸(¿£ÅÍÆ÷ÇÔ)´Â ÀĞ¾î¼­ ¹ö¸²
-    return line;             // ÀÌÀ¯´Â ¿©±â¼­ [¿£ÅÍ]¸¦ Á¦°ÅÇÏÁö ¾ÊÀ¸¸é
-}                            // ´ÙÀ½ÀÇ getNextLine()¿¡¼­ ¿£ÅÍ¸¸ ÀĞ¾î µéÀÏ ¼ö ÀÖ±â ¶§¹®¿¡
+    cout << msg; // ì…ë ¥ìš© ë©”ì‹œì§€ë¥¼ ì¶œë ¥
+    cin >> line; // í•˜ë‚˜ì˜ ë‹¨ì–´ë¥¼ ì½ì–´ ë“¤ì„
+    if (echo_input) cout << line << endl; // ìë™ì²´í¬ ì‹œ ì¶œë ¥ë¨
+    getline(cin, emptyLine); // ì…ë ¥ë°›ì€ í•œ ë‹¨ì–´ ì™¸ ê·¸ í–‰ì˜ ë‚˜ë¨¸ì§€ ë°ì´íƒ€(ì—”í„°í¬í•¨)ëŠ” ì½ì–´ì„œ ë²„ë¦¼
+    return line;             // ì´ìœ ëŠ” ì—¬ê¸°ì„œ [ì—”í„°]ë¥¼ ì œê±°í•˜ì§€ ì•Šìœ¼ë©´
+}                            // ë‹¤ìŒì˜ getNextLine()ì—ì„œ ì—”í„°ë§Œ ì½ì–´ ë“¤ì¼ ìˆ˜ ìˆê¸° ë•Œë¬¸ì—
 
-// ÀÔ·ÂÀåÄ¡¿¡¼­ ÇÑ ÇàÀ» ÀÔ·Â ¹ŞÀ½
+// ì…ë ¥ì¥ì¹˜ì—ì„œ í•œ í–‰ì„ ì…ë ¥ ë°›ìŒ
 string getNextLine(const string msg) {
-    cout << msg; // ÀÔ·Â¿ë ¸Ş½ÃÁö¸¦ Ãâ·Â
-    getline(cin, line); // ÇÑ ÇàÀ» ÀĞ¾î µéÀÓ
-    if (echo_input) cout << line << endl; // ÀÚµ¿Ã¼Å© ½Ã Ãâ·ÂµÊ
+    cout << msg; // ì…ë ¥ìš© ë©”ì‹œì§€ë¥¼ ì¶œë ¥
+    getline(cin, line); // í•œ í–‰ì„ ì½ì–´ ë“¤ì„
+    if (echo_input) cout << line << endl; // ìë™ì²´í¬ ì‹œ ì¶œë ¥ë¨
     return line;
 }
 
-// ÇÏ³ªÀÇ Á¤¼ö¸¦ ÀÔ·Â ¹ŞÀ½; Á¤¼ö°¡ ¾Æ´Ñ ¾Æ´Ñ ¹®ÀÚ¿­ ÀÔ·Â½Ã ¿¡·¯ ¸Ş½ÃÁö Ãâ·Â ÈÄ ÀçÀÔ·Â ¹ŞÀ½
+// í•˜ë‚˜ì˜ ì •ìˆ˜ë¥¼ ì…ë ¥ ë°›ìŒ; ì •ìˆ˜ê°€ ì•„ë‹Œ ì•„ë‹Œ ë¬¸ìì—´ ì…ë ¥ì‹œ ì—ëŸ¬ ë©”ì‹œì§€ ì¶œë ¥ í›„ ì¬ì…ë ¥ ë°›ìŒ
 int getInt(const string msg) {
     for (int value; true; ) {
         cout << msg;
         cin >> value;
-        if (echo_input) cout << value << endl; // ÀÚµ¿Ã¼Å© ½Ã Ãâ·ÂµÊ
+        if (echo_input) cout << value << endl; // ìë™ì²´í¬ ì‹œ ì¶œë ¥ë¨
         if (checkInputError(&cin, "Input an INTEGER.\n"))
             continue;
         getline(cin, emptyLine); // skip [enter] after the number
@@ -175,7 +176,7 @@ int getInt(const string msg) {
     }
 }
 
-// ÇÏ³ªÀÇ ¾çÀÇ Á¤¼ö¸¦ ÀÔ·Â ¹ŞÀ½; À½¼ö ÀÔ·Â½Ã ¿¡·¯ ¸Ş½ÃÁö Ãâ·Â ÈÄ ÀçÀÔ·Â ¹ŞÀ½
+// í•˜ë‚˜ì˜ ì–‘ì˜ ì •ìˆ˜ë¥¼ ì…ë ¥ ë°›ìŒ; ìŒìˆ˜ ì…ë ¥ì‹œ ì—ëŸ¬ ë©”ì‹œì§€ ì¶œë ¥ í›„ ì¬ì…ë ¥ ë°›ìŒ
 int getPositiveInt(const string msg) {
     int value;
     while ((value = getInt(msg)) < 0)
@@ -183,8 +184,8 @@ int getPositiveInt(const string msg) {
     return value;
 }
 
-// 0~(size-1)»çÀÌÀÇ ¼±ÅÃµÈ ¸Ş´º Ç×¸ñ ¶Ç´Â ¸®½ºÆ®ÀÇ Ç×¸ñÀÇ ÀÎµ¦½º °ªÀ» ¸®ÅÏÇÔ
-// Á¸ÀçÇÏÁö ¾Ê´Â ¸Ş´ºÇ×¸ñÀ» ¼±ÅÃÇÑ °æ¿ì ¿¡·¯ Ãâ·Â
+// 0~(size-1)ì‚¬ì´ì˜ ì„ íƒëœ ë©”ë‰´ í•­ëª© ë˜ëŠ” ë¦¬ìŠ¤íŠ¸ì˜ í•­ëª©ì˜ ì¸ë±ìŠ¤ ê°’ì„ ë¦¬í„´í•¨
+// ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ë©”ë‰´í•­ëª©ì„ ì„ íƒí•œ ê²½ìš° ì—ëŸ¬ ì¶œë ¥
 int getIndex(const string msg, int size) {
     while (true) {
         int index = getPositiveInt(msg);
@@ -194,7 +195,7 @@ int getIndex(const string msg, int size) {
     }
 }
 
-// »ç¿ëÀÚ¿¡°Ô ¸Ş´º¸¦ º¸¿©ÁÖ°í »ç¿ëÀÚ°¡ ¼±ÅÃÇÑ ¸Ş´ºÇ×¸ñÀÇ ÀÎµ¦½º¸¦ ¸®ÅÏÇÔ
+// ì‚¬ìš©ìì—ê²Œ ë©”ë‰´ë¥¼ ë³´ì—¬ì£¼ê³  ì‚¬ìš©ìê°€ ì„ íƒí•œ ë©”ë‰´í•­ëª©ì˜ ì¸ë±ìŠ¤ë¥¼ ë¦¬í„´í•¨
 int selectMenu(const string menuStr, int menuItemCount) {
     cout << endl << menuStr;
     return getIndex("Menu item number? ", menuItemCount);
@@ -208,7 +209,7 @@ int selectMenu(const string menuStr, int menuItemCount) {
 
 class Memo
 {
-    string mStr; // ¸Ş¸ğ¸¦ ÀúÀåÇØ µÎ´Â ¹®ÀÚ¿­
+    string mStr; // ë©”ëª¨ë¥¼ ì €ì¥í•´ ë‘ëŠ” ë¬¸ìì—´
 
     string get_next_line(size_t* ppos);
     bool find_line(int line, size_t* start, size_t* next);
@@ -230,17 +231,38 @@ public:
     void run();
 };
 
+string Memo::getNext(size_t* ppos) {
+    size_t pos = *ppos, end;
+    for ( ; pos < mStr.size() && isspace(mStr[pos]); ++pos) ; // ë‹¨ì–´ ì•ì˜ ê³µë°± ë¬¸ìë“¤ ìŠ¤í‚µ(ìˆì„ ê²½ìš°)
+    end = pos; // posëŠ” ë‹¨ì–´ì˜ ì‹œì‘ ìœ„ì¹˜ì´ê³  endëŠ” ë‹¨ì–´ì˜ ë ë‹¤ìŒ ìœ„ì¹˜ì´ë‹¤.
+    if (end < mStr.size() && ispunct(mStr[end])) // ì²« ê¸€ìê°€ êµ¬ë‘ì ì¼ ê²½ìš°
+        ++end;
+    else { // ë‹¨ì–´ì˜ ëì„ ì°¾ìŒ
+        for ( ; end < mStr.size() && !isspace(mStr[end]) &&
+                !ispunct(mStr[end]); ++end) ;
+    }
+    *ppos = end; // ë‹¤ìŒ ë‹¨ì–´ì˜ ì‹œì‘ ìœ„ì¹˜ë¥¼ ê¸°ë¡í•´ ë‘ 
+
+    /*
+    TODO: string::substr()ì„ ì´ìš©í•´ì„œ ì°¾ì€ ë‹¨ì–´ë¥¼ ë°œì·Œí•´ì„œ ë³„ë„ì˜ stringìœ¼ë¡œ êµ¬ì„±í•˜ì—¬ ë¦¬í„´í•˜ë¼.
+          mStrì˜ ëì— ë„ì°©í•˜ì—¬ ë” ì´ìƒ ì°¾ì„ ë‹¨ì–´ê°€ ì—†ì„ ê²½ìš° "" ë¬¸ìì—´ì„ ë°˜í™˜í•˜ê²Œ ëœë‹¤.
+          ë°œì·Œí•  ë‹¨ì–´ì˜ ê¸¸ì´ëŠ” posì™€ endì˜ ê°„ë‹¨í•œ ê³„ì‚°ìœ¼ë¡œ êµ¬í•  ìˆ˜ ìˆë‹¤.
+    */
+    //cout<<mStr.substr(pos, end-pos+1)<<endl;
+    return mStr.substr(pos, end-pos+1);
+}
+
 void Memo::displayMemo() { // Menu item 1
     cout << "------- Memo -------" << endl;
     cout << mStr;
     if (mStr.length() > 0 && mStr[mStr.length()-1] != '\n')
-        cout << endl; // ¸Ş¸ğ ³¡¿¡ ÁÙ¹Ù²Ù±â ¹®ÀÚ°¡ ¾øÀ» °æ¿ì Ãâ·Â
+        cout << endl; // ë©”ëª¨ ëì— ì¤„ë°”ê¾¸ê¸° ë¬¸ìê°€ ì—†ì„ ê²½ìš° ì¶œë ¥
     cout << "--------------------" << endl;
 }
 
-// ¾Æ·¡ R"( ¿Í )"´Â ±× »çÀÌ¿¡ ÀÖ´Â ¸ğµç ¹®ÀÚ¸¦ ÇÏ³ªÀÇ ¹®ÀÚ¿­·Î Ãë±ŞÇÏ¶ó´Â ÀÇ¹ÌÀÌ´Ù.
-// µû¶ó¼­ Çà°ú Çà »çÀÌ¿¡ ÀÖ´Â ÁÙ¹Ù²Ù±â \n ¹®ÀÚµµ ¹®ÀÚ¿­¿¡ ±×´ë·Î Æ÷ÇÔµÈ´Ù.
-// ÀÌ·± ¹æ½ÄÀ» »ç¿ëÇÏÁö ¾ÊÀ¸¸é ¿©·¯ Çà¿¡ °ÉÄ£ ¹®ÀÚ¿­À» ¸¸µé·Á¸é º¹ÀâÇØÁø´Ù.
+// ì•„ë˜ R"( ì™€ )"ëŠ” ê·¸ ì‚¬ì´ì— ìˆëŠ” ëª¨ë“  ë¬¸ìë¥¼ í•˜ë‚˜ì˜ ë¬¸ìì—´ë¡œ ì·¨ê¸‰í•˜ë¼ëŠ” ì˜ë¯¸ì´ë‹¤.
+// ë”°ë¼ì„œ í–‰ê³¼ í–‰ ì‚¬ì´ì— ìˆëŠ” ì¤„ë°”ê¾¸ê¸° \n ë¬¸ìë„ ë¬¸ìì—´ì— ê·¸ëŒ€ë¡œ í¬í•¨ëœë‹¤.
+// ì´ëŸ° ë°©ì‹ì„ ì‚¬ìš©í•˜ì§€ ì•Šìœ¼ë©´ ì—¬ëŸ¬ í–‰ì— ê±¸ì¹œ ë¬¸ìì—´ì„ ë§Œë“¤ë ¤ë©´ ë³µì¡í•´ì§„ë‹¤.
 const char* memoData = R"(The Last of the Mohicans
 James Fenimore Cooper
 Author's Introduction
@@ -256,21 +278,21 @@ than the native warrior of North America.
 
 void Memo::run() {
 
-    // TODO ¹®Á¦ [1]: func_arr[], menuCount ¼±¾ğ
+    // TODO ë¬¸ì œ [1]: func_arr[], menuCount ì„ ì–¸
 	using func_t = void (Memo::*)();
 	func_t func_arr[] = {
-	    nullptr, &Memo::displayMemo, &Memo::findString
+	    nullptr, &Memo::displayMemo, &Memo::findString, &Memo::compareWord
 	};
-	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] ±æÀÌ
+	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] ê¸¸ì´
     string menuStr =
         "++++++++++++++++++++++ Memo Management Menu +++++++++++++++++++++\n"
         "+ 0.Exit 1.DisplayMemo 2.FindString 3.CompareWord 4.DispByLine  +\n"
         "+ 5.DeleteLine 6.RepaceLine 7.ScrollUp 8.ScrollDown 9.InputMemo +\n"
         "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
-    if (mStr == "") mStr = memoData;// ¸â¹ö mStrÀÌ ºñ¾úÀ» °æ¿ì À§ memoData·Î ÃÊ±âÈ­ÇÑ´Ù.
+    if (mStr == "") mStr = memoData;// ë©¤ë²„ mStrì´ ë¹„ì—ˆì„ ê²½ìš° ìœ„ memoDataë¡œ ì´ˆê¸°í™”í•œë‹¤.
 
-    // TODO ¹®Á¦ [1]: while ¹®Àå »ğÀÔÇÏ¿© ¼±ÅÃµÈ ¸Ş´ºÇ×¸ñ ½ÇÇàÇÏ´Â ÇÔ¼ö È£Ãâ
+    // TODO ë¬¸ì œ [1]: while ë¬¸ì¥ ì‚½ì…í•˜ì—¬ ì„ íƒëœ ë©”ë‰´í•­ëª© ì‹¤í–‰í•˜ëŠ” í•¨ìˆ˜ í˜¸ì¶œ
     while (true) {
         int menuItem = UI::selectMenu(menuStr, menuCount);
         if (menuItem == 0) return;
@@ -285,12 +307,12 @@ void Memo::findString() {
     string Data(memoData);
 
     /*
-    TODO: for ¹®À» »ç¿ëÇÏ¿© ¹İº¹ÀûÀ¸·Î string::find() ÇÔ¼ö¸¦ È£ÃâÇÏ¿© Ã£Àº ´Ü¾îÀÇ
-          ÃâÇö È¸¼ö(count)¸¦ ¼¼¾î¶ó. find()¸¦ ÅëÇØ Ã£Àº À§Ä¡¿¡¼­ lenÀ» ´õÇÏ¸é
-          Ã£Àº ´Ü¾îÀÇ ³¡ À§Ä¡°¡ µÇ´Âµ¥ ÀÌ°ÍÀÌ ´ÙÀ½ ¹ø¿¡ Ã£±â ½ÃÀÛÇÒ À§Ä¡ÀÌ´Ù.
-          string::find()ÀÇ ¸®ÅÏ °ªÀÌ string::npos¿Í °°À¸¸é
-          ´Ü¾î¸¦ Ã£Áö ¸øÇß´Ù´Â °ÍÀ» ÀÇ¹ÌÇÑ´Ù. ¸ø Ã£À» ¶§±îÁö ¹İº¹ ¼öÇàÇÏ¸é µÊ.
-          Ã£±â ½ÃÀÛ À§Ä¡ ¶Ç´Â ¸®ÅÏ °ªÀÇ Å¸ÀÔÀº size_t¸¦ »ç¿ëÇÏ¶ó.
+    TODO: for ë¬¸ì„ ì‚¬ìš©í•˜ì—¬ ë°˜ë³µì ìœ¼ë¡œ string::find() í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ ì°¾ì€ ë‹¨ì–´ì˜
+          ì¶œí˜„ íšŒìˆ˜(count)ë¥¼ ì„¸ì–´ë¼. find()ë¥¼ í†µí•´ ì°¾ì€ ìœ„ì¹˜ì—ì„œ lenì„ ë”í•˜ë©´
+          ì°¾ì€ ë‹¨ì–´ì˜ ë ìœ„ì¹˜ê°€ ë˜ëŠ”ë° ì´ê²ƒì´ ë‹¤ìŒ ë²ˆì— ì°¾ê¸° ì‹œì‘í•  ìœ„ì¹˜ì´ë‹¤.
+          string::find()ì˜ ë¦¬í„´ ê°’ì´ string::nposì™€ ê°™ìœ¼ë©´
+          ë‹¨ì–´ë¥¼ ì°¾ì§€ ëª»í–ˆë‹¤ëŠ” ê²ƒì„ ì˜ë¯¸í•œë‹¤. ëª» ì°¾ì„ ë•Œê¹Œì§€ ë°˜ë³µ ìˆ˜í–‰í•˜ë©´ ë¨.
+          ì°¾ê¸° ì‹œì‘ ìœ„ì¹˜ ë˜ëŠ” ë¦¬í„´ ê°’ì˜ íƒ€ì…ì€ size_të¥¼ ì‚¬ìš©í•˜ë¼.
     */
     for(int i=0; i<(int)Data.length(); i++){
     	if(Data.find(word, pos) != string::npos){
@@ -301,6 +323,33 @@ void Memo::findString() {
     cout << "Found count: " << count << endl;
 }
 
+void Memo::compareWord() {
+    string next, word = UI::getNext("Word to compare? ");
+    int less = 0, same = 0, larger = 0;
+    /*
+    ì•„ë˜ posëŠ” getNext(&pos)ë¥¼ í˜¸ì¶œí•  ë•Œ ë‹¤ìŒ ë‹¨ì–´ë¥¼ ì°¾ì•„ì•¼ í•  ì‹œì‘ ìœ„ì¹˜ì„
+    TODO: for(size_t pos = 0; getNext(&pos)ë¥¼ í˜¸ì¶œí•˜ì—¬ mStrì˜ ëê¹Œì§€ ë°˜ë³µ ìˆ˜í–‰; )
+             ìœ„ getNext(&pos)ë¥¼ í˜¸ì¶œì‹œ ë¦¬í„´ëœ ë‹¤ìŒ ë‹¨ì–´ë¥¼ nextì— ì €ì¥í•œ í›„
+             nextê°€ ""ì¼ ê²½ìš° mStrì˜ ëì„ ì˜ë¯¸í•˜ë¯€ë¡œ forë¬¸ ì¢…ë£Œ
+             ""ê°€ ì•„ë‹Œ ê²½ìš° ì°¾ì„ ë‹¨ì–´ì¸ wordì™€ ë¹„êµ(<, >, ==)í•˜ì—¬
+             ì ì ˆí•œ less, same, larger ë³€ìˆ˜ì˜ ê°’ì„ ì¦ê°€ì‹œí‚¨ë‹¤.
+    */
+    for(size_t pos = 0; getNext(&pos) != ""; pos++){
+    	next = getNext(&pos);
+    	cout<<"next:"<<next<<endl;
+    	if(word > next)
+    		less++;
+    	else if(word == next)
+    		same++;
+    	else
+    		larger++;
+    }
+
+    cout << "less: "   << less   << endl;
+    cout << "same: "   << same   << endl;
+    cout << "larger: " << larger << endl;
+}
+
 /******************************************************************************
  * ch3_2: CurrentUser class
  ******************************************************************************/
@@ -308,7 +357,7 @@ void Memo::findString() {
 class CurrentUser
 {
     Person* pUser;
-    Memo    memo; // ch4_3¿¡¼­ Ãß°¡
+    Memo    memo; // ch4_3ì—ì„œ ì¶”ê°€
 
 public:
     CurrentUser(Person* pUser): pUser(pUser) { }
@@ -333,21 +382,21 @@ void CurrentUser::getter() { // Menu item 2
 }
 
 void CurrentUser::setter() { // Menu item 3
-	Person* pp = new Person("pp"); // pp µ¿Àû ÇÒ´ç
+	Person* pp = new Person("pp"); // pp ë™ì  í• ë‹¹
     pp->setName(pp->getName());
     pp->setId(pUser->getId());
     pp->setWeight(pUser->getWeight());
     pp->setMarried(pUser->getMarried());
     pp->setAddress(pUser->getAddress());
     cout << "pp->setMembers():"; pp->println();
-    delete pp; // pp°¡ Æ÷ÀÎÅÍ ÇÏ´Â °´Ã¼ÀÇ ¸Ş¸ğ¸®¸¦ ¹İÈ¯
+    delete pp; // ppê°€ í¬ì¸í„° í•˜ëŠ” ê°ì²´ì˜ ë©”ëª¨ë¦¬ë¥¼ ë°˜í™˜
 }
 
 void CurrentUser::set() { // Menu item 4
-	Person* pp = new Person("pp"); // pp µ¿Àû ÇÒ´ç
+	Person* pp = new Person("pp"); // pp ë™ì  í• ë‹¹
     pp->set(pp->getName(), pUser->getId(), pUser->getWeight(), !pUser->getMarried(), pUser->getAddress());
     cout << "pp->set():"; pp->println();
-    delete pp; // pp ¹İÈ¯
+    delete pp; // pp ë°˜í™˜
 }
 
 void CurrentUser::whatAreYouDoing() {  // Menu item 5
@@ -381,7 +430,7 @@ void CurrentUser::run() {
         nullptr, &CU::display, &CU::getter, &CU::setter, &CU::set, &CU::whatAreYouDoing, &CU::isSame, &CU::inputPerson, &CU::changePasswd, &CU::manageMemo
     };
 
-    int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] ¹è¿­ÀÇ ±æÀÌ
+    int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] ë°°ì—´ì˜ ê¸¸ì´
     string menuStr =
             "+++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n"
             "+ 0.Logout 1.Display 2.Getter 3.Setter 4.Set 5.WhatAreYouDoing +\n"
@@ -402,51 +451,51 @@ void CurrentUser::run() {
 /******************************************************************************
  * ch4_2: VectorPerson class
  ******************************************************************************/
-// VectorPerson´Â n°³ÀÇ Person * Æ÷ÀÎÅÍ¸¦ pVector[] ¹è¿­¿¡ ´ã¾Æ °ü¸®ÇÏ´Â Å¬·¡½ºÀÌ´Ù.
-// ÇÊ¿ä¿¡ µû¶ó Æ÷ÀÎÅÍ¸¦ »ğÀÔ, »èÁ¦, Ãß°¡ µîÀ» ÇÒ ¼ö ÀÖ´Ù.
-// »ğÀÔÇÏ´Â Æ÷ÀÎÅÍ °³¼ö°¡ Á¡Á¡ ¸¹¾ÆÁö¸é pVector[] ¹è¿­À» À§ÇÑ ¸Ş¸ğ¸®¸¦ ÀÚµ¿ È®ÀåÇÏ±âµµ ÇÑ´Ù.
+// VectorPersonëŠ” nê°œì˜ Person * í¬ì¸í„°ë¥¼ pVector[] ë°°ì—´ì— ë‹´ì•„ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤ì´ë‹¤.
+// í•„ìš”ì— ë”°ë¼ í¬ì¸í„°ë¥¼ ì‚½ì…, ì‚­ì œ, ì¶”ê°€ ë“±ì„ í•  ìˆ˜ ìˆë‹¤.
+// ì‚½ì…í•˜ëŠ” í¬ì¸í„° ê°œìˆ˜ê°€ ì ì  ë§ì•„ì§€ë©´ pVector[] ë°°ì—´ì„ ìœ„í•œ ë©”ëª¨ë¦¬ë¥¼ ìë™ í™•ì¥í•˜ê¸°ë„ í•œë‹¤.
 
 class VectorPerson
 {
-    static const int DEFAULT_SIZE = 10; // pVectorÀÇ µğÆúÆ® ¹è¿­ ¿ø¼Ò °³¼ö
+    static const int DEFAULT_SIZE = 10; // pVectorì˜ ë””í´íŠ¸ ë°°ì—´ ì›ì†Œ ê°œìˆ˜
 
-    Person **pVector; // Person *pVector[]; Person¿¡ ´ëÇÑ Æ÷ÀÎÅÍµéÀÇ ¹è¿­, ¹è¿­¿¡ ÀúÀåµÉ °ªÀÌ Person *ÀÌ´Ù.
-    int count;        // pVector ¹è¿­¿¡ ÇöÀç »ğÀÔµÈ °´Ã¼ Æ÷ÀÎÅÍÀÇ °³¼ö
-    int allocSize;    // ÇÒ´ç ¹ŞÀÇ pVectorÀÇ ÃÑ ¹è¿­ ¿ø¼ÒÀÇ °³¼ö
+    Person **pVector; // Person *pVector[]; Personì— ëŒ€í•œ í¬ì¸í„°ë“¤ì˜ ë°°ì—´, ë°°ì—´ì— ì €ì¥ë  ê°’ì´ Person *ì´ë‹¤.
+    int count;        // pVector ë°°ì—´ì— í˜„ì¬ ì‚½ì…ëœ ê°ì²´ í¬ì¸í„°ì˜ ê°œìˆ˜
+    int allocSize;    // í• ë‹¹ ë°›ì˜ pVectorì˜ ì´ ë°°ì—´ ì›ì†Œì˜ ê°œìˆ˜
 
-    void extend_capacity(); /* TODO ¹®Á¦ [7] */
+    void extend_capacity(); /* TODO ë¬¸ì œ [7] */
 
 public:
     VectorPerson() : VectorPerson(DEFAULT_SIZE) {}
     VectorPerson(int capacity);
     ~VectorPerson();
 
-    // ¾Æ·¡ ±ã ÇÔ¼öÀÌ¸§ µÚÀÇ const´Â ±× ÇÔ¼ö°¡ Å¬·¡½º ¸â¹ö º¯¼öµéÀ» ¼öÁ¤ÇÏÁö ¾Ê°í ÀĞ±â¸¸ ÇÑ´Ù´Â ÀÇ¹ÌÀÓ
-    // pVector[index]ÀÇ Æ÷ÀÎÅÍ °ªÀ» ¹İÈ¯
+    // ì•„ë˜ ê¸± í•¨ìˆ˜ì´ë¦„ ë’¤ì˜ constëŠ” ê·¸ í•¨ìˆ˜ê°€ í´ë˜ìŠ¤ ë©¤ë²„ ë³€ìˆ˜ë“¤ì„ ìˆ˜ì •í•˜ì§€ ì•Šê³  ì½ê¸°ë§Œ í•œë‹¤ëŠ” ì˜ë¯¸ì„
+    // pVector[index]ì˜ í¬ì¸í„° ê°’ì„ ë°˜í™˜
     Person* at(int index) const { return pVector[index]; }
 
-    // ÇÒ´ç ¹ŞÀÇ pVectorÀÇ ÃÑ ¹è¿­ ¿ø¼ÒÀÇ °³¼ö¸¦ ¹İÈ¯
+    // í• ë‹¹ ë°›ì˜ pVectorì˜ ì´ ë°°ì—´ ì›ì†Œì˜ ê°œìˆ˜ë¥¼ ë°˜í™˜
     int     capacity()    const { return allocSize; }
 
-    // pVector ¹è¿­¿¡ ÇöÀç »ğÀÔµÈ °´Ã¼ Æ÷ÀÎÅÍÀÇ °³¼ö¸¦ 0À¸·Î ¼³Á¤
+    // pVector ë°°ì—´ì— í˜„ì¬ ì‚½ì…ëœ ê°ì²´ í¬ì¸í„°ì˜ ê°œìˆ˜ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
     void    clear()             { count = 0; }
 
-    // ÇöÀç »ğÀÔµÈ °´Ã¼ Æ÷ÀÎÅÍ°¡ ÇÏ³ªµµ ¾øÀ¸¸é true, ÀÖÀ¸¸é false
+    // í˜„ì¬ ì‚½ì…ëœ ê°ì²´ í¬ì¸í„°ê°€ í•˜ë‚˜ë„ ì—†ìœ¼ë©´ true, ìˆìœ¼ë©´ false
     bool    empty()       const { return count == 0; }
 
-    // ÇöÀç »ğÀÔµÈ °´Ã¼ Æ÷ÀÎÅÍÀÇ °³¼ö¸¦ ¹İÈ¯
+    // í˜„ì¬ ì‚½ì…ëœ ê°ì²´ í¬ì¸í„°ì˜ ê°œìˆ˜ë¥¼ ë°˜í™˜
     int     size()        const { return count; }
 
-    // pVector ¹è¿­¿¡ ¸¶Áö¸· »ğÀÔµÈ ¿ø¼Ò µÚ¿¡ »õ·Î¿î ¿ø¼Ò p¸¦ »ğÀÔÇÏ°í ÇöÀç »ğÀÔµÈ °´Ã¼ °³¼ö¸¦ Áõ°¡
-    void    push_back(Person* p); /* TODO ¹®Á¦ [4, 7] */
+    // pVector ë°°ì—´ì— ë§ˆì§€ë§‰ ì‚½ì…ëœ ì›ì†Œ ë’¤ì— ìƒˆë¡œìš´ ì›ì†Œ pë¥¼ ì‚½ì…í•˜ê³  í˜„ì¬ ì‚½ì…ëœ ê°ì²´ ê°œìˆ˜ë¥¼ ì¦ê°€
+    void    push_back(Person* p); /* TODO ë¬¸ì œ [4, 7] */
 };
 
-// capacity´Â ÇÒ´çÇØ¾ß ÇÒ ¹è¿­ ¿ø¼ÒÀÇ °³¼ö
+// capacityëŠ” í• ë‹¹í•´ì•¼ í•  ë°°ì—´ ì›ì†Œì˜ ê°œìˆ˜
 VectorPerson::VectorPerson(int capacity) : count{}, allocSize{ capacity } {
-    // allocSize = capacity, count = 0; ÃÊ±âÈ­¸¦ À§ ÇÔ¼ö ¼­µÎ(À§ /* */ ÁÖ¼® »çÀÌ)¿¡¼­ ÇÒ °Í
-    // ÇÔ¼ö ¼­µÎ¿¡¼­ ÃÊ±âÈ­ÇÏ´Â ¹æ¹ıÀº Person Å¬·¡½º Âü°íÇÒ °Í
+    // allocSize = capacity, count = 0; ì´ˆê¸°í™”ë¥¼ ìœ„ í•¨ìˆ˜ ì„œë‘(ìœ„ /* */ ì£¼ì„ ì‚¬ì´)ì—ì„œ í•  ê²ƒ
+    // í•¨ìˆ˜ ì„œë‘ì—ì„œ ì´ˆê¸°í™”í•˜ëŠ” ë°©ë²•ì€ Person í´ë˜ìŠ¤ ì°¸ê³ í•  ê²ƒ
     cout << "VectorPerson::VectorPerson(" << allocSize << ")" << endl;
-    pVector = new Person*[allocSize]; // Person* µéÀÇ ¹è¿­À» À§ÇÑ µ¿Àû ¸Ş¸ğ¸® ÇÒ´ç
+    pVector = new Person*[allocSize]; // Person* ë“¤ì˜ ë°°ì—´ì„ ìœ„í•œ ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹
 }
 
 VectorPerson::~VectorPerson() {
@@ -481,16 +530,16 @@ void VectorPerson::extend_capacity(){
 class Factory
 {
 public:
-    // µ¿ÀûÀ¸·Î Person °´Ã¼¸¦ ÇÒ´ç ¹ŞÀº ÈÄ Å°º¸µå·ÎºÎÅÍ »õ·Î Ãß°¡ÇÏ°íÀÚ ÇÏ´Â »ç¶÷ÀÇ
-    // ÀÎÀûÁ¤º¸¸¦ ÀĞ¾î µé¿© ÇØ´ç °´Ã¼¿¡ ÀúÀåÇÑ ÈÄ ±× °´Ã¼ÀÇ Æ÷ÀÎÅÍ¸¦ ¹İÈ¯ÇÑ´Ù.
+    // ë™ì ìœ¼ë¡œ Person ê°ì²´ë¥¼ í• ë‹¹ ë°›ì€ í›„ í‚¤ë³´ë“œë¡œë¶€í„° ìƒˆë¡œ ì¶”ê°€í•˜ê³ ì í•˜ëŠ” ì‚¬ëŒì˜
+    // ì¸ì ì •ë³´ë¥¼ ì½ì–´ ë“¤ì—¬ í•´ë‹¹ ê°ì²´ì— ì €ì¥í•œ í›„ ê·¸ ê°ì²´ì˜ í¬ì¸í„°ë¥¼ ë°˜í™˜í•œë‹¤.
     Person* inputPerson(istream* in) {
         Person* p = new Person();
-        p->input(in);  // ¸â¹öµéÀ» ÀÔ·Â ¹ŞÀ½
-        if (UI::checkDataFormatError(in)) { // Á¤¼öÀÔ·ÂÇÒ °÷¿¡ ÀÏ¹İ ¹®ÀÚ ÀÔ·ÂÇÑ °æ¿ì
-            delete p;         // ÇÒ´çÇÑ ¸Ş¸ğ¸® ¹İ³³
-            return nullptr;   // nullptr ¹İÈ¯Àº ¿¡·¯°¡ ¹ß»ıÇß´Ù´Â ÀÇ¹ÌÀÓ
+        p->input(in);  // ë©¤ë²„ë“¤ì„ ì…ë ¥ ë°›ìŒ
+        if (UI::checkDataFormatError(in)) { // ì •ìˆ˜ì…ë ¥í•  ê³³ì— ì¼ë°˜ ë¬¸ì ì…ë ¥í•œ ê²½ìš°
+            delete p;         // í• ë‹¹í•œ ë©”ëª¨ë¦¬ ë°˜ë‚©
+            return nullptr;   // nullptr ë°˜í™˜ì€ ì—ëŸ¬ê°€ ë°œìƒí–ˆë‹¤ëŠ” ì˜ë¯¸ì„
         }
-        if (UI::echo_input) p->println(); // ÀÚµ¿Ã¼Å©¿¡¼­ »ç¿ëµÊ
+        if (UI::echo_input) p->println(); // ìë™ì²´í¬ì—ì„œ ì‚¬ìš©ë¨
         return p;
     }
 };
@@ -509,7 +558,7 @@ class PersonManager
     Person* findByName(const string name);
 
 public:
-    PersonManager(Person* array[], int len); // 6Àå¿¡¼­ default ¸Å°³º¯¼ö ¼³Á¤
+    PersonManager(Person* array[], int len); // 6ì¥ì—ì„œ default ë§¤ê°œë³€ìˆ˜ ì„¤ì •
     ~PersonManager();
     void display();
     void append();
@@ -533,7 +582,7 @@ PersonManager::~PersonManager() {
 }
 
 void PersonManager::deleteElemets() {
-    /* TODO ¹®Á¦ [5] */
+    /* TODO ë¬¸ì œ [5] */
 	for(int i=0; i<persons.size(); i++){
 		delete persons.at(i);
 	}
@@ -553,14 +602,14 @@ void PersonManager::display() { // Menu item 1
 
 void PersonManager::append() { // Menu item 2
 	int count = UI::getPositiveInt("The number of persons to append? ");
-	// to_string(10) ÇÔ¼ö: Á¤¼ö 10À» ¹®ÀÚ¿­ "10"À¸·Î º¯È¯
-	// stoi("10") ÇÔ¼ö: ¹®ÀÚ¿­ "10"À» Á¤¼ö 10À¸·Î º¯È¯
+	// to_string(10) í•¨ìˆ˜: ì •ìˆ˜ 10ì„ ë¬¸ìì—´ "10"ìœ¼ë¡œ ë³€í™˜
+	// stoi("10") í•¨ìˆ˜: ë¬¸ìì—´ "10"ì„ ì •ìˆ˜ 10ìœ¼ë¡œ ë³€í™˜
 	printNotice("Input "+to_string(count), ":");
 	for (int i = 0; i < count; ++i) {
-	    Person* p = factory.inputPerson(&cin); // ÇÑ »ç¶÷ Á¤º¸ ÀÔ·Â ¹ŞÀ½
-	    if (p) persons.push_back(p); // if (p != nullptr) ¿Í µ¿ÀÏ;
-	    // ¸¸¾à p°¡ nullptrÀÌ¸é ÀÌ´Â ÀÔ·Â ½Ã ¿¡·¯°¡ ¹ß»ıÇÑ °ÍÀÓ
-	    // (Áï, Á¤¼ö¸¦ ÀÔ·ÂÇØ¾ß ÇÏ´Â °÷¿¡ ÀÏ¹İ ¹®ÀÚ¸¦ ÀÔ·ÂÇÑ °æ¿ì)
+	    Person* p = factory.inputPerson(&cin); // í•œ ì‚¬ëŒ ì •ë³´ ì…ë ¥ ë°›ìŒ
+	    if (p) persons.push_back(p); // if (p != nullptr) ì™€ ë™ì¼;
+	    // ë§Œì•½ pê°€ nullptrì´ë©´ ì´ëŠ” ì…ë ¥ ì‹œ ì—ëŸ¬ê°€ ë°œìƒí•œ ê²ƒì„
+	    // (ì¦‰, ì •ìˆ˜ë¥¼ ì…ë ¥í•´ì•¼ í•˜ëŠ” ê³³ì— ì¼ë°˜ ë¬¸ìë¥¼ ì…ë ¥í•œ ê²½ìš°)
 	}
 	display();
 }
@@ -571,10 +620,10 @@ void PersonManager::clear() { // Menu item 3
 }
 void PersonManager::login() { // Menu item 4
 	string name = UI::getNext("user name: ");
-	Person* p = findByName(name); // ÇØ´ç »ç¶÷À» VectorPerson¿¡¼­ Ã£´Â´Ù.
-	if (p == nullptr) return;     // ÇØ´ç »ç¶÷ Á¸ÀçÇÏÁö ¾ÊÀ½
+	Person* p = findByName(name); // í•´ë‹¹ ì‚¬ëŒì„ VectorPersonì—ì„œ ì°¾ëŠ”ë‹¤.
+	if (p == nullptr) return;     // í•´ë‹¹ ì‚¬ëŒ ì¡´ì¬í•˜ì§€ ì•ŠìŒ
 		string passwd = UI::getNextLine("password: ");
-	if (passwd != p->getPasswd()) // ºñ¹ø ºÒÀÏÄ¡
+	if (passwd != p->getPasswd()) // ë¹„ë²ˆ ë¶ˆì¼ì¹˜
 	    cout << "WRONG password!!" << endl;
 	else
 	    CurrentUser(p).run();
@@ -582,11 +631,11 @@ void PersonManager::login() { // Menu item 4
 
 void PersonManager::run() {
     using func_t = void (PersonManager::*)();
-    using PM = PersonManager; // ÄÚµù ±æÀÌ¸¦ ÁÙÀÌ±â À§ÇØ
+    using PM = PersonManager; // ì½”ë”© ê¸¸ì´ë¥¼ ì¤„ì´ê¸° ìœ„í•´
     func_t func_arr[] = {
         nullptr, &PM::display, &PM::append, &PM::clear, &PM::login,
     };
-    int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] ±æÀÌ
+    int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] ê¸¸ì´
     string menuStr =
         "====================== Person Management Menu ===================\n"
         "= 0.Exit 1.Display 2.Append 3.Clear 4.Login(CurrentUser, ch4_2) =\n"
@@ -629,7 +678,7 @@ class MultiManager
         Person("p3", 13, 83.3, true,  "100 Dunsan-ro Seo-gu Daejeon"),
         Person("p4", 14, 64.4, false, "88 Gongpyeong-ro, Jung-gu, Daegu"),
     };
-    // new¸¦ ÀÌ¿ëÇØ µ¿ÀûÀ¸·Î ÇÒ´çÇÒ °æ¿ì ¼Ò¸êÀÚ ÇÔ¼ö¸¦ ¸¸µé¾î °Å±â¼­ delete ÇØ ÁÖ¾î¾ß ÇÔ
+    // newë¥¼ ì´ìš©í•´ ë™ì ìœ¼ë¡œ í• ë‹¹í•  ê²½ìš° ì†Œë©¸ì í•¨ìˆ˜ë¥¼ ë§Œë“¤ì–´ ê±°ê¸°ì„œ delete í•´ ì£¼ì–´ì•¼ í•¨
 
     static const int allPersonCount = personCount;
     Person* allPersons[allPersonCount] = {
@@ -637,7 +686,7 @@ class MultiManager
     };
 
     PersonManager personMng { allPersons, allPersonCount };
-    // À§ ¹®ÀåÀº PersonManager personMng(allPersons, allPersonCount);¿Í µ¿ÀÏÇÔ
+    // ìœ„ ë¬¸ì¥ì€ PersonManager personMng(allPersons, allPersonCount);ì™€ ë™ì¼í•¨
 
 public:
     void run() {
@@ -656,10 +705,10 @@ public:
 class ClassAndObject
 {
     void defualConstructor() { // Menu item 1
-    	Person ps;    // Person::Person() ±âº» »ı¼ºÀÚ ¹× ¼Ò¸êÀÚ ½ÇÇà
+    	Person ps;    // Person::Person() ê¸°ë³¸ ìƒì„±ì ë° ì†Œë©¸ì ì‹¤í–‰
     }
 
-    void constructor() { // Menu item 2: Áö¿ª°´Ã¼ÀÇ ´Ù¾çÇÑ »ı¼ºÀÚ ¹× ¼Ò¸êÀÚ ½ÇÇà
+    void constructor() { // Menu item 2: ì§€ì—­ê°ì²´ì˜ ë‹¤ì–‘í•œ ìƒì„±ì ë° ì†Œë©¸ì ì‹¤í–‰
         Person ps1;
         Person ps2("ps2");
         Person ps3("ps3", 3, 70.3, true, "ps3 address");
@@ -674,10 +723,10 @@ class ClassAndObject
         }
         cout << "- if ends -\n" << endl;
         cout << "- temporary object begins -" << endl;
-        Person("temp_ps_1"); // ÀÓ½Ã°´Ã¼(ÀÌ¸§ ¾ø´Â °´Ã¼) ¼º¼º ¹× ¼Ò¸ê
+        Person("temp_ps_1"); // ì„ì‹œê°ì²´(ì´ë¦„ ì—†ëŠ” ê°ì²´) ì„±ì„± ë° ì†Œë©¸
         cout << endl;
-        Person("temp_ps_2").setName("TEMP_PS_2"); // ÀÓ½Ã°´Ã¼ »ı¼º,
-                                                  // setName() È£Ãâ, ÀÓ½Ã°´Ã¼ ¼Ò¸ê
+        Person("temp_ps_2").setName("TEMP_PS_2"); // ì„ì‹œê°ì²´ ìƒì„±,
+                                                  // setName() í˜¸ì¶œ, ì„ì‹œê°ì²´ ì†Œë©¸
         cout << "- temporary object ends -\n" << endl;
         Person ps5("ps5");
     }
@@ -709,27 +758,27 @@ class ClassAndObject
     }
 
 public:
-    // »ç¿ëÀÚ°¡ ¼±ÅÃÇÑ ¸Ş´º Ç×¸ñÀ» ½ÇÇàÇÏ´Â ¸â¹ö ÇÔ¼ö(func_arr[menuItem]¿¡ µî·ÏµÈ ÇÔ¼ö)¸¦ È£Ãâ
+    // ì‚¬ìš©ìê°€ ì„ íƒí•œ ë©”ë‰´ í•­ëª©ì„ ì‹¤í–‰í•˜ëŠ” ë©¤ë²„ í•¨ìˆ˜(func_arr[menuItem]ì— ë“±ë¡ëœ í•¨ìˆ˜)ë¥¼ í˜¸ì¶œ
     void run() {
-        // ClassAndObjectÀÇ ¸â¹ö ÇÔ¼ö¿¡ ´ëÇÑ Æ÷ÀÎÅÍ Å¸ÀÔÀÎ »õ·Î¿î µ¥ÀÌÅ¸ Å¸ÀÔ func_t¸¦ Á¤ÀÇÇÔ
+        // ClassAndObjectì˜ ë©¤ë²„ í•¨ìˆ˜ì— ëŒ€í•œ í¬ì¸í„° íƒ€ì…ì¸ ìƒˆë¡œìš´ ë°ì´íƒ€ íƒ€ì… func_të¥¼ ì •ì˜í•¨
         using func_t = void (ClassAndObject::*)();
-        // À§ using ¹®Àº ClassAndObject Å¬·¡½ºÀÇ ¸â¹ö ÇÔ¼ö(¸®ÅÏ Å¸ÀÔÀÌ void ÀÌ¸é¼­ ¸Å°³º¯¼ö°¡ ¾ø´Â)¿¡
-        // ´ëÇÑ Æ÷ÀÎÅÍ Å¸ÀÔÀ» ¾ÕÀ¸·Î´Â °£´ÜÈ÷ func_t·Î »ç¿ëÇÏ°Ú´Ù´Â ÀÇ¹ÌÀÌ´Ù.
+        // ìœ„ using ë¬¸ì€ ClassAndObject í´ë˜ìŠ¤ì˜ ë©¤ë²„ í•¨ìˆ˜(ë¦¬í„´ íƒ€ì…ì´ void ì´ë©´ì„œ ë§¤ê°œë³€ìˆ˜ê°€ ì—†ëŠ”)ì—
+        // ëŒ€í•œ í¬ì¸í„° íƒ€ì…ì„ ì•ìœ¼ë¡œëŠ” ê°„ë‹¨íˆ func_të¡œ ì‚¬ìš©í•˜ê² ë‹¤ëŠ” ì˜ë¯¸ì´ë‹¤.
 
-        // ClassAndObjectÀÇ ¸â¹ö ÇÔ¼ö Æ÷ÀÎÅÍµéÀÇ ¹è¿­
-        // ³ªÁß¿¡ È£ÃâÇÏ±â À§ÇØ ¸â¹ö ÇÔ¼öÀÇ ÀÌ¸§À» ¹Ì¸® ¹è¿­¿¡ ÀúÀå(µî·Ï)
-        //     ÇÔ¼ö ÀÌ¸§ÀÌ °ğ ÇÔ¼ö¿¡ ´ëÇÑ Æ÷ÀÎÅÍÀÓ: Áï, ÇÔ¼öÀÇ Ã¹¹øÂ° ¸í·É¾îÀÇ ÁÖ¼Ò¸¦ ÀúÀåÇÔ
-        // µî·ÏµÈ ÀÌ ¸â¹ö ÇÔ¼öµéÀº ³ªÁß¿¡ run()¿¡¼­ È£ÃâµÊ
-        //     (Áï, ÇÔ¼ö ÁÖ¼Ò·Î jump ÇØ °¡¼­ ÇÔ¼ö¸¦ ½ÇÇàÇÔ)
+        // ClassAndObjectì˜ ë©¤ë²„ í•¨ìˆ˜ í¬ì¸í„°ë“¤ì˜ ë°°ì—´
+        // ë‚˜ì¤‘ì— í˜¸ì¶œí•˜ê¸° ìœ„í•´ ë©¤ë²„ í•¨ìˆ˜ì˜ ì´ë¦„ì„ ë¯¸ë¦¬ ë°°ì—´ì— ì €ì¥(ë“±ë¡)
+        //     í•¨ìˆ˜ ì´ë¦„ì´ ê³§ í•¨ìˆ˜ì— ëŒ€í•œ í¬ì¸í„°ì„: ì¦‰, í•¨ìˆ˜ì˜ ì²«ë²ˆì§¸ ëª…ë ¹ì–´ì˜ ì£¼ì†Œë¥¼ ì €ì¥í•¨
+        // ë“±ë¡ëœ ì´ ë©¤ë²„ í•¨ìˆ˜ë“¤ì€ ë‚˜ì¤‘ì— run()ì—ì„œ í˜¸ì¶œë¨
+        //     (ì¦‰, í•¨ìˆ˜ ì£¼ì†Œë¡œ jump í•´ ê°€ì„œ í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•¨)
 
-        func_t func_arr[] = { // ¸Ş´ºÇ×¸ñÀ» ½ÇÇàÇÏ´Â ¸â¹ö ÇÔ¼ö¸¦ ¹è¿­¿¡ ¹Ì¸® ÀúÀå(µî·Ï)ÇØ µÒ
+        func_t func_arr[] = { // ë©”ë‰´í•­ëª©ì„ ì‹¤í–‰í•˜ëŠ” ë©¤ë²„ í•¨ìˆ˜ë¥¼ ë°°ì—´ì— ë¯¸ë¦¬ ì €ì¥(ë“±ë¡)í•´ ë‘ 
             nullptr, &ClassAndObject::defualConstructor, &ClassAndObject::constructor,
             &ClassAndObject::construcorDestructor, &ClassAndObject::globalStaticLocalObjects,
         };
         int menuCount = sizeof(func_arr) / sizeof(func_arr[0]);
-        // func_arr[]ÀÇ ¿ø¼ÒÀÇ °³¼ö = ¹è¿­ ÀüÃ¼ Å©±â / ÇÑ ¹è¿­ ¿ø¼ÒÀÇ Å©±â
+        // func_arr[]ì˜ ì›ì†Œì˜ ê°œìˆ˜ = ë°°ì—´ ì „ì²´ í¬ê¸° / í•œ ë°°ì—´ ì›ì†Œì˜ í¬ê¸°
 
-        // È­¸é¿¡ º¸¿© ÁÙ ¸Ş´º
+        // í™”ë©´ì— ë³´ì—¬ ì¤„ ë©”ë‰´
         string menuStr =
             "+++++++++++ Person Class And Object Menu ++++++++++++\n"
             "+ 0.Exit 1.DefualConstructor 2.Constructor          +\n"
@@ -737,12 +786,12 @@ public:
             "+++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
         while (true) {
-            int menuItem = UI::selectMenu(menuStr, menuCount); // ¸Ş´º ¹øÈ£ ÀÔ·Â ¹ŞÀ½
+            int menuItem = UI::selectMenu(menuStr, menuCount); // ë©”ë‰´ ë²ˆí˜¸ ì…ë ¥ ë°›ìŒ
             if (menuItem == 0) return;
-            (this->*func_arr[menuItem])(); // ¼±ÅÃµÈ ¸Ş´º Ç×¸ñÀ» ½ÇÇàÇÒ ¸â¹ö ÇÔ¼ö¸¦ È£ÃâÇÔ
-            /* À§ ¹®ÀåÀº ´ÙÀ½À» °£´ÜÈ÷ ÇÑ °ÍÀÌ´Ù. ¾ÕÀ¸·Î °è¼Ó ³ª¿ÃÅ×´Ï Àß ÀÌÇØÇÏ±â ¹Ù¶õ´Ù.
-               func_t f = func_arr[menuItem];// ¹è¿­¿¡ ÀúÀåµÈ ¸â¹ö ÇÔ¼ö Æ÷ÀÎÅÍ
-               (this->*f)();                 // ¸â¹öÇÔ¼ö Æ÷ÀÎÅÍ¸¦ ÀÌ¿ëÇÏ¿© ÇØ´ç ÇÔ¼ö¸¦ È£ÃâÇÔ
+            (this->*func_arr[menuItem])(); // ì„ íƒëœ ë©”ë‰´ í•­ëª©ì„ ì‹¤í–‰í•  ë©¤ë²„ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•¨
+            /* ìœ„ ë¬¸ì¥ì€ ë‹¤ìŒì„ ê°„ë‹¨íˆ í•œ ê²ƒì´ë‹¤. ì•ìœ¼ë¡œ ê³„ì† ë‚˜ì˜¬í…Œë‹ˆ ì˜ ì´í•´í•˜ê¸° ë°”ë€ë‹¤.
+               func_t f = func_arr[menuItem];// ë°°ì—´ì— ì €ì¥ëœ ë©¤ë²„ í•¨ìˆ˜ í¬ì¸í„°
+               (this->*f)();                 // ë©¤ë²„í•¨ìˆ˜ í¬ì¸í„°ë¥¼ ì´ìš©í•˜ì—¬ í•´ë‹¹ í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•¨
             */
         }
     }
@@ -757,7 +806,7 @@ class MainMenu
 {
 public:
     void run() {
-        int menuCount = 3; // »ó¼ö Á¤ÀÇ
+        int menuCount = 3; // ìƒìˆ˜ ì •ì˜
         string menuStr =
 "******************************* Main Menu *********************************\n"
 "* 0.Exit 1.PersonManager(ch3_2, 4)                                        *\n"
@@ -777,14 +826,14 @@ public:
 }; // class MainMenu
 
 /******************************************************************************
- * run() ÇÔ¼ö: ¸ŞÀÎ ¸Ş´º¸¦ ½ÃÀÛÇÔ
+ * run() í•¨ìˆ˜: ë©”ì¸ ë©”ë‰´ë¥¼ ì‹œì‘í•¨
  ******************************************************************************/
 void run() {
     //MainMenu().run();
 	Memo().run();
-    // MainMenu Å¸ÀÔÀÇ ÀÌ¸§ ¾ø´Â ÀÓ½Ã°´Ã¼¸¦ »ı¼ºÇÑ ÈÄ
-    // ±× °´Ã¼ÀÇ run() ¸â¹öÇÔ¼ö¸¦ È£ÃâÇÔ; run()¿¡¼­ ¸®ÅÏÇÑ ÈÄ¿¡´Â ÀÓ½Ã°´Ã¼°¡ ÀÚµ¿ ¼Ò¸êµÊ
-    // Áï, À§ ¹®ÀåÀº ¾Æ·¡ µÎ ¹®Àå°ú µ¿ÀÏÇÑ ±â´ÉÀÓ
+    // MainMenu íƒ€ì…ì˜ ì´ë¦„ ì—†ëŠ” ì„ì‹œê°ì²´ë¥¼ ìƒì„±í•œ í›„
+    // ê·¸ ê°ì²´ì˜ run() ë©¤ë²„í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•¨; run()ì—ì„œ ë¦¬í„´í•œ í›„ì—ëŠ” ì„ì‹œê°ì²´ê°€ ìë™ ì†Œë©¸ë¨
+    // ì¦‰, ìœ„ ë¬¸ì¥ì€ ì•„ë˜ ë‘ ë¬¸ì¥ê³¼ ë™ì¼í•œ ê¸°ëŠ¥ì„
     // MainMenu mm;
     // mm.run();
 }
@@ -797,14 +846,14 @@ void run() {
 #endif
 
 /******************************************************************************
- * main() ÇÔ¼ö
+ * main() í•¨ìˆ˜
  ******************************************************************************/
 int main() {
-    cout << boolalpha;  // 11Àå¿¡¼­ ¹è¿ò; bool Å¸ÀÔ °ªÀ» 0, 1 ´ë½Å true, false·Î Ãâ·ÂÇÏµµ·Ï ¼³Á¤
-    cin >> boolalpha;   // bool Å¸ÀÔ °ªÀ» 0, 1 ´ë½Å true, false·Î ÀÔ·Â ¹Şµµ·Ï ¼³Á¤
+    cout << boolalpha;  // 11ì¥ì—ì„œ ë°°ì›€; bool íƒ€ì… ê°’ì„ 0, 1 ëŒ€ì‹  true, falseë¡œ ì¶œë ¥í•˜ë„ë¡ ì„¤ì •
+    cin >> boolalpha;   // bool íƒ€ì… ê°’ì„ 0, 1 ëŒ€ì‹  true, falseë¡œ ì…ë ¥ ë°›ë„ë¡ ì„¤ì •
 
 #if AUTOMATIC_ERROR_CHECK
-    evaluate(true);   // °¢ ¹®Á¦¿¡ ´ëÇØ ´Ü¼øÈ÷ O, X¸¸ È®ÀÎÇÏ°íÀÚ ÇÒ ¶§´Â false
+    evaluate(true);   // ê° ë¬¸ì œì— ëŒ€í•´ ë‹¨ìˆœíˆ O, Xë§Œ í™•ì¸í•˜ê³ ì í•  ë•ŒëŠ” false
 #else
     run();
 #endif
