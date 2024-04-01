@@ -263,21 +263,23 @@ bool Memo::find_line(int line_num, size_t* pstart, size_t* plen) {
               start 값을 1 증가시켜 다음 행의 시작 위치로 조정
     */
     for(int i=0; i<line_num; i++){
-    	if(mStr.find(start, '\n') == string::npos)
+    	if(mStr.find('\n', start) == string::npos)
     		return false;
     	else
-    		start = mStr.find(*pstart, '\n');
-    	start++;
+    		start = mStr.find('\n', start) + 1;
     }
 
     *pstart = start; // line_num 행의 시작 위치를 기록
 /*
     TODO: line_num 행의 끝 위치를 찾고,
           찾았으면 그 행의 길이를 계산하여 *plen에 저장
-          찾지 못한 경우 string::npos를 *plen에 저장 /* 예를들어, 실제로 행이
+          찾지 못한 경우 string::npos를 *plen에 저장 예를들어, 실제로 행이
               [0], [1], [2] 행까지 있는데 [3] 행의 시작(메모의 끝 위치)을 찾을 경우에 해당함 */
-    if(mStr.find(*pstart, '\n') == string::npos){
-
+    if(mStr.find('\n', start) == string::npos){
+    	*plen = string::npos;
+    }
+    else{
+    	*plen = mStr.find('\n', start) - start;
     }
     return true; // line_num 행을 찾았다는 것을 의미함
 }
@@ -285,22 +287,12 @@ bool Memo::find_line(int line_num, size_t* pstart, size_t* plen) {
 void Memo::dispByLine() {
 	int i = 0;
     cout << "--- Memo by line ---" << endl;
-    /*
-    아래 pos는 get_next_line(&pos)를 호출할 때 다음 행의 시작 위치임
-    TODO: for(size_t pos = 0, ... 문을 이용하여 pos가 mStr의 길이보다 작을 동안 반복 수행
-             get_next_line(&pos)를 호출하여 반환된 다음 행 문자열을 line에 저장하고
-             적절한 행 번호와 함께 해당 행(line)을 출력(행번호 출력은 PersonManager::display() 참조)
-             행의 끝에 줄바꾸기 문자 '\n'가 없을 경우 endl 출력 (displayMemo() 참조)
-    */
-
     for(size_t pos = 0; pos < mStr.length();){
     	string line = get_next_line(&pos);
     	cout << "[" << i++ << "] "<<line;
         if (mStr.length() > 0 && mStr[mStr.length()-1] != '\n')
             cout << endl; // 메모 끝에 줄바꾸기 문자가 없을 경우 출력
     }
-
-
     cout << "--------------------" << endl;
 }
 
@@ -314,7 +306,34 @@ void Memo::deleteLine() {
               "Out of line range" 문장 출력
           line_num 행을 찾은 경우 mStr에서 해당 행을 삭제한 후 dispByLine() 호출
           */
+    if(mStr.empty() || !(find_line(line_num, &start, &len)) || start == mStr.size())
+    		cout<<"Out of line range";
+    else{
+    	if((start + len) < mStr.size()){
+    		mStr.erase(start, len+1);
+    	}
+    	else{
+    		mStr.erase(start, len);
+    	}
+    	dispByLine();
+    }
+    //요약하자면, 이 코드는 mStr에서 start 위치부터 시작하여 len 길이만큼의 문자를 삭제하고, 만약 삭제하는 부분이 문자열의 마지막이 아니라면 개행 문자도 함께 삭제합니다.
+
 }
+
+void Memo::replaceLine() {
+    size_t start, len, line_num = UI::getPositiveInt("Line number to replace? ");
+
+    if(!(find_line(line_num, &start, &len))){
+    	cout<<"Out of line range";
+    	return;
+    }
+    string line = UI::getNextLine("Input a line to replace:\n");
+    //line += '\n';
+    mStr.replace(start, len, line);
+    dispByLine();
+}
+
 
 string Memo::getNext(size_t* ppos) {
     size_t pos = *ppos, end;
@@ -372,7 +391,7 @@ void Memo::run() {
     // TODO 문제 [1]: func_arr[], menuCount 선언
 	using func_t = void (Memo::*)();
 	func_t func_arr[] = {
-	    nullptr, &Memo::displayMemo, &Memo::findString, &Memo::compareWord, &Memo::dispByLine, &Memo::deleteLine
+	    nullptr, &Memo::displayMemo, &Memo::findString, &Memo::compareWord, &Memo::dispByLine, &Memo::deleteLine, &Memo::replaceLine
 	};
 	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
     string menuStr =
