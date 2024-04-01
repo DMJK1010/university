@@ -231,6 +231,41 @@ public:
     void run();
 };
 
+string Memo::get_next_line(size_t* ppos) {
+    size_t pos = *ppos, end;
+
+    /*
+    TODO: string::find()를 이용해 행의 끝('\n') 위치를 찾아서(현재 행의 시작 위치는 pos임) end에 저장
+    */
+    end = mStr.find('\n', pos);
+
+    // 메모의 끝에 '\n'이 없을 경우: (end == string::npos)
+    end = (end == string::npos)? mStr.length() : end+1;
+    *ppos = end; // 다음 행의 시작 위치를 기록해 둠
+
+    /*
+    TODO: 찾은 현재 행을 string::substr()으로 발췌해서 별도의 string으로 구성하여 리턴하라.
+          발췌할 단어 길이는 pos와 end로 간단히 계산할 수 있음
+    */
+    return mStr.substr(pos, end - pos);
+}
+
+void Memo::dispByLine() {
+    cout << "--- Memo by line ---" << endl;
+    /*
+    아래 pos는 get_next_line(&pos)를 호출할 때 다음 행의 시작 위치임
+    TODO: for(size_t pos = 0, ... 문을 이용하여 pos가 mStr의 길이보다 작을 동안 반복 수행
+             get_next_line(&pos)를 호출하여 반환된 다음 행 문자열을 line에 저장하고
+             적절한 행 번호와 함께 해당 행(line)을 출력(행번호 출력은 PersonManager::display() 참조)
+             행의 끝에 줄바꾸기 문자 '\n'가 없을 경우 endl 출력 (displayMemo() 참조)
+    */
+    for(size_t pos = 0; pos < mStr.length();){
+    	string line = get_next_line(&pos);
+
+    }
+    cout << "--------------------" << endl;
+}
+
 string Memo::getNext(size_t* ppos) {
     size_t pos = *ppos, end;
     for ( ; pos < mStr.size() && isspace(mStr[pos]); ++pos) ; // 단어 앞의 공백 문자들 스킵(있을 경우)
@@ -284,7 +319,7 @@ void Memo::run() {
     // TODO 문제 [1]: func_arr[], menuCount 선언
 	using func_t = void (Memo::*)();
 	func_t func_arr[] = {
-	    nullptr, &Memo::displayMemo, &Memo::findString, &Memo::compareWord
+	    nullptr, &Memo::displayMemo, &Memo::findString, &Memo::compareWord, &Memo::dispByLine
 	};
 	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
     string menuStr =
