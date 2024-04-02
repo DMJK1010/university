@@ -1,7 +1,7 @@
 /*
  * CH4_3: ch4_3.cpp
  *
- *  Created on: 2024. 4. 1.(13:57) 3번 해결 완료
+ *  Created on: 2024. 4. 2.(20:07) 완료
  *      Author: Junha Kim
  *
  *
@@ -31,6 +31,7 @@ class Person
     double weight;          // 체중
     bool   married;         // 결혼여부
     char   address[40];     // 주소
+    char   memo_c_str[1024]; // 메모장
 
 protected:
     void inputMembers(istream* in);
@@ -49,13 +50,16 @@ public:
     void setWeight(double weight)        { this->weight = weight; }
     void setMarried(bool married)        { this->married = married; }
     void setAddress(const char* address)  { strcpy(this->address, address); }
+    void setMemo(const char* c_str)      { strcpy(memo_c_str, c_str); }
+
 
     string 		getName()    { return name; }
     string      getPasswd()  { return passwd; }
     int         getId()      { return id; }
-    double      getWeight()  { return weight; }  // 구현 시
-    bool        getMarried() { return married; }  // 리턴 값들을
-    const char* getAddress() { return address; } // 수정하시오.
+    double      getWeight()  { return weight; }
+    bool        getMarried() { return married; }
+    const char* getAddress() { return address; }
+    const char* getMemo()    { return memo_c_str; }
 
     void input(istream* pin)  { inputMembers(pin); } // ch3_2에서 추가
     void print(ostream* pout) { printMembers(pout); }
@@ -64,7 +68,7 @@ public:
     bool isSame(const string name, int pid);         // ch3_2에서 추가
 };
 
-Person::Person(const string name, int id, double weight, bool married, const char *address) : name(name), id{id}, weight{weight}, married{married} {
+Person::Person(const string name, int id, double weight, bool married, const char *address) : name(name), id{id}, weight{weight}, married{married}, memo_c_str{} {
     // 위에서 각 멤버를 초기화하는 {}는 각 매개변수 값을 객체의 상응하는 멤버에 설정하는 것이다. 즉,
     // this->id=id, this->weight=weight, this->married=married와 동일하다.
     // 여기서 this는 해당 객체를 포인터하는 포인터 변수이며, (다음 장에서 설명될 예정임)
@@ -218,8 +222,6 @@ class Memo
 public:
     string getNext(size_t* ppos);
     void displayMemo();
-    const char *get_c_str();
-    void set_c_str(const char *c_str);
     void findString();
     void compareWord();
     void dispByLine();
@@ -229,6 +231,8 @@ public:
     void scrollDown();
     void inputMemo();
     void run();
+    const char *get_c_str() { return mStr.c_str(); }
+    void set_c_str(const char *c_str) { mStr = c_str; }
 };
 
 string Memo::get_next_line(size_t* ppos) {
@@ -250,31 +254,18 @@ string Memo::get_next_line(size_t* ppos) {
     return mStr.substr(pos, end - pos);
 }
 
-bool Memo::find_line(int line_num, size_t* pstart, size_t* plen) {
+bool Memo::find_line(int line_num, size_t* pstart, size_t* plen) { // 찾으면 : true 못찾으면 : false 반환
     size_t start = 0;
 
-    /*
-    TODO: for 문을 이용해 line_num번 반복 수행 (0 행에서 line_num-1 행까지 반복)
-              string::find()를 이용해 start에서부터 행의 끝('\n')을 찾고,
-              find()의 리턴된 값을 다시 start에 저장
-              행의 끝을 찾지 못했을 경우(line_num 행까지 진행하지 못한 경우) 즉,
-              find()의 반환된 값 start가 string::npos이면
-                  여기서 false 리턴함 (line_num행을 찾지 못한 경우)
-              start 값을 1 증가시켜 다음 행의 시작 위치로 조정
-    */
     for(int i=0; i<line_num; i++){
-    	if(mStr.find('\n', start) == string::npos)
+    	if((start = mStr.find('\n', start)) == string::npos)
     		return false;
     	else
-    		start = mStr.find('\n', start) + 1;
+    		start++;
     }
 
     *pstart = start; // line_num 행의 시작 위치를 기록
-/*
-    TODO: line_num 행의 끝 위치를 찾고,
-          찾았으면 그 행의 길이를 계산하여 *plen에 저장
-          찾지 못한 경우 string::npos를 *plen에 저장 예를들어, 실제로 행이
-              [0], [1], [2] 행까지 있는데 [3] 행의 시작(메모의 끝 위치)을 찾을 경우에 해당함 */
+
     if(mStr.find('\n', start) == string::npos){
     	*plen = string::npos;
     }
@@ -282,6 +273,16 @@ bool Memo::find_line(int line_num, size_t* pstart, size_t* plen) {
     	*plen = mStr.find('\n', start) - start;
     }
     return true; // line_num 행을 찾았다는 것을 의미함
+}
+
+size_t Memo::find_last_line() {
+    for (size_t start = 0, pos = 0; true; start = pos) {
+    	pos = mStr.find('\n', start);
+    	if(pos == string::npos || ++pos == mStr.length()){
+    		return start;
+    	}
+
+    }
 }
 
 void Memo::dispByLine() {
@@ -309,15 +310,9 @@ void Memo::deleteLine() {
     if(mStr.empty() || !(find_line(line_num, &start, &len)) || start == mStr.size())
     		cout<<"Out of line range";
     else{
-    	if((start + len) < mStr.size()){
-    		mStr.erase(start, len+1);
-    	}
-    	else{
-    		mStr.erase(start, len);
-    	}
+    	mStr.erase(start, len+1);
     	dispByLine();
     }
-    //요약하자면, 이 코드는 mStr에서 start 위치부터 시작하여 len 길이만큼의 문자를 삭제하고, 만약 삭제하는 부분이 문자열의 마지막이 아니라면 개행 문자도 함께 삭제합니다.
 
 }
 
@@ -329,12 +324,44 @@ void Memo::replaceLine() {
     	return;
     }
     string line = UI::getNextLine("Input a line to replace:\n");
-    //line += '\n';
-    mStr.replace(start, len, line);
+    line += '\n';
+    mStr.replace(start, len+1, line);
     dispByLine();
 }
 
+void Memo::scrollUp() {
+    size_t start, len;
 
+    find_line(0, &start, &len);
+
+    string line = mStr.substr(start, len+1);
+    mStr += line;
+    mStr.erase(start, len+1);
+    dispByLine();
+}
+
+void Memo::scrollDown() {
+    size_t last = find_last_line();
+    size_t len = mStr.size() - last;
+    string line = mStr.substr(last, len+1);
+    mStr.erase(last, len+1);
+    mStr.insert(0, line);
+    dispByLine();
+}
+
+void Memo::inputMemo() {
+	mStr.clear();
+    string line;
+    cout << "--- Input memo lines, and then input empty line at the end ---" << endl;
+    while (true) {
+    	getline(cin, line);
+    	if (UI::echo_input) cout << line << endl;
+    	if(line == "")
+    		return;
+    	line += '\n';
+    	mStr += line;
+    }
+}
 string Memo::getNext(size_t* ppos) {
     size_t pos = *ppos, end;
     for ( ; pos < mStr.size() && isspace(mStr[pos]); ++pos) ; // 단어 앞의 공백 문자들 스킵(있을 경우)
@@ -352,7 +379,6 @@ string Memo::getNext(size_t* ppos) {
           mStr의 끝에 도착하여 더 이상 찾을 단어가 없을 경우 "" 문자열을 반환하게 된다.
           발췌할 단어의 길이는 pos와 end의 간단한 계산으로 구할 수 있다.
     */
-    //cout<<mStr.substr(pos, end-pos+1)<<endl;
     if(pos == mStr.size())
     	return "";
     else
@@ -391,7 +417,7 @@ void Memo::run() {
     // TODO 문제 [1]: func_arr[], menuCount 선언
 	using func_t = void (Memo::*)();
 	func_t func_arr[] = {
-	    nullptr, &Memo::displayMemo, &Memo::findString, &Memo::compareWord, &Memo::dispByLine, &Memo::deleteLine, &Memo::replaceLine
+	    nullptr, &Memo::displayMemo, &Memo::findString, &Memo::compareWord, &Memo::dispByLine, &Memo::deleteLine, &Memo::replaceLine, &Memo::scrollUp, &Memo::scrollDown, &Memo::inputMemo
 	};
 	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
     string menuStr =
@@ -402,7 +428,6 @@ void Memo::run() {
 
     if (mStr == "") mStr = memoData;// 멤버 mStr이 비었을 경우 위 memoData로 초기화한다.
 
-    // TODO 문제 [1]: while 문장 삽입하여 선택된 메뉴항목 실행하는 함수 호출
     while (true) {
         int menuItem = UI::selectMenu(menuStr, menuCount);
         if (menuItem == 0) return;
@@ -414,20 +439,10 @@ void Memo::findString() {
     string word = UI::getNext("Word to find? ");
     int count = 0, len = word.length();
     size_t pos = 0;
-    string Data(memoData);
-
-    /*
-    TODO: for 문을 사용하여 반복적으로 string::find() 함수를 호출하여 찾은 단어의
-          출현 회수(count)를 세어라. find()를 통해 찾은 위치에서 len을 더하면
-          찾은 단어의 끝 위치가 되는데 이것이 다음 번에 찾기 시작할 위치이다.
-          string::find()의 리턴 값이 string::npos와 같으면
-          단어를 찾지 못했다는 것을 의미한다. 못 찾을 때까지 반복 수행하면 됨.
-          찾기 시작 위치 또는 리턴 값의 타입은 size_t를 사용하라.
-    */
-    for(int i=0; i<(int)Data.length(); i++){
-    	if(Data.find(word, pos) != string::npos){
+    for(int i=0; i<(int)mStr.length(); i++){
+    	if(mStr.find(word, pos) != string::npos){
     		count++;
-    		pos = Data.find(word, pos) + len;
+    		pos = mStr.find(word, pos) + len;
     	}
     }
     cout << "Found count: " << count << endl;
@@ -528,7 +543,9 @@ void CurrentUser::changePasswd() {
 }
 
 void CurrentUser::manageMemo() { // Menu item 9
+    memo.set_c_str(pUser->getMemo());
     memo.run();
+    pUser->setMemo(memo.get_c_str());
 }
 
 void CurrentUser::run() {
@@ -542,7 +559,6 @@ void CurrentUser::run() {
     string menuStr =
             "+++++++++++++++++++++ Current User Menu ++++++++++++++++++++++++\n"
             "+ 0.Logout 1.Display 2.Getter 3.Setter 4.Set 5.WhatAreYouDoing +\n"
-            "+ 6.IsSame 7.InputPerson 8.ChangePasswd(4_2)                   +\n"
     		"+ 6.IsSame 7.InputPerson 8.ChangePasswd(4_2) 9.ManageMemo(4_3) +\n"
             "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
@@ -746,7 +762,7 @@ void PersonManager::run() {
     int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
     string menuStr =
         "====================== Person Management Menu ===================\n"
-        "= 0.Exit 1.Display 2.Append 3.Clear 4.Login(CurrentUser, ch4_2) =\n"
+        "= 0.Exit 1.Display 2.Append 3.Clear 4.Login(CurrentUser, ch4)   =\n"
         "=================================================================\n";
 
     while (true) {
@@ -937,8 +953,7 @@ public:
  * run() 함수: 메인 메뉴를 시작함
  ******************************************************************************/
 void run() {
-    //MainMenu().run();
-	Memo().run();
+    MainMenu().run();
     // MainMenu 타입의 이름 없는 임시객체를 생성한 후
     // 그 객체의 run() 멤버함수를 호출함; run()에서 리턴한 후에는 임시객체가 자동 소멸됨
     // 즉, 위 문장은 아래 두 문장과 동일한 기능임
