@@ -1,7 +1,7 @@
 /*
  * CH5_2: ch5_2.cpp
  *
- *  Created on: 2024. 4. 9.(17:40) 문제 1번 완료
+ *  Created on: 2024. 4. 9.(19:02) - 문제 4번 검토 필요
  *      Author: Junha Kim
  *
  *
