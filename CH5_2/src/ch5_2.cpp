@@ -1236,8 +1236,6 @@ public:
 
     void run() {
         using CC = CopyConstructor;
-
-        // TODO 문제 [3]: func_t, func_arr[], menuCount 선언
     	using func_t = void (CopyConstructor::*)();
     	func_t func_arr[] = {
     	        nullptr, &CC::explicitCopyConstructor, &CC::referenceVariable, &CC::implicitCopyConstructor, &CC::temporaryObject, &CC::functionParameterType, &CC::returnDataType, &CC::inputPerson
@@ -1277,16 +1275,21 @@ public:
     void run() {
         //using AM = AllocatedMember;
 
-        // TODO 문제 [1]: func_t, func_arr[], menuCount 선언
-
+    	using func_t = void (AllocatedMember::*)();
+    	func_t func_arr[] = {
+    		nullptr
+    	};
+    	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
         string menuStr =
             "++++++++++++++++ Allocated Member Menu ++++++++++++++++\n"
             "+ 0.Exit 1.ChangeAddress 2.ChangeMemo 3.UsingMemoMenu +\n"
             "+ 4.CopyConstructor 5.NullptrMember 6.inputPerson     +\n"
             "+++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-
-        // TODO 문제 [1]: while 문장 삽입하여 선택된 메뉴항목 실행하는 함수 호출
-        cout << menuStr;
+        while (true) {
+        	int menuItem = UI::selectMenu(menuStr, menuCount);
+        	if (menuItem == 0) return;
+        	(this->*func_arr[menuItem])();
+        }
   }
 }; // ch5_2: AllocatedMember
 
