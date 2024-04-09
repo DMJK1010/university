@@ -1,7 +1,7 @@
 /*
  * CH5_2: ch5_2.cpp
  *
- *  Created on: 2024. 4. 9.(17:32) 초기설정
+ *  Created on: 2024. 4. 9.(17:40) 문제 1번 완료
  *      Author: Junha Kim
  *
  *
@@ -36,12 +36,14 @@ class Person
     int    id;              // Identifier
     double weight;          // 체중
     bool   married;         // 결혼여부
-    char   address[40];     // 주소
-    char   memo_c_str[1024]; // 메모장
+    char*  address;         // 주소:  5_2에서 []에서 *로 변경
+    char*  memo_c_str;      // 메모장: 5_2에서 []에서 *로 변경
 
 protected:
     void inputMembers(istream* in);
     void printMembers(ostream* out);
+    void copyAddress(const char* address); // 5_2에서 추가
+    void copyMemo(const char* c_str);      // 5_2에서 추가
 
 public:
     Person() : Person("") {}
@@ -56,8 +58,8 @@ public:
     void setId(int id)                    { this->id = id; }
     void setWeight(double weight)        { this->weight = weight; }
     void setMarried(bool married)        { this->married = married; }
-    void setAddress(const char* address)  { strcpy(this->address, address); }
-    void setMemo(const char* c_str)      { strcpy(memo_c_str, c_str); }
+    void setAddress(const char* address); // 5_2에서 수정
+    void setMemo(const char* c_str);      // 5_2에서 수정
 
 
     string 		getName()    { return name; }
@@ -75,15 +77,9 @@ public:
     bool isSame(const string name, int pid);         // ch3_2에서 추가
 };
 
-Person::Person(const string name, int id, double weight, bool married, const char *address) : name(name), id{id}, weight{weight}, married{married}, memo_c_str{} {
-    // 위에서 각 멤버를 초기화하는 {}는 각 매개변수 값을 객체의 상응하는 멤버에 설정하는 것이다. 즉,
-    // this->id=id, this->weight=weight, this->married=married와 동일하다.
-    // 여기서 this는 해당 객체를 포인터하는 포인터 변수이며, (다음 장에서 설명될 예정임)
-    // this->id는 해당 객체의 멤버 id를 지칭하며 =의 우측변수 id는 함수의 매개변수이다.
-    // 값을 간단히 대입하는 것은 위처럼 하면 되지만 name[], address[]와 같은 배열 복사 함수
-    // 호출 또는 다른 함수를 호출할 때는 생성자 함수의 몸체 { } 내에서 호출해야 한다.
-
-	setAddress(address);
+Person::Person(const string name, int id, double weight, bool married, const char* address):name(name), id{id}, weight{weight}, married{married}, memo_c_str{} {
+    // 생성자 서두에서 memo_c_str{}은 초기 값으로 디폴트 값인 nullptr(실제로는 주소 값 0)로 설정됨
+    copyAddress(address);
     cout << "Person::Person(...):"; println();
 }
 
@@ -99,7 +95,64 @@ Person::Person(const Person& p):name(p.name), id{p.id}, weight{p.weight}, marrie
 
 Person::~Person() {
     cout << "Person::~Person():"; println();
+
+    if (address) cout << "address";
+    if (address && memo_c_str) cout << ", ";
+    if (memo_c_str) cout << "memo_c_str";
+    if (address || memo_c_str) cout << " deleted" << endl;
+    // 위 if 문장들은 i) "address deleted" 또는
+    // ii) "memo_c_str deleted" 또는
+    // iii) "address, memo_c_str deleted" 가 출력됨; 즉, 셋 중 하나가 출력됨
+    if(address != nullptr)
+    	delete [] address;
+    if(memo_c_str != nullptr)
+    	delete [] memo_c_str;
 }
+
+// 처음 객체가 초기화될 때(생성자 또는 복사생성자) address 멤버를 초기화하고자 할 때 호출된다.
+// 즉, 일반 생성자 또는 복사 생성자에서만 호출됨.
+// 새로 할당받은 메모리에 매개변수 address 문자열을 복사한다.
+void Person::copyAddress(const char* address) {
+	if(address == nullptr){
+		this->address = nullptr;
+		return;
+	}
+	this->address = new char[strlen(address)+1];
+	strcpy(this->address, address);
+          // [교재 예제 5-11]의 복사 생성자  참조할 것
+          // strlen(), strcpy() 함수는 구글링 또는 http://www.cplusplus.com/reference/에서 검색
+          // strlen()은 끝의 null 문자를 포함하지 않은 길이이므로
+          // 이를 포함하기 위해 할당해야 할 메모리는 strlen()+1이어야 함
+          // strcpy()는 끝의 null 문자도 함께 복사해 준다라는 사실에 유의하라.
+}
+
+// 복사 생성자에 의해 처음 메모 문자열 memo_c_str을 초기화할 때 호출된다.
+// 복사 생성자에서만 호출되고 일반 생성자에서는 nullptr로 설정됨
+void Person::copyMemo(const char* c_str)      {
+	if(c_str == nullptr){
+			memo_c_str = nullptr;
+			return;
+		}
+		memo_c_str = new char[strlen(c_str)+1];
+		strcpy(memo_c_str, address);
+}
+
+void Person::setAddress(const char* address) {
+	if(this->address != nullptr){
+		cout << "old address(" << this->address << ") deleted" << endl;
+		delete [] address;
+	}
+    copyAddress(address); // 새로 메모리 할당받은 후 복사한다.
+}
+
+void Person::setMemo(const char* c_str)      {
+	if(memo_c_str != nullptr){
+		cout << "old memo_c_str deleted" << endl;
+		delete [] memo_c_str;
+	}
+    copyMemo(c_str); // 새로 메모리 할당받아 복사한다.
+}
+
 
 void Person::printMembers(ostream* pout)   {
 	*pout<<name <<" "<<id<<" "<<weight<<" "<<married<<" :"<<address<<": ";
@@ -1251,10 +1304,10 @@ public:
 
         // TODO 문제 [3]: while 문장 삽입하여 선택된 메뉴항목 실행하는 함수를 호출하라.
         while (true) {
-                int menuItem = UI::selectMenu(menuStr, menuCount);
-                if (menuItem == 0) return;
-                (this->*func_arr[menuItem])();
-            }
+        	int menuItem = UI::selectMenu(menuStr, menuCount);
+        	if (menuItem == 0) return;
+        	(this->*func_arr[menuItem])();
+        }
   }
 }; // ch5_1: Reference and CopyConstructor
 
@@ -1265,19 +1318,53 @@ class AllocatedMember
 {
     Person  u;
     Memo    memo;
+    void set_print_address(Person& p, const char* address) {
+        cout << "p.setAddress(" << (address? address : "") << ")" << endl;
+        p.setAddress(address);
+        p.println();
+        cout << endl;
+    }
+
+    void changeAddress() { // Menu Item 1
+        Person p("p", 1, 70, true, "Gwangju");
+        set_print_address(p, "short address");
+        set_print_address(p, "middle length Address, Seoul");
+        set_print_address(p, "long length Address Seoul Mapo-gu Korea");
+        set_print_address(p, u.getAddress());
+    }
+
+    void print_memo(Person& p) { // 객체 p의 메모 출력
+        cout << "------ " << p.getName() << " memo ------" << endl;
+        const char *pmemo = p.getMemo();
+        cout << (pmemo? pmemo : ""); // 메모 출력; nullptr이면 "" 출력
+        cout << "\n--------------------" << endl << endl;
+    }
+
+    void set_print_memo(Person& p, const char* memo) { // 객체 p에 메모 복사하고 출력
+        cout << "p.setMemo(memo)" << endl;
+        p.setMemo(memo);
+        print_memo(p);
+    }
+
+    void changeMemo() { // Menu Item 2
+        Person p("p", 1, 70, true, "Gwangju");
+        set_print_memo(p, "short memo\n");
+        set_print_memo(p, "middle long memo: The Last of the Mohicans\n");
+        set_print_memo(p, u.getMemo());
+    }
 
 public:
     AllocatedMember():
         u("u", 1, 70, true, "NAMDAEMUN-RO 123, JONGNO-GU, SEOUL, KOREA") {
-        //u.setMemo("It is believed that the Aborigines of the American continent");
+        u.setMemo("It is believed that the Aborigines of the American continent");
     }
 
     void run() {
-        //using AM = AllocatedMember;
+        using AM = AllocatedMember;
 
     	using func_t = void (AllocatedMember::*)();
     	func_t func_arr[] = {
-    		nullptr
+    		nullptr, &AM::changeAddress, &AM::changeMemo
     	};
     	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
         string menuStr =
