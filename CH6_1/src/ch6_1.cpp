@@ -1,7 +1,7 @@
 /*
  * CH6_1: ch6_1.cpp
  *
- *  Created on: 2024. 4. 10.(20:47) - 완료
+ *  Created on: 2024. 4. 10.(20:56) - 초기 설정
  *      Author: Junha Kim
  *
  *
