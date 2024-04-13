@@ -1,217 +1,148 @@
 /*
  * ch5.cpp
  *
- *  Created on: 2024. 4. 13. - 5장 실습 문제 완료
+ *  Created on: 2024. 4. 13. - 5장 과제 문제 완료
  *      Author: jon00
  */
-
 #include <iostream>
 #include <string>
-
 using namespace std;
 
-/******************************************************************************
- * Person Container
- ******************************************************************************/
 
-class Container {
-    string title;  // 컨테이너 타이틀
-    int    size;   // 컨테이너에 저장된 정수 배열 arr의 크기
-    int    *arr;   // size 개의 원소를 가진 배열 시작 주소
+class MyStack {
+private:
+	string *element; // 스택의 메모리로 사용할 포인터
+	int size;           // 스택의 최대 크기
+	int tos;            // 스택의 top을 가리키는 인덱스
 public:
-    Container();
-    Container(string title);
-    Container(string title, int size);
-    Container(const Container& c);
-    ~Container();
+	MyStack(int size);    // 생성자 스택의 최대 크기를 입력 받아서 element 객체 배열을 생성해줌.
+	MyStack(MyStack& s);  // 깊은 복사 생성자
+	~MyStack();           // 소멸자
 
-    void setTitle(string title);
-    string getTitle();
-    void printIntArray();
-    Container& newIntArray();
-    Container& inputIntArray();
+	bool push(string item); // item을 스택에 삽입
+			// 스택이 가득 차 있으면 false를, 아니면 true 리턴
+	bool pop(string &item); // 스택의 탑에 있는 값을 item에 반환  그리고 top에 있는 자료 삭제
+	bool peek(string &item); // 스택의 탑에 있는 값을 item에 반환
+	void print_stack();  // 스택 내용 출력
+
 };
 
-Container::Container():Container("no-title") { }
+// 위에 코드는 수정 불가
 
-Container::Container(string title): Container(title, 0) { }
-
-Container::Container(string title, int size) {
-    this->title = title; this->size = size;
-    if(size > 0)
-    	arr = new int[size];
-    else
-    	arr = nullptr;
-    for(int i=0; i<size; i++){
-    	arr[i] = 0;
-    }
-    cout << "Container(): "; printIntArray();
+// 여기에 MyStack의 모든 멤버 함수들을 작성하라.
+MyStack::MyStack(int size){
+	this->size = size;
+	tos = 0;
+	element = new string[size];
+	cout<<"MyStack("<<size<<")"<<endl;
 }
 
-Container::Container(const Container& c){
-	this->title = c.title;
-	this->size = c.size;
-	if(size > 0){
-		arr = new int[size];
-		for(int i=0; i<size; i++){
-			arr[i] = c.arr[i];
-		}
+MyStack::MyStack(MyStack& s){
+	this->size = s.size;
+	tos = s.tos;
+	element = new string[size];
+	for(int i=0; i<size; i++){
+		element[i] = s.element[i];
 	}
-	else
-		arr = nullptr;
-	cout << "Container(Container& c): "; printIntArray();
+	cout<<"MyStack(MyStack& s): tos+1 = "<<tos<<endl;
 }
 
-Container::~Container() {
-    cout << "~Container(): "; printIntArray();
-    if (arr != nullptr)
-        delete [] arr;
+MyStack::~MyStack(){
+	cout<<"~MyStack(): tos+1 = "<<tos<<endl;
 }
 
-void Container::setTitle(string title) {
-    this->title = title;
+bool MyStack::push(string item){
+	if(tos == size){
+		cout<<"stack is full"<<endl;
+		return false;
+	}
+	else{
+		element[tos] = item;
+		tos++;
+		return true;
+	}
 }
 
-string Container::getTitle() {
-    return title;
+bool MyStack::pop(string &item){
+	if(tos == 0){
+		cout<<"stack is empty"<<endl;
+		return false;
+	}
+	else{
+		item = element[--tos];
+		return true;
+	}
 }
 
-void Container::printIntArray() {
-    cout << title << ": arr[" << size << "]: ";
-    for (int i = 0; i < size; ++i)
-    	cout << arr[i] << " ";
-    cout << endl;
+bool MyStack::peek(string &item){
+	if(tos == 0)
+		return false;
+	else{
+		item = element[--tos];
+		tos++;
+		return true;
+	}
 }
 
-Container& Container::newIntArray() {
-    if (arr != nullptr)
-        delete [] arr;
-    cout << "element numbers of int array[]? ";
-    cin >> size;
-    arr = new int[size];
-    return *this;
+void MyStack::print_stack(){
+	for(int i=0; i<tos; i++){
+		cout<<element[i]<<" ";
+	}
+	cout<<endl;
 }
 
-Container& Container::inputIntArray() {
-    cout << "input " << size << " integers: ";
-    for (int i = 0; i < size; ++i)
-        cin >> arr[i];
-    return *this;
-}
-
-/******************************************************************************
- * Global functions
- ******************************************************************************/
-void skipEnter() {
-    string s;
-    getline(cin, s); // 메뉴항목 번호 뒤의 [엔터]를 제거함
-}
-
-void inputTitle(Container &d){
-	string title;
-	cout<<"input title: ";
-	getline(cin, title);
-	d.setTitle(title);
-}
-
-void refParam() {
-    Container c("C", 3);
-    Container b("B");
-    Container a;
-    Container d;
-    skipEnter();
-    inputTitle(d);
-}
-
-Container& changeTitle(Container& rc) {
-    string s;
-    cout << "title to change: ";
-    getline(cin, s);
-    rc.setTitle(s);
-    return rc;       // rc의 원본 객체의 참조를 리턴함
-}
-
-void refRet1() {
-    skipEnter();
-    Container c("C");
-    Container& rc = changeTitle(c); // rc는 원본 객체 c의 데이타를 공유하는 참조변수임
-    cout << " c.getTitle(): " <<  c.getTitle() << endl;
-    cout << "rc.getTitle(): " << rc.getTitle() << endl;
-    cout << "---" << endl;
-    cout << "appendTitle(c).getTitle(): " << changeTitle(rc).getTitle() << endl;
-    cout << "             c.getTitle(): " <<               c.getTitle() << endl;
-    cout << "            rc.getTitle(): " <<              rc.getTitle() << endl;
-    // changeTitle(rc)에 의해 반환되는 참조 역시 원본 객체 c의 데이타를 공유하는 참조변수임
-    // 참조 변수는 생성자 및 소멸자가 없다. 원본 객체의 데이터를 공유하는 또 다른 변수 이름일 뿐이다.
-}
-
-void refRet2() {
-    Container c("C");
-    c.newIntArray().inputIntArray().printIntArray();
-}
-
-void explicitCopy() {
-    Container c1("c1", 4);
-    c1.inputIntArray().printIntArray();
-    cout << "---" << endl;
-    Container c2(c1);
-    c2.setTitle("c2");
-    c2.printIntArray();
-    cout << "---" << endl;
-    c2.inputIntArray().printIntArray();
-    c1.printIntArray();
-}
-
-void callByValue(Container v) {
-    cout << "callByValue" << endl;
-    v.setTitle("V");
-    v.inputIntArray().printIntArray();
-}
-
-Container returnValue(Container& r) {
-    cout << "returnValue" << endl;
-    return r;  // 자동으로 복사생성자 호출
-}
-
-void implicitCopy() {
-    Container a("A", 2);
-    a.inputIntArray().printIntArray();
-    cout << "---" << endl;
-    Container b = a; // 자동으로 복사생성자 호출
-    b.setTitle("B");
-    b.inputIntArray().printIntArray();
-    cout << "---" << endl;
-    callByValue(a); // 자동으로 복사생성자 호출
-    cout << "---" << endl;
-    Container c = returnValue(a);
-    c.setTitle("C");
-    c.inputIntArray().printIntArray();
-    cout << "---" << endl;
-
-}
-
-
-string menuStr =
-"****************************** Main Menu ******************************\n"
-"* 0.Exit 1.refParam 2.refRet1 3.refRet2 4.explicitCopy 5.implicitCopy *\n"
-"***********************************************************************\n";
+// 아래 코드는 수정 불가
 
 int main() {
-    while (true) {
-        int menuItem;
-        cout << endl << menuStr << "menu? ";
-        cin >> menuItem;
-        if (menuItem == 0)
-            break;
-        switch(menuItem) {
-        case 1: refParam();     break;
-        case 2: refRet1();      break;
-        case 3: refRet2();      break;
-        case 4: explicitCopy(); break;
-        case 5: implicitCopy(); break;
-        }
-    }
-    cout << "Good bye!!" << endl;
+
+	int stack_size;
+
+	// 스택이 저장할수 있는 최대 크기를 입력 받는다
+	cout << "Enter stack size : ";
+	cin >> stack_size;
+
+	// 스택을 생성해 줌
+	MyStack first_stack(stack_size);
+
+	// 입력할 데이터의 수를 입력 받는다
+	// 데이터를 숫자 만큼 입력 받고 stack에 푸시한다.
+	int  input_size;
+	string  item;
+	cout << "Enter number of input string : " ;
+	cin >> input_size;
+	for (int i=0; i < input_size; i++ ) {
+		cout <<"Enter string : " ;
+		cin >> item;
+		first_stack.push(item);
+	}
+
+	// 스택의 자료를 출력
+	cout << "first stack : " ;
+	first_stack.print_stack();
+
+	// 스택을 생성해 줌
+	MyStack second_stack(first_stack);
+
+	// 스택의 자료를 출력
+
+	cout << "second stack : " ;
+	second_stack.print_stack();
+
+	first_stack.pop(item);
+	cout << "first stack pop: " << item << endl ;
+	second_stack.peek(item);
+	cout << "second stack peek: " << item << endl ;
+
+	// 스택의 자료를 출력
+	cout << "first stack : " ;
+	first_stack.print_stack();
+
+	cout << "second stack : " ;
+	second_stack.print_stack();
+
+	cout << "second stack all pop: " << endl;
+	while (second_stack.pop(item))
+		cout << item << endl;
+
+	return 0;
 }
-
-
