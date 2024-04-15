@@ -1,7 +1,7 @@
 /*
  * CH6_1: ch6_1.cpp
  *
- *  Created on: 2024. 4. 15.(15:14) - 초기 설정
+ *  Created on: 2024. 4. 16.(12:22) - 완료
  *      Author: Junha Kim
  *
  *
@@ -60,13 +60,13 @@ public:
     void setMemo(const char* c_str);      // 5_2에서 수정
 
 
-    string&		getName()    { return name; }
-    string&     getPasswd()  { return passwd; }
-    int         getId()      { return id; }
-    double      getWeight()  { return weight; }
-    bool        getMarried() { return married; }
-    const char* getAddress() { return address; }
-    const char* getMemo()    { return memo_c_str; }
+    const string&		getName()   const { return name; }
+    const string&     getPasswd() const { return passwd; }
+    int         getId()     const { return id; }
+    double      getWeight() const { return weight; }
+    bool        getMarried() const { return married; }
+    const char* getAddress() const { return address; }
+    const char* getMemo()   const { return memo_c_str; }
 
     void input(istream& in)  { inputMembers(in); } // ch3_2에서 추가
     void print(ostream& out) { printMembers(out); }
@@ -792,8 +792,24 @@ void VectorPerson::extend_capacity(){
 	cout << "VectorPerson: capacity extended to " << allocSize << endl;
 }
 
-void VectorPerson::erase(int index) { }
-void VectorPerson::insert(int index, Person* p) { }
+void VectorPerson::erase(int index) {
+	if(index < 0 || index > count)
+		return;
+	for(int i=0; i<count; i++){
+		pVector[index+i] = pVector[index+i+1];
+	}
+	count--;
+}
+void VectorPerson::insert(int index, Person* p) {
+	if(count >= allocSize){
+			extend_capacity();
+	}
+	for(int i=count-1; i>=index; i--){
+		pVector[i+1] = pVector[i];
+	}
+	pVector[index] = p;
+	count++;
+}
 
 /******************************************************************************
  * ch4_2: Factory class
@@ -940,9 +956,27 @@ Person* PersonManager::findByName(const string& name) {
 }
 
 void PersonManager::insert() { // Menu item 5
+	int index;
+	if(persons.empty())
+		index = 0;
+	else
+		index = UI::getIndex("Index to insert in front? ", persons.size() + 1);
+	printNotice("Input", "to insert:");
+	Person* p = Factory::inputPerson(cin);
+	if (p == nullptr) return;
+	persons.insert(index, p);
+	display();
 }
 
 void PersonManager::remove() { // Menu item 6
+	if(persons.empty()){
+		cout << "No entry to remove" << endl;
+		return;
+	}
+	int index = UI::getIndex("Index to delete? ", persons.size());
+	delete persons.at(index);
+	persons.erase(index);
+	display();
 }
 
 
@@ -1038,9 +1072,233 @@ class ClassAndObject
         cout << "--- global_static_local_objects_inner() returned ---" << endl;
     }
 
+    class Init1 { // ch6_2 추가
+        Person p;
+        int i, j;
+        double d;
+        char name[5];
+    public:
+        void print() {
+            // d = i = j = 0;
+            cout << "Init1 i: " << i << ", j: " << j <<
+                    ", d: " << d << ", name: " << name << endl;
+        }
+    };
+
+    // 기본 생성자가 있지만 아무것도 실행하지 않는다.
+    // 이럴 경우 객체 멤버들(여기선 p)은 자동으로 기본 생성자가 실행되어 초기화된다.
+    // 하지만 기본 데이타 타입 변수(i, j, d)들은 자동으로 초기화되지 않는다.
+    // 따라서 필요한 경우 기본 데이타 타입 변수들은 생성자 내에서 반드시 초기화 해 주어야 한다.
+    class Init2 {
+        Person p;
+        int i, j;
+        double d;
+    public:
+        Init2() { i = 6; j = 6; }
+        void print() {
+            cout << "Init2 i: " << i << ", j: " << j << ", d: " << d << endl;
+        }
+    };
+
+    // 기본 생성자가 있지만 아무것도 실행하지 않는다.
+    // 그러나 멤버 변수 선언 시에 멤버 p와 i처럼 선언과 동시에 초기화를 할 수 있다.
+    // 멤버를 초기화하는 한 방법이지만 추천하고 싶은 방법은 아니다.
+    // (일부 컴파일러는 이를 지원하지 않을 수 있는데 그럴경우 class Init4처럼 수정하라.)
+    class Init3 {
+        Person p { "p-Init3" };
+        // Person p("p-Init3");와 동일한 기능이나 이렇게 표현하면 컴파일 에러가 발생할 것이다.
+        // 즉, 함수 리턴 타입이 Person이고 함수 이름 p, 매개변수가 "p-Init3"인 새로운
+        // [함수 선언]으로 컴파일러가 오해하여 에러 메시지(매개변수가 잘못되었다는)를 출력한다.
+        // 컴파일러는 함수 선언인지 객체변수 선언인지 구분할 수 없기 때문이다.
+        // 그래서 { }를 사용한다. { }는 객체 변수 선언이며 생성자 함수 인자를 의미한다.
+        int i {3}, j;  // i {3}는 i = 3으로 표현해도 됨; 그러나 i(3)은 에러
+        double d;      // i는 초기화되지만 j, d는 초기화되지 않음
+    public:
+        Init3() { j = 6; d = 0; }
+        void print() {
+            cout << "Init3 i: " << i << ", j: " << j << ", d: " << d << endl;
+        }
+    };
+
+    // 생성자의 서두에서 멤버 초기화(p{"p-Init4-head"})가 있을 경우 멤버 변수 선언 때 즉,
+    // Person p는 초기화(생성자 실행 X)하지 않고 생성자의 서두에서 멤버 p와 i를 초기화 한다.
+    // 이처럼 생성자 서두에서 멤버를 초기화하는 것이 일반적인 방법이다.
+    class Init4 {
+        Person p;
+        int i, j;
+        double d;
+    public:
+        Init4(): p{"p-Init4-head"}, i{4} { j = 6; d = 0; }
+         // 위 함수 서두에서는 p("p-Init4-head") 로 초기화해도 됨; 그러나 i = 4는 안됨
+        void print() {
+            cout << "Init4 i: " << i << ", j: " << j << ", d: " << d << endl;
+        }
+    };
+
+    // 멤버 선언 때도 초기화하고, 생성자 서두에서도 초기화를 하면 생성자가 두번 실행될까?
+    // 정답은 생성자 서두에 있는 멤버 초기화만 한번 실행된다. 멤버 선언 때의 초기화는 무시된다.
+    class Init5 {
+        Person p { "p-Init5" };
+        int i{4}, j;
+        double d;
+    public:
+        Init5(): p{ "p-Init5-head" }, i{5} { j = 6; d = 0; }
+        void print() {
+            cout << "Init5 i: " << i << ", j: " << j << ", d: " << d << endl;
+        }
+    };
+
+    // 멤버 선언과 생성자 서두에서 객체를 초기화 하지 않으면 객체 p의 기본 생성자가 자동으로 무조건 실행된다.
+    // 생성자 함수 본체에서는 객체 p의 생성자를 호출할 수는 없고 set() 함수를 호출하여 초기화해야 한다.
+    // 그래서 생성자 Init6()의 셍성자 본체 { } 에서 p.set()을 호출하면 객체 p는 두번 초기화되는 것이다.
+    //----------------------------------------------------------------------------
+    // 중요: 결국 객체 멤버(p)는 생성자의 서두에서 초기화하는 것이 가장 좋으며,
+    //      기본 데이타 타입(int, double 등)의 경우 생성자 본체 또는 서두에서 초기화해도 상관없다.
+    //      어차피 멤버 변수 선언 때 자동으로 초기화되지 않으니까.
+    class Init6 {
+        Person p;
+        int i, j;
+        double d;
+    public:
+        // 여기서는 p.set(...) 대신 편의상 p.setName(...)을 호출했다.
+        Init6() { i = j = 6; d = 0; p.setName("p-Init6-body"); p.println(); }
+        void print() {
+            cout << "Init6 i: " << i << ", j: " << j << ", d: " << d << endl;
+        }
+    };
+
+    void memberInitialization() { // Menu item 5
+        int i = 0, i2 = i; i = i2; // 의미 없는 문장이지만, 삭제하지 말 것
+
+        // 임시객체 생성 후 print()를 호출하고 바로 소멸된다.
+        Init1().print(); cout << endl;
+        Init2().print(); cout << endl;
+        Init3().print(); cout << endl;
+        Init4().print(); cout << endl;
+        Init5().print(); cout << endl;
+        Init6().print();
+    }
+
+    class Parameter {
+    public:
+        // 아래 각 함수 선언에서 const가 있는 매개변수는 해당 함수에서 객체 p를 수정하지 않는다는 의미이고,
+        // const가 없는 매개변수는 해당 함수에서 객체 p를 수정할 수 있다는 의미임
+        // 함수 호출한 곳에서 함수의 실행 결과를 매개변수를 통해 넘겨 받아야 하는 경우는 const가 없어야 함
+        void normalValue(Person p)           { cout << "normalValue(Person p)" << endl; }
+        void constValue(const Person p)      { cout << "constValue(const Person p)" << endl; }
+        void normalReference(Person& p)      { cout << "normalReference(Person& p)" << endl; }
+        void constReference(const Person& p) { cout << "constReference(const Person& p)" << endl; }
+
+        void printStr(string& s)             { cout << "printStr(string& s): " << s << endl; }
+        void printConstStr(const string& s)  { cout << "printConstStr(const string& s): " << s << endl; }
+        void printPerson(const Person& p) { // const Person p로 선언해도 동일한 결과가 나옴
+            cout << "printPerson(const Person& p)" << endl;
+            // 위 const Person& p 선언의 의미: 이 함수에서 객체 p를 수정하지 않겠다는 의미임
+            // 따라서 아래의 p.setName("const-value")처럼 p의 멤버함수를 호출하면 에러로 처리함;
+            // 이유는 이 함수가 const 객체인 p의 멤버 name를 수정하기기 때문에.
+
+            /* p.setName("const-value"); */ // 명백히 이름을 수정하는 것이므로 컴파일 에러 발생
+            cout << p.getName() << " " << p.getId() << " " << p.getWeight() << " " <<p.getMarried() << " :" << ((p.getAddress()==nullptr)?"":p.getAddress()) <<":" << endl;
+
+            // 주석을 풀 경우 발생하는 컴파일 에러는 매개변수가 const로 선언되었기 때문에
+            // 발생하는 것이다. 컴파일러 입장에서는 위 멤버함수들이 p의 멤버를 수정하는지 아니면
+            // 읽기만하는지 알 수 없기 때문에 컴파일 시 에러로 처리함;
+        }
+    };
+
+    Parameter cp;
+
+    void normalParameter() {
+        cout << "normalParameter()" << endl;
+        cout << "Person p1(\"p1-name\")" << endl;
+
+        // 요점: 아래 Person p1처럼 p1이 일반적인 객체일 경우
+        //      함수의 매개변수 타입에 상관없이 이 객체를 함수 인자로 넘겨 줄 수 있다.
+        Person p1("p1-name");
+
+        cp.normalValue(p1);     // 복사생성자 통해 매개변수 p에 p1을 복사해서 넘겨 줌
+        cp.constValue(p1);      // 복사생성자 통해 매개변수 p에 p1을 복사해서 넘겨 줌
+        cp.normalReference(p1); // 매개변수 p에 단순히 p1의 참조만 넘겨 줌
+        cp.constReference(p1);  // 매개변수 p에 단순히 p1의 참조만 넘겨 줌
+    }
+
+    void constParameter() {
+        cout << "constParameter()" << endl;
+        cout << "const Person p2(\"const-p2-name\")" << endl;
+
+        // 요점: p2처럼 상수(const) 객체일 경우
+        //      매개변수 타입 선언에 따라 인자로 넘겨 줄 수 없는 함수가 있다.
+        const Person p2("const-p2-name"); // p2는 상수이므로 수정되어서는 안된다.
+
+        // 아래 인자 p2가 일반 매개변수 p에 복사되므로
+        // 매개변수 p는 수정될지언정 원래 인자 p2는 수정되지 않는다. OK
+        cp.normalValue(p2);
+        // 아래 인자 p2가 상수 매개변수 p에 복사되므로 원래 인자 p2는 수정되지 않는다. OK
+        cp.constValue(p2);
+        //cp.normalReference(p2);
+        // 위 함수의 일반 참조 매개변수 p는 p2와 메모리를 공유하므로 해당 함수에서 상수인 p2를
+        // 수정할 가능성이 있다.(const로 선언되지 않았으므로)
+        // 이런 경우 상수 객체 p2을 normalReference()의 인자로 줄 수 없다. 컴파일 에러.
+        cp.constReference(p2); // 상수 참조 매개변수 p는 p2와 메모리를 공유하지만 p가 상수
+        // 객체의 참조로 선언되어 있으므로 해당 함수에서 p2를 수정하지 않는다는 것을 보장한다. OK
+    }
+
+    void temporaryParameter() {
+        cout << "temporaryParameter()" << endl;
+
+        // 요점: 아래의 Person("Person-name")는 임시객체가 생성되며,
+        //      이 임시객체는 컴파일러에 의해 const로 취급된다.
+        //      따라서 이 임시객체는 위 [문제 10]의 const p2와 동일하게 취급된다.
+
+        cp.normalValue(Person("Person-name"));       // 불필요한 객체 복사 일어남
+        cp.constValue(Person("Person-name"));        // 불필요한 객체 복사 일어남
+        //cp.normalReference(Person("Person-name")); // 컴파일 에러 발생
+        cp.constReference(Person("Person-name"));    // 임시 객체 참조만 넘어감
+
+        // 결론: 일반적으로 객체는 함수의 매개변수로 value로 복사해서 넘기지 않고 객체의 참조를 넘긴다.
+        //      이유는 객체의 크기가 커지면 복사 오버헤드가 발생하기 때문이다.
+        //      그런데 함수의 매개변수가 const가 아닌 일반 참조 변수로 선언된 경우
+        //      그 함수에서 이 참조변수를 통해 원본 객체를 수정할 수 있기 때문에
+        //      const p2 또는 위 임시객체(const 취급)와 같은 객체들을 함수 인자로 넘길 수 없다.
+        //      따라서 [만약 함수 내에서 매개변수인 객체를 수정하지 않는다면]
+        //      일반 & 매개변수로 선언하기 보다는 const &로 습관적으로 선언하는 것이 유리하다.
+        //      (이렇게 선언하면 위 cp.constReference()처럼
+        //       임시객체의 참조를 함수의 매개변수로 바로 넘길 수 있다.)
+    }
+
+    void stringParameter() {
+        cout << "stringParameter()" << endl;
+
+        string s("name1"); // string s = "name1"; 과 동일
+
+        cp.printStr(s);
+        cp.printConstStr(s);
+        // 아래는 임시 string 객체 생성 (임시객체는 항상 const): 컴파일 에러
+        //cp.printStr(string("name"));
+        cp.printConstStr(string("name2")); // const 임시 객체 생성
+        // 아래 "name"은 자동으로 임시 string("name") 객체 생성: 컴파일 에러
+        //cp.printStr("name");
+        cp.printConstStr("name3"); // const 임시 객체 생성
+        // 결론: 함수의 매개변수로 "name3"처럼 문자열을 직접 넘겨 주고 싶으면
+        //      함수 매개변수를 const string& 으로 선언해야 한다. string&로 선언시 에러.
+        //      함수 내에서 매개변수 객체를 수정하지 않을 경우 습관적으로 항상 이렇게 선언하라.
+        // 매개변수를 const string으로 선언해도 되지만 이 경우 문자열 전체가 복사되므로 비효율적임
+    }
+
+    void parameters() { // Menu item 6
+        normalParameter();
+        constParameter(); cout << endl;
+        temporaryParameter(); cout << endl;
+        stringParameter(); cout << endl;
+        cp.printPerson(Person("name", 10, 77.7, true, "address"));
+        // 임시 Person 객체의 참조 전달 (임시 객체는 항상 const)
+    }
+
+
 public:
     // 사용자가 선택한 메뉴 항목을 실행하는 멤버 함수(func_arr[menuItem]에 등록된 함수)를 호출
     void run() {
+    	using CO = ClassAndObject;
         // ClassAndObject의 멤버 함수에 대한 포인터 타입인 새로운 데이타 타입 func_t를 정의함
         using func_t = void (ClassAndObject::*)();
         // 위 using 문은 ClassAndObject 클래스의 멤버 함수(리턴 타입이 void 이면서 매개변수가 없는)에
@@ -1053,8 +1311,9 @@ public:
         //     (즉, 함수 주소로 jump 해 가서 함수를 실행함)
 
         func_t func_arr[] = { // 메뉴항목을 실행하는 멤버 함수를 배열에 미리 저장(등록)해 둠
-            nullptr, &ClassAndObject::defualConstructor, &ClassAndObject::constructor,
-            &ClassAndObject::construcorDestructor, &ClassAndObject::globalStaticLocalObjects,
+            nullptr, &CO::defualConstructor, &CO::constructor,
+            &CO::construcorDestructor, &CO::globalStaticLocalObjects, &CO::memberInitialization,
+			&CO::parameters
         };
         int menuCount = sizeof(func_arr) / sizeof(func_arr[0]);
         // func_arr[]의 원소의 개수 = 배열 전체 크기 / 한 배열 원소의 크기
@@ -1064,6 +1323,7 @@ public:
             "+++++++++++ Person Class And Object Menu ++++++++++++\n"
             "+ 0.Exit 1.DefualConstructor 2.Constructor          +\n"
             "+ 3.ConstrucorDestructor 4.GlobalStaticLocalObjects +\n"
+            "+ 5.MemberInitialization 6.constParameter           +\n"
             "+++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
         while (true) {
