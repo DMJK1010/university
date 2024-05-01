@@ -1,7 +1,7 @@
 /*
  * CH7_3: ch7_3.cpp
  *
- *  Created on: 2024. 5. 1.(22:32) - 초기 설정
+ *  Created on: 2024. 5. 1.(23:39) - 완료
  *      Author: Junha Kim
  *
  *
@@ -45,6 +45,7 @@ public:
     Person(const Person& p);
     ~Person();
 
+    Person* clone() { return new Person(*this); } // ch7_3에서 추가
     void set(const string& name, int id, double weight, bool married, const char *address);
     void setName(const string& name)       { this->name = name; }
     void setPasswd(const string& passwd)   { this->passwd = passwd; }
@@ -974,6 +975,11 @@ class PersonManager
     VectorPerson persons;
     //Factory factory;
 
+    Person** array;     // ch7_3 추가
+    int arrLen;         // ch7_3 추가
+    int cpCount;        // ch7_3 추가
+
+    void pushArray();   // ch7_3 추가
     void deleteElemets();
     void printNotice(const string& preMessage, const string& postMessage);
     Person* findByName(const string& name);
@@ -988,21 +994,25 @@ public:
     void run();
     void insert();
     void remove();
-    void PersonManager::copyPersons();
-    void PersonManager::reset();
+    void copyPersons();
+    void reset();
 };
 
-PersonManager::PersonManager(Person* array[], int len) {
+PersonManager::PersonManager(Person* array[], int len):array{array}, arrLen{len}, cpCount{} {
     //cout << "PersonManager::PersonManager(array[], len)" << endl;
-    for(int i=0; i<len; i++){
-    	Person *n_person = new Person(*array[i]);
-    	persons.push_back(n_person);
-    }
-    display();
+	pushArray();
+	display();
 }
 
 PersonManager::~PersonManager() {
     deleteElemets();
+}
+
+void PersonManager::pushArray(){
+    for(int i=0; i<arrLen; i++){
+    	Person *n_person = new Person(*array[i]);
+    	persons.push_back(array[i]->clone());
+    }
 }
 
 void PersonManager::deleteElemets() {
@@ -1011,6 +1021,7 @@ void PersonManager::deleteElemets() {
 		delete persons[i];
 	}
 	persons.clear();
+	cpCount = 0;
 }
 
 void PersonManager::display() { // Menu item 1
@@ -1117,9 +1128,26 @@ void PersonManager::remove() { // Menu item 6
 }
 
 void PersonManager::copyPersons() { // Menu item 7
+    cpCount++;
+    for (unsigned i = 0, size = persons.size(); i < size; ++i) {
+        Person *p = persons[i]->clone();
+        string name = p->getName();
+        for (int j = 0; j < cpCount; ++j)
+            name = name[0] + name;  // 이름 변경
+        p->setName(name);
+        p->set(p->getId()+(20*cpCount));
+        p->set(p->getWeight()+cpCount);
+        if(cpCount %2)
+        	p->set((!p->getMarried()));
+        persons.push_back(p);
+    }
+    display();
 }
 
 void PersonManager::reset() { // Menu item 8
+	deleteElemets();
+	pushArray();
+	display();
 }
 
 /******************************************************************************
