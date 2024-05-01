@@ -5,8 +5,9 @@
  *      Author: Junha Kim
  *
  *
- *  + VectorPerson에 operator 추가
- *  + VectorOperator 클래스 추가
+ *  1) Person::clone() 추가
+ *  2) PersonManager::pushArray(), copyPersons(), reset() 추가
+ *  3) PersonManager:: Person** array, int arrLen, int cpCount 추가
  */
 
 #include <iostream>
@@ -987,6 +988,8 @@ public:
     void run();
     void insert();
     void remove();
+    void PersonManager::copyPersons();
+    void PersonManager::reset();
 };
 
 PersonManager::PersonManager(Person* array[], int len) {
@@ -1056,12 +1059,13 @@ void PersonManager::run() {
     using PM = PersonManager; // 코딩 길이를 줄이기 위해
     func_t func_arr[] = {
         nullptr, &PM::display, &PM::append, &PM::clear, &PM::login, &PM::insert, &PM::remove
+		,&PM::copyPersons, &PM::reset
     };
     int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
     string menuStr =
         "====================== Person Management Menu ===================\n"
         "= 0.Exit 1.Display 2.Append 3.Clear 4.Login(CurrentUser, ch6)   =\n"
-        "= 5.Insert(6_2) 6.Delete(6_2)                                   =\n"
+        "= 5.Insert(6_2) 6.Delete(6_2) 7.CopyPersons(7_3) 8.Reset(7_3)   =\n"
         "=================================================================\n";
 
     while (true) {
@@ -1112,6 +1116,11 @@ void PersonManager::remove() { // Menu item 6
 	display();
 }
 
+void PersonManager::copyPersons() { // Menu item 7
+}
+
+void PersonManager::reset() { // Menu item 8
+}
 
 /******************************************************************************
  * ch3_2, 4_1, 4_2: MultiManager class
@@ -2288,7 +2297,7 @@ public:
         int menuCount = 6; // 상수 정의
         string menuStr =
         		"******************************* Main Menu *********************************\n"
-        		"* 0.Exit 1.PersonManager(ch3_2, 4, 6)                                     *\n"
+        		"* 0.Exit 1.PersonManager(ch3_2, 4, 6, 7_3)                                *\n"
         		"* 2.Class:Object(ch3_1) 3.CopyConstructor(ch5_1) 4.AllocatedMember(ch5_2) *\n"
         		"* 5.OperatorOverload(ch7)                                                 *\n"
         		"***************************************************************************\n";
