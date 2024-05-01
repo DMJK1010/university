@@ -1,7 +1,7 @@
 /*
  * CH7_1: ch7_1.cpp
  *
- *  Created on: 2024. 4. 30.(14:14) - 초기 설정
+ *  Created on: 2024. 5. 1.(15:20) - 완료
  *      Author: Junha Kim
  *
  *
@@ -68,23 +68,39 @@ public:
     void println()            { print(cout); cout << endl; }
     void whatAreYouDoing();                          // ch3_2에서 추가
     bool isSame(const string& name, int pid);         // ch3_2에서 추가
-    Person& assign(const Person& p);
+
+    bool operator== (Person &p);
+    Person operator+(double weight);
+    friend Person operator+(double weight, Person &p);
+    Person& operator = (const Person& p);
+    Person& operator++();    // 객체 자신에 대한 참조자 리턴
+    Person  operator++(int); // 기존 객체(this)를 복사하여 새로운 지역 객체를 만들고
+           // 기존 객체의 체중을 1 증가시킨다. 그리고 새로운 지역 객체(기존 복사본)를 반환한다.
+    Person& operator << (const string& name); // setName()과 동일
+    Person& operator << (const char* name);   // setName()과 동일
+    Person& operator << (int id);             // set(int id)와 동일
+    Person& operator >> (string& name); // 멤버 name을 매개변수 name에 저장
+    Person& operator >> (int& id);      // 멤버 id을 매개변수 id에 저장
+    Person& operator >> (char* name);   // 멤버 name의 C-스트링을 매개변수 name에 복사
+
+    operator string() { return this->name; }
+    operator int()    { return this->id; }
 };
 
 Person::Person(const string& name, int id, double weight, bool married, const char* address):name(name), id{id}, weight{weight}, married{married}, memo_c_str{} {
     // 생성자 서두에서 memo_c_str{}은 초기 값으로 디폴트 값인 nullptr(실제로는 주소 값 0)로 설정됨
     copyAddress(address);
-    cout << "Person::Person(...):"; println();
+    //cout << "Person::Person(...):"; println();
 }
 
 Person::Person(const Person& p):name(p.name), id{p.id}, weight{p.weight}, married{p.married}{
     copyAddress(p.address);
 	copyMemo(p.memo_c_str);
-    cout << "Person::Person(const Person&):"; println();
+    //cout << "Person::Person(const Person&):"; println();
 }
 
 Person::~Person() {
-    cout << "Person::~Person():"; println();
+    //cout << "Person::~Person():"; println();
 
     if(address != nullptr)
     	delete [] address;
@@ -168,7 +184,30 @@ void Person::whatAreYouDoing() {
 	cout<<name<<" is taking a rest.";
 }
 
-Person& Person::assign(const Person& p) {
+bool Person::isSame(const string& name, int pid) {
+    if((this->name == name) && (id == pid))
+        return true;
+    else
+        return false;
+}
+
+bool Person::operator== (Person &p){
+	return this->isSame(p.name, p.id);
+}
+
+Person Person::operator+(double weight){
+	Person tmp(*this);
+	tmp.weight += weight;
+	return tmp;
+}
+
+Person operator+(double weight, Person &p){
+	Person tmp(p);
+	tmp.weight += weight;
+	return tmp;
+}
+
+Person& Person::operator = (const Person& p){
 	this->name = p.name;
 	this->passwd = p.passwd;
 	this->id = p.id;
@@ -176,30 +215,47 @@ Person& Person::assign(const Person& p) {
 	this->married = p.married;
 	setAddress(p.address);
 	setMemo(p.memo_c_str);
-
-/*
-    TODO: name, passwd, id, weight, married 멤버의 경우 = 연산자를 사용하여 p의 상응하는
-          멤버 값을 this의 멤버에 바로 대입시켜라. (C++의 기본 데이타 타입과 string인 경우)
-          즉, this의 각 멤버에 =를 이용해 p의 멤버 값을 저장하라.
-
-          p.addres와 p.memo_c_str의 경우 각각 setAddress(), setMemo()를 호출하여
-          this의 addres와 memo_c_str에 복사하라. 이 함수들은 기존에 할당 받았던 this의
-          address와 memo_c_str 멤버의 메모리를 먼저 반납하고 새로 할당 받은 후 복사한다.
-          // 복사생성자에서는 copyAddress()와 copyMemo()를 호출했는데 (처음 초기화할 때)
-          // 여기서는 setAddress(), setMemo()를 호출하였다. (기존 값을 변경하고자 할 때)
-          // 왜 그렇게 했는지 이해했는가?
-*/
-
-    return *this; // this 객체 자신의 참조자를 반환한다.
-    // 자신 객체의 참조자를 리턴했기 때문에 c.assign(p.assign(backup)).println() 등의
-    // 연속된 함수 호출도 가능해 진다. 즉 (c = p = backup).println()과 같은 효과
+	return *this;
 }
 
-bool Person::isSame(const string& name, int pid) {
-    if((this->name == name) && (id == pid))
-        return true;
-    else
-        return false;
+Person& Person::operator++(){
+	this->weight++;
+	return *this;
+}
+Person Person::operator++(int){
+	Person tmp(*this);
+	this->weight++;
+	return tmp;
+}
+
+Person& Person::operator << (const string& name){
+	this->name = name;
+	return *this;
+}
+
+Person& Person::operator << (const char* name){
+	this->name = name;
+	return *this;
+}
+
+Person& Person::operator << (int id){
+	this->id = id;
+	return *this;
+}
+
+Person& Person::operator >> (string& name){
+	name = this->name;
+	return *this;
+}
+
+Person& Person::operator >> (int& id){
+	id = this->id;
+	return *this;
+}
+
+Person& Person::operator >> (char* name){
+	strcpy(name, this->name.c_str());
+	return *this;
 }
 
 /******************************************************************************
@@ -341,6 +397,9 @@ public:
     void c_str(const char *c_str){
     	mStr = (c_str == nullptr) ? "" : c_str;
     }
+
+    Memo  operator +  (const Memo& m); // ch7_1 추가
+    Memo& operator += (const Memo& m); // ch7_1 추가
 };
 
 string& Memo::get_next_line(size_t& ppos, string& line) {
@@ -583,6 +642,16 @@ void Memo::compareWord() {
     cout << "larger: " << larger << endl;
 }
 
+Memo  Memo::operator +  (const Memo& m){
+	Memo tmp;
+	tmp.mStr = this->mStr + m.mStr;
+	return tmp;
+}
+Memo& Memo::operator += (const Memo& m){
+	mStr = mStr + m.mStr;
+	return *this;
+}
+
 /******************************************************************************
  * ch3_2: CurrentUser class
  ******************************************************************************/
@@ -758,13 +827,13 @@ public:
 VectorPerson::VectorPerson(int capacity) : count{}, allocSize{ capacity } {
     // allocSize = capacity, count = 0; 초기화를 위 함수 서두(위 /* */ 주석 사이)에서 할 것
     // 함수 서두에서 초기화하는 방법은 Person 클래스 참고할 것
-    cout << "VectorPerson::VectorPerson(" << allocSize << ")" << endl;
+    //cout << "VectorPerson::VectorPerson(" << allocSize << ")" << endl;
     pVector = new Person*[allocSize]; // Person* 들의 배열을 위한 동적 메모리 할당
 }
 
 VectorPerson::~VectorPerson() {
 	delete [] pVector;
-    cout << "VectorPerson::~VectorPerson(): pVector deleted" << endl;
+    //cout << "VectorPerson::~VectorPerson(): pVector deleted" << endl;
 }
 
 void VectorPerson::push_back(Person* p){
@@ -853,7 +922,7 @@ public:
 };
 
 PersonManager::PersonManager(Person* array[], int len) {
-    cout << "PersonManager::PersonManager(array[], len)" << endl;
+    //cout << "PersonManager::PersonManager(array[], len)" << endl;
     for(int i=0; i<len; i++){
     	Person *n_person = new Person(*array[i]);
     	persons.push_back(n_person);
@@ -876,12 +945,13 @@ void PersonManager::deleteElemets() {
 void PersonManager::display() { // Menu item 1
     int count = persons.size();
     cout << "display(): count " << count << endl;
+
     for (int i = 0; i < count; ++i) {
         cout << "[" << i << "] ";
         persons.at(i)->println();
     }
-    cout << "empty():" << persons.empty() << ", size():" << persons.size()
-         << ", capacity():" << persons.capacity() << endl;
+
+    //cout << "empty():" << persons.empty() << ", size():" << persons.size()<< ", capacity():" << persons.capacity() << endl;
 }
 
 void PersonManager::append() { // Menu item 2
@@ -1493,7 +1563,7 @@ public:
         cout << "p: "; p.println();   // p와 u은 동일한 객체 메모리를 공유하므로 항상 내용이 동일함
         cout << "u: "; u.println();
         //u = backup;       // u 값을 원래 값으로 복구
-        u.assign(backup);
+        u = backup;
         // 매개변수 p는 참조이므로 함수 리턴 시 소멸자가 호출되지 않음
     }
 
@@ -1506,7 +1576,7 @@ public:
         cout << "p: "; p->println();   // p는 u 메모리를 포인터하므로 항상 동일한 내용이 출력됨
         cout << "u: "; u.println();
         //u = backup;       // u 값을 원래 값으로 복구
-        u.assign(backup);
+        u = backup;
         // 매개변수 p는 포인터이므로 함수 리턴 시 소멸자가 호출되지 않음
     }
 
@@ -1580,7 +1650,7 @@ public:
         cout << "r: "; r.println();
         cout << "u: "; u.println();
         //u = backup;
-        u.assign(backup);
+        u = backup;
         // 함수 리턴 시 지역 객체 p의 경우 소멸자 함수가 호출되지만
         //           참조 변수 r는 소멸자가 호출되지 않음
     }
@@ -1604,7 +1674,7 @@ public:
         cout << "p: "; p->println();
         cout << "u: "; u.println();
         //u = backup;
-        u.assign(backup);
+        u = backup;
         // 함수 리턴 시 p는 포인터 변수이므로 소멸자가 호출되지 않음
     }
 
@@ -1617,7 +1687,7 @@ public:
         cout << "u: "; u.println();
         while (!UI::inputPerson(u)) ;  // USER 11 88 false :DONG-GU, DAEGU:
         //backup = u;
-        backup.assign(u);
+        backup = u;
         cout << "u: "; u.println();
     }
 
@@ -1788,6 +1858,167 @@ class OperatorOverload
     Person p;
     Memo   m;
 
+    void disp_memo(const string& name, Memo& m) {
+        cout << name << endl; m.displayMemo(); cout << endl;
+    }
+
+    void memoAdd() { // Memu item 1
+        Memo m1(m);
+        Memo m2("James Fenimore Cooper\n");
+        disp_memo("m1", m1);
+        disp_memo("m2", m2);
+        // operator +
+        Memo m3 = m1 + m2;
+        disp_memo("m3 = m1 + m2", m3);
+        // operator +=
+        m3 += Memo("1st const added memo line.\n");
+        disp_memo("m3 += Memo(...)", m3);
+        // operator +
+        m3 = m3 + m2 + Memo("2nd const added memo line.\n");
+        disp_memo("m3 = m3 + m2 + Memo(...)", m3);
+    }
+
+    void personEqual() { // Memu item 2
+        Person p1(p), p2(p);
+        cout << "p1: "; p1.println();
+        cout << "p2: "; p2.println();
+        cout << "p1 == p2 : " << (p1 == p2) << endl;
+        p2.set(2);  // p2는 p1과 비교해 이름은 같고 id는 다름
+        cout << "p2: "; p2.println();
+        cout << "p1 == p2 : " << (p1 == p2) << endl;
+        p2.set(1); p2.setName("user"); // p2는 p1과 비교해 이름은 다르고 id는 동일
+        cout << "p2: "; p2.println();
+        cout << "p1 == p2 : " << (p1 == p2) << endl;
+    }
+
+    void personAdd() { // Memu item 3
+        Person p1(p); p1.setAddress("");
+        cout << "p1:  "; p1.println();
+        cout << "p2 = p1 + 5.0" << endl;
+        Person p2 = p1 + 5.0;
+        cout << "p2:  "; p2.println();
+        cout << "(p2 + 10.0).println()" << endl;
+        cout << "tmp: "; (p2 + 10.0).println();
+        cout << "p2:  "; p2.println();
+        cout << "p3 = 15.0 + p1" << endl;
+        Person p3 = 15.0 + p1;
+        cout << "p3:  "; p3.println();
+        cout << "(20.0 + p3).println()" << endl;
+        cout << "tmp: "; (20.0 + p3).println();
+        cout << "p3:  "; p3.println();
+    }
+
+    void personAssign() { // Memu item 4
+        cout << "p:  "; p.println();
+        Person p2; // 기본 생성자에 의해 초기화
+        cout << "p2 = p" << endl;
+        p2 = p;
+        cout << "p2: "; p2.println();
+        Person p3("Hong",  0, 72.1, false, "Gwangju Nam-gu Bongseon-dong 21");
+        cout << "p3: "; p3.println();
+        cout << "p3 = 20.0 + p2 + 30.5" << endl;
+        p3 = 20.0 + p2 + 30.5;
+        cout << "p3: "; p3.println();
+        cout << "p == p3 : " << (p == p3) << endl;
+    }
+
+    void personIncrement() { // Memu item 5
+        Person p1(p); p1.setAddress("");
+        cout << "p1  : "; p1.println();
+        cout << "++p1: "; (++p1).println(); // operator ++()
+        cout << "p1++: "; (p1++).println(); // operator ++(int)
+        cout << "p1  : "; p1.println();
+        cout << "p2 = p1++" << endl;
+        Person p2 = p1++; // copy constructor
+        cout << "p2  : "; p2.println();
+        cout << "p1  : "; p1.println();
+        cout << "p2 = (++p1)++" << endl;
+        p2 = (++p1)++;
+        cout << "p2  : "; p2.println();
+        cout << "p1  : "; p1.println();
+        cout << "p2 = ++(p1++)" << endl;
+        p2 = ++(p1++);
+        cout << "p2  : "; p2.println();
+        cout << "p1  : "; p1.println();
+        cout << "p2 = ++p1++" << endl;
+        p2 = ++p1++;
+        cout << "p2  : "; p2.println();
+        cout << "p1  : "; p1.println();
+        cout << "(p2 = 2.0 + ++p1++ + 3.0) == p : "
+             << ((p2 = 2.0 + ++p1++ + 3.0) == p) << endl;
+        cout << "p2  : "; p2.println();
+        cout << "p1  : "; p1.println();
+    }
+
+    void personShift() { // Memu item 6
+        Person p1(p); p1.setAddress("");
+        cout << "p1: "; p1.println();
+        cout << "p1 << \"p1\" << 11" << endl;
+        // operator << (const char *), operator << (int)
+        p1 << "p1";
+        p1 << 11;
+        cout << "p1: "; p1.println();
+
+        cout << "p1 << name << 12" << endl;
+        string name("p1-12");
+        // operator << (const string&), operator << (int)
+        p1 << name << 12;
+        cout << "p1: "; p1.println();
+
+        cout << "p1 >> name >> id >> c_name" << endl;
+        int id;
+        char c_name[40];
+        name = "";
+        // operator >> (string), operator >> (int), operator >> (char *)
+        p1 >> name >> id >> c_name;
+        cout << "name:" << name << ", id:" << id << ", c_name:" << c_name << endl;
+
+        cout << "(p1 << \"p\" << 1) == p : " << ((p1 << "p" << 1) == p) << endl;
+        cout << "p1: "; p1.println();
+        cout << "p : "; p.println();
+    }
+
+    void print_name_id(string name, int id) {
+        cout << "print_name_id() name:" << name << ", id:" << id << endl;
+    }
+
+    void typeConversion() { // Memu item 7
+        Person p1(p), p2(p);
+        p1 << "Hong" << 1; // 이름과 id를 객체 p1에 설정함
+        p2 << "Dong" << 2;
+        cout << "p1: "; p1.println();
+        cout << "p2: "; p2.println();
+
+        // 아래 문장은 int id = (int)p1; 과 동일; 컴파일러가 id와 동일한 타입인 int로
+        // 타입을 변경하는 operator int()를 자동으로 호출하여 리턴 값을 id에 저장
+        int id = p1;
+
+        // 아래 문장은 (string)p1 와 동일; 컴파일러가 name과 동일한 타입인 string로
+        // 타입을 변경하는 operator string()를 자동으로 호출하여 리턴 값을 name에 저장
+        string name = p1;
+
+        cout << "p1 name:" << name << ", id:" << id << endl;
+        p2 >> id >> name; // 객체 p2로부터 id와 이름을 얻어옴
+        cout << "p2 name:" << name << ", id:" << id << endl;
+
+        // 아래 함수호출 시 컴파일러가 알아서 자동으로 함수 매개변수와 동일한 타입으로 변환해 주는
+        // operator string()과  operator int()를 호출하여 리턴 값을 함수인자로 넘겨 줌
+        print_name_id(p1, p1);
+        print_name_id(p2, p2);
+
+        // 아래 문장은 사용자가 출력할 데이타 타입을 정확히 지정해 주면
+        // 컴파일러가 상응하는 operator string()과  operator int()를 호출한다.
+        cout << "p2 name:" << (string)p2 << ", id:" << (int)p2 << endl;
+        cout << "p1+p2 name:" << (string)p1+name << ", id:" << (int)p1+id << endl;
+    }
+
+    void currentUser() { // Memu item 8
+        CurrentUser(p).run();
+        m.c_str(p.getMemo());
+        cout << "p: "; p.println();
+        m.displayMemo();
+    }
+
 public:
     OperatorOverload():
         p("p",  1, 65.4, true,  "Jong-ro 1-gil, Jongno-gu, Seoul"),
@@ -1795,16 +2026,27 @@ public:
     }
 
     void run() {
-        //using OOL = OperatorOverload;
+        using OOL = OperatorOverload;
 
         // TODO: func_t, func_arr[], menuCount 선언
+    	using func_t = void (OperatorOverload::*)();
+    	func_t func_arr[] = {
+    			nullptr, &OOL::memoAdd, &OOL::personEqual, &OOL::personAdd, &OOL::personAssign
+				,&OOL::personIncrement, &OOL::personShift, &OOL::typeConversion, &OOL::currentUser
+    	};
+    	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
+
         string menuStr =
             "+++++++++++++++++++ Operator Overload +++++++++++++++++\n"
             "+ 0.Exit 1.MemoAdd 2.Equal 3.Add 4.Assign 5.Increment +\n"
             "+ 6.Shift 7.TypeConversion 8.CurrentUser              +\n"
             "+++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
-        // TODO: while 문장 삽입하여 선택된 메뉴항목 실행하는 함수 호출
+        while (true) {
+        	int menuItem = UI::selectMenu(menuStr, menuCount);
+        	if (menuItem == 0) return;
+        	(this->*func_arr[menuItem])();
+        }
     }
 
 }; // ch7_1: OperatorOverload class
