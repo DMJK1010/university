@@ -1,7 +1,7 @@
 /*
  * CH7_2: ch7_2.cpp
  *
- *  Created on: 2024. 5. 1.(18:15) - 초기 설정
+ *  Created on: 2024. 5. 1.(22:32) - 완료
  *      Author: Junha Kim
  *
  *
@@ -792,11 +792,12 @@ class VectorPerson
     int count;        // pVector 배열에 현재 삽입된 객체 포인터의 개수
     int allocSize;    // 할당 받의 pVector의 총 배열 원소의 개수
 
-    void extend_capacity(); /* TODO 문제 [7] */
+    void extend_capacity(int capacity);
 
 public:
     //VectorPerson() : VectorPerson(DEFAULT_SIZE) {}
     VectorPerson(int capacity = DEFAULT_SIZE);
+    VectorPerson(const VectorPerson& vp);
     ~VectorPerson();
 
     // 아래 긱 함수이름 뒤의 const는 그 함수가 클래스 멤버 변수들을 수정하지 않고 읽기만 한다는 의미임
@@ -820,6 +821,12 @@ public:
     void erase(int index);
     void insert(int index, Person* p);
 
+    Person* operator [] (int index)const;
+    bool operator ! ();
+    operator bool ();
+    VectorPerson& operator = (const VectorPerson& vp);
+    VectorPerson  operator + (const VectorPerson& vp);
+    VectorPerson& operator += (const VectorPerson& vp);
 };
 
 // capacity는 할당해야 할 배열 원소의 개수
@@ -830,6 +837,18 @@ VectorPerson::VectorPerson(int capacity) : count{}, allocSize{ capacity } {
     pVector = new Person*[allocSize]; // Person* 들의 배열을 위한 동적 메모리 할당
 }
 
+VectorPerson::VectorPerson(const VectorPerson& vp){
+	cout << "VectorPerson::VectorPerson(const VectorPerson& vp)" << endl;
+	this->allocSize = vp.allocSize;
+	this->count = vp.count;
+
+	pVector = new Person*[allocSize];
+
+	for(int i=0; i<count; i++){
+		pVector[i] = vp.pVector[i];
+	}
+}
+
 VectorPerson::~VectorPerson() {
 	delete [] pVector;
     //cout << "VectorPerson::~VectorPerson(): pVector deleted" << endl;
@@ -837,14 +856,14 @@ VectorPerson::~VectorPerson() {
 
 void VectorPerson::push_back(Person* p){
 	if(count >= allocSize){
-		extend_capacity();
+		extend_capacity(allocSize*2);
 	}
 	pVector[count++] = p;
 }
 
-void VectorPerson::extend_capacity(){
+void VectorPerson::extend_capacity(int capacity){
 	Person **saved_persons = pVector;
-	allocSize *= 2;
+	allocSize = capacity;
 	pVector = new Person*[allocSize];
 
 	for(int i=0; i<count; i++){
@@ -865,13 +884,63 @@ void VectorPerson::erase(int index) {
 }
 void VectorPerson::insert(int index, Person* p) {
 	if(count >= allocSize){
-			extend_capacity();
+			extend_capacity(allocSize*2);
 	}
 	for(int i=count-1; i>=index; i--){
 		pVector[i+1] = pVector[i];
 	}
 	pVector[index] = p;
 	count++;
+}
+
+Person* VectorPerson::operator [] (int index)const{
+	return pVector[index];
+}
+
+bool VectorPerson::operator ! (){
+	return this->empty();
+}
+
+VectorPerson::operator bool (){
+	return !(this->empty());
+}
+
+VectorPerson& VectorPerson::operator = (const VectorPerson& vp){
+	if(vp.count > this->allocSize){
+		delete [] pVector;
+		this->allocSize = vp.allocSize;
+		pVector = new Person*[allocSize];
+		cout << "VectorPerson::operator = : capacity extended to " << allocSize << endl;
+	}
+	this->count = vp.count;
+	for(int i=0; i<count; i++){
+		pVector[i] = vp.pVector[i];
+	}
+	return *this;
+}
+
+VectorPerson  VectorPerson::operator + (const VectorPerson& vp){
+	VectorPerson tmp(this->count + vp.count);
+	for(int i=0; i<this->count; i++){
+		tmp.pVector[i] = this->pVector[i];
+	}
+	for(int i=0; i<vp.count; i++){
+		tmp.pVector[this->count + i] = vp.pVector[i];
+	}
+	tmp.count = this->count + vp.count;
+	return tmp;
+}
+
+VectorPerson& VectorPerson::operator += (const VectorPerson& vp){
+
+	if(count + vp.count > allocSize){
+		extend_capacity(this->allocSize+vp.allocSize);
+	}
+	for(int i=0; i<vp.count; i++){
+		this->pVector[i+count] = vp.pVector[i];
+	}
+	count += vp.count;
+	return *this;
 }
 
 /******************************************************************************
@@ -936,7 +1005,7 @@ PersonManager::~PersonManager() {
 void PersonManager::deleteElemets() {
     /* TODO 문제 [5] */
 	for(int i=0; i<persons.size(); i++){
-		delete persons.at(i);
+		delete persons[i];
 	}
 	persons.clear();
 }
@@ -947,7 +1016,7 @@ void PersonManager::display() { // Menu item 1
 
     for (int i = 0; i < count; ++i) {
         cout << "[" << i << "] ";
-        persons.at(i)->println();
+        persons[i]->println();
     }
 
     //cout << "empty():" << persons.empty() << ", size():" << persons.size()<< ", capacity():" << persons.capacity() << endl;
@@ -1010,8 +1079,8 @@ void PersonManager::printNotice(const string& preMessage, const string& postMess
 
 Person* PersonManager::findByName(const string& name) {
     for(int i=0; i<persons.size(); i++){
-    	if(name == persons.at(i)->getName()){
-    		return persons.at(i);
+    	if(name == persons[i]->getName()){
+    		return persons[i];
     	}
 
     }
@@ -1038,7 +1107,7 @@ void PersonManager::remove() { // Menu item 6
 		return;
 	}
 	int index = UI::getIndex("Index to delete? ", persons.size());
-	delete persons.at(index);
+	delete persons[index];
 	persons.erase(index);
 	display();
 }
@@ -1874,6 +1943,99 @@ class VectorOperator
         cout << endl;
     }
 
+    void operatorIndex() { // Memu item 1
+        MultiManager().run();
+        // display(), remove(), clear(), login()에서 [index] 연산자 사용
+    }
+
+    void operatorNot() { // Memu item 2
+        VectorPerson pv;
+        disp_vector(pv);
+
+        // operator bool() 호출
+        if (pv) cout << "if(pv): true" << endl;
+        else    cout << "if(pv): false" << endl;
+        cout << "operator bool(): " << (bool)pv << endl;
+
+        // operator !() 호출
+        if (!pv) cout << "if(!pv): true" << endl;
+        else     cout << "if(!pv): false" << endl;
+        cout << "operator !(): " << !pv << endl;
+
+        pv.push_back(pa);
+        disp_vector(pv);
+        cout << "(pv? true: false) " << (pv? true: false) << endl;// operator bool() 호출
+        pv.push_back(new Person("Chung", 2, 67.8, true,  nullptr));
+        disp_vector(pv);
+
+        // operator []
+        cout << "pv[0]: "; pv[0]->println();
+        cout << "delete pv[1];" << endl;
+        delete pv[1];
+        // pv[0]는 동적으로 할당받은 주소가 아니므로, 즉 배열 원소 pa[0]의 주소이므로 반납하지 않아도 됨
+    }
+
+    VectorPerson call_return_value(VectorPerson pv) {
+        cout << "pv: "; disp_vector(pv);
+        cout << "return pv1 " << endl;
+        return pv1;
+    }
+
+    void copyConstructor() { // Memu item 3
+        cout << "VectorPerson pv3 = pv2" << endl;
+        VectorPerson pv3 = pv2;  // 묵시적 복사생성자 호출; VectorPerson pv3(pv2)와 동일
+        cout << "pv3: "; disp_vector(pv3);
+        pv3.erase(0);
+        cout << "pv3.erase(0)" << endl;
+        cout << "pv3: "; disp_vector(pv3);
+        cout << "pv2: "; disp_vector(pv2);
+        cout << "disp_vector(call_return_value(vp2))" << endl;
+        // 아래 함수 호출에서 pv2 인자를 복사생성자를 이용하여 call_return_value()의
+        // 매개변수 pv에 복사하고 함수에서 리턴되는 pv1 또한 복사생성자를 통해 임시객체에 복사된다.
+        // 그 후 disp_vector()를 호출하여 리턴된 임시객체를 보여줌
+        disp_vector(call_return_value(pv2)); // 임시객체와 아래 pv1의 출력이 같아야 함
+        cout << "pv1: "; disp_vector(pv1);
+    }
+
+    void operatorAssign() { // Memu item 4
+        cout << "VectorPerson pv3 = pv2" << endl;
+        VectorPerson pv3 = pv2;
+        cout << "pv3: "; disp_vector(pv3);
+        cout << "pv3 = pv1" << endl;
+        pv3 = pv1; // 대입 연산자
+        cout << "pv3: "; disp_vector(pv3);
+        cout << "repeat 9 times: pv3.push_back(pa+2)" << endl;
+        for (int i = 0; i < 9; ++i) // 원소개수가 11개 이상이면 pv3 메모리가 확장되어야 함
+            pv3.push_back(pa+2);
+        cout << "pv3: "; disp_vector(pv3);
+        VectorPerson pv4;
+        cout << "pv4 = pv3" << endl;
+        pv4 = pv3; // 대입 연산자: 원소개수가 11개 이상이면 pv4의 메모리가 확장되어야 함
+        cout << "pv4: "; disp_vector(pv4);
+    }
+
+    void operatorAdd() { // Memu item 5
+        VectorPerson pv3;
+        cout << "pv3 = pv1 + pv2" << endl;
+        pv3 = pv1 + pv2;
+        cout << "pv3: "; disp_vector(pv3);
+        cout << "pv3 = pv2 + pv2 + pv3" << endl;
+        pv3 = pv2 + pv2 + pv3; // + 연산자: pv3의 메모리가 확장
+        cout << "pv3: "; disp_vector(pv3);
+    }
+
+    void operatorAddAssign() { // Memu item 6
+        cout << "VectorPerson pv4 = pv1: " << endl;
+        VectorPerson pv4 = pv1;   // 묵시적 복사생성자 호출
+        cout << "pv4: "; disp_vector(pv4);
+        cout << "pv4 += pv2" << endl;
+        pv4 += pv2; // += 연산자
+        cout << "pv4: "; disp_vector(pv4);
+        cout << "pv4 += pv2 + pv2" << endl;
+        pv4 += pv2 + pv2;       // 원소개수가 11개 이상이면 메모리 확장해야 함
+        cout << "pv4: "; disp_vector(pv4);
+    }
+
 public:
     VectorOperator() {
         int i;
@@ -1887,16 +2049,24 @@ public:
     }
 
     void run() {
-        //using VO = VectorOperator;
-
-        // TODO: func_t, func_arr[], menuCount 선언
+        using VO = VectorOperator;
+    	using func_t = void (VectorOperator::*)();
+    	func_t func_arr[] = {
+    		nullptr, &VO::operatorIndex, &VO::operatorNot, &VO::copyConstructor, &VO::operatorAssign
+			,&VO::operatorAdd, &VO::operatorAddAssign
+    	};
+    	int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
         string menuStr =
             "+++++++++++++ Vector Operator Overload ++++++++++++++\n"
             "+ 0.Exit 1.operator[] 2.operator! 3.CopyConstructor +\n"
             "+ 4.operator= 5.operator+ 6.operator=+              +\n"
             "+++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 
-        // TODO: while 문장 삽입하여 선택된 메뉴항목 실행하는 함수 호출
+        while (true) {
+        	int menuItem = UI::selectMenu(menuStr, menuCount);
+        	if (menuItem == 0) return;
+        	(this->*func_arr[menuItem])();
+        }
     }
 
 }; // ch7_2: VectorOperator class
