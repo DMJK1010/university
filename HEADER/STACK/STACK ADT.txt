@@ -1,4 +1,5 @@
  * STACK ADT
+ * int type STACK
  * init(Stack) 초기화
  * is_empty(Stack) 비어있는지 체크
  * push(Stack, item) item을 push
