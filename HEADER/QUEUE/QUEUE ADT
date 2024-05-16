@@ -1,4 +1,5 @@
  * Queue ADT
+ * int data type
  * init(Q) 초기화 함수
  * is_empty(Q) 큐가 비어있는지
  * enqueue(Q, data) 큐 넣기
