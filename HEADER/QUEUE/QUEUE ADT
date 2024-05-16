@@ -1,0 +1,6 @@
+ * Queue ADT
+ * init(Q) 초기화 함수
+ * is_empty(Q) 큐가 비어있는지
+ * enqueue(Q, data) 큐 넣기
+ * dequeue(Q) 큐 빼기
+ * print_queue(Q) 큐 내용 출력
