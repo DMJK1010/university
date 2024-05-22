@@ -16,7 +16,9 @@
 #define SWAP(x, y, t) ( (t)=(x), (x)=(y), (y)=(t) )
 #define MAX_ARR_SIZE 11
 
-////////////////////// selection_sort //////////////////////
+int sorted[MAX_ARR_SIZE];
+
+ ////////////////////// selection_sort //////////////////////
 void selection_sort(int list[], int n)
 {
 	int i, j, least, temp;
@@ -82,9 +84,38 @@ void shell_sort(int list[], int n)   // n = size
 
 
 ////////////////////// merge_sort //////////////////////
-void merge_sort() {
-	printf("아직 구현되지 않았습니다.\n");
+void merge(int list[], int left, int mid, int right)
+{
+	int i, j, k, l;
+	i = left; j = mid + 1; k = left;
+	// 분할 정렬된 list의 합병
+	while (i <= mid && j <= right) {
+		if (list[i] <= list[j]) sorted[k++] = list[i++];
+		else sorted[k++] = list[j++];
+	}
+	if (i > mid) 	// 남아 있는 레코드의 일괄 복사
+		for (l = j; l <= right; l++)
+			sorted[k++] = list[l];
+	else 	// 남아 있는 레코드의 일괄 복사
+		for (l = i; l <= mid; l++)
+			sorted[k++] = list[l];
+	// 배열 sorted[]의 리스트를 배열 list[]로 복사
+	for (l = left; l <= right; l++)
+		list[l] = sorted[l];
 }
+
+void merge_sort(int list[], int left, int right)
+{
+	int mid;
+	if (left < right)
+	{
+		mid = (left + right) / 2;              // 리스트의 균등분할
+		merge_sort(list, left, mid);     // 부분리스트 정렬
+		merge_sort(list, mid + 1, right);//부분리스트 정렬
+		merge(list, left, mid, right);    // 합병
+	}
+}
+
 ////////////////////// shell_sort 끝 //////////////////////
 
 
@@ -128,7 +159,7 @@ void radix_sort() {
 }
 ////////////////////// radix_sort 끝 //////////////////////
 
-void random_arr(int *arr) {
+void random_arr(int* arr) {
 	srand(time(NULL));
 	for (int i = 0; i < MAX_ARR_SIZE; i++) {
 		arr[i] = rand() % 100;
@@ -144,7 +175,7 @@ void print_arr(int* arr) {
 	printf("\n");
 }
 
-int Main_menu(int *arr) {
+int Main_menu(int* arr) {
 	int sel;
 
 	char* menu[] = {
@@ -193,10 +224,12 @@ void Main_run() {
 			print_arr(arr);
 			break;
 		case 5:
-			merge_sort();
+			merge_sort(arr, 0, MAX_ARR_SIZE);
+			print_arr(arr);
 			break;
 		case 6:
-			quick_sort(arr, 0, MAX_ARR_SIZE-1);
+			quick_sort(arr, 0, MAX_ARR_SIZE - 1);
+			print_arr(arr);
 			break;
 		case 7:
 			radix_sort();
