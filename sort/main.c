@@ -15,10 +15,49 @@
 
 #define SWAP(x, y, t) ( (t)=(x), (x)=(y), (y)=(t) )
 #define MAX_ARR_SIZE 11
+#define MAX_QUEUE_SIZE 100
+
+typedef int element;
+
+typedef struct {
+	element data[MAX_QUEUE_SIZE];
+	int front, rear;
+} QueueType;
+
+void error(char* message) {
+	fprintf(stderr, "%s\n", message);
+	exit(1);
+}
+
+void init_queue(QueueType* q) {
+	q->front = q->rear = 0;
+}
+
+int is_empty(QueueType* q) {
+	return (q->front == q->rear);
+}
+
+int is_full(QueueType* q) {
+	return ((q->rear + 1) % MAX_QUEUE_SIZE == q->front);
+}
+
+void enqueue(QueueType* q, element item) {
+	if (is_full(q))
+		error("큐가 포화상태입니다");
+	q->rear = (q->rear + 1) % MAX_QUEUE_SIZE;
+	q->data[q->rear] = item;
+}
+
+element dequeue(QueueType* q) {
+	if (is_empty(q))
+		error("큐가 공백상태입니다");
+	q->front = (q->front + 1) % MAX_QUEUE_SIZE;
+	return q->data[q->front];
+}
 
 int sorted[MAX_ARR_SIZE];
 
- ////////////////////// selection_sort //////////////////////
+////////////////////// selection_sort //////////////////////
 void selection_sort(int list[], int n)
 {
 	int i, j, least, temp;
@@ -154,9 +193,26 @@ void quick_sort(int list[], int left, int right)
 
 
 ////////////////////// radix_sort //////////////////////
-void radix_sort() {
-	printf("아직 구현되지 않았습니다.\n");
+#define BUCKETS 10
+#define DIGITS 4
+void radix_sort(int list[], int n)
+{
+	int i, b, d, factor = 1;
+	QueueType queues[BUCKETS];
+
+	for (b = 0; b < BUCKETS; b++) init_queue(&queues[b]);	// 큐들의 초기화
+
+	for (d = 0; d < DIGITS; d++) {
+		for (i = 0; i < n; i++)				// 데이터들을 자리수에 따라 큐에 입력
+			enqueue(&queues[(list[i] / factor) % 10], list[i]);
+
+		for (b = i = 0; b < BUCKETS; b++)			// 버켓에서 꺼내어 list로 합친다.
+			while (!is_empty(&queues[b]))
+				list[i++] = dequeue(&queues[b]);
+		factor *= 10;				// 그 다음 자리수로 간다.
+	}
 }
+
 ////////////////////// radix_sort 끝 //////////////////////
 
 void random_arr(int* arr) {
@@ -232,7 +288,8 @@ void Main_run() {
 			print_arr(arr);
 			break;
 		case 7:
-			radix_sort();
+			radix_sort(arr, MAX_ARR_SIZE);
+			print_arr(arr);
 			break;
 		case 8:
 			random_arr(arr);
