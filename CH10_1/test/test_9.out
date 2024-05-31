@@ -1,0 +1,1064 @@
+
+******************************* Main Menu *********************************
+* 0.Exit 1.PersonManager(ch3_2, 4, 6, 7_2, 8, 9, 10)                      *
+* 2.Class:Object(ch3_1) 3.CopyConstructor(ch5_1) 4.AllocatedMember(ch5_2) *
+* 5.OperatorOverload(ch7_1) 6.Inheritance(ch8) 7.PMbyVector               *
+***************************************************************************
+Menu item number? 7
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 1
+display(): count 16
+[0] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] s1 21 65.4 true :Jongno-gu Seoul:
+[5] s2 22 54.3 false :Yeonje-gu Busan:
+[6] s3 23 55.5 true :Dong-gu Incheon:
+[7] s4 24 66.6 false :Sasang-gu Sejong:
+[8] w1 31 33.3 false :Kangnam-gu Seoul:
+[9] w2 32 44.4 true :Dobong-gu Kwangju:
+[10] w3 33 55.5 true :Dong-gu Incheon:
+[11] w4 34 66.6 false :Sasang-gu Sejong:
+[12] a1 41 55.5 true :Dong-gu Incheon:
+[13] a2 42 66.6 false :Sasang-gu Sejong:
+[14] a3 43 51.9 false :Buk-gu Daejeon:
+[15] a4 44 66.6 true :Nam-gu Busan:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 6
+display(): count 32
+[0] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] s1 21 65.4 true :Jongno-gu Seoul:
+[5] s2 22 54.3 false :Yeonje-gu Busan:
+[6] s3 23 55.5 true :Dong-gu Incheon:
+[7] s4 24 66.6 false :Sasang-gu Sejong:
+[8] w1 31 33.3 false :Kangnam-gu Seoul:
+[9] w2 32 44.4 true :Dobong-gu Kwangju:
+[10] w3 33 55.5 true :Dong-gu Incheon:
+[11] w4 34 66.6 false :Sasang-gu Sejong:
+[12] a1 41 55.5 true :Dong-gu Incheon:
+[13] a2 42 66.6 false :Sasang-gu Sejong:
+[14] a3 43 51.9 false :Buk-gu Daejeon:
+[15] a4 44 66.6 true :Nam-gu Busan:
+[16] pp0 30 71 true :Gwangju Nam-gu Bongseon-dong 21:
+[17] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[18] pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[19] pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[20] ss1 41 66.4 false :Jongno-gu Seoul:
+[21] ss2 42 55.3 true :Yeonje-gu Busan:
+[22] ss3 43 56.5 false :Dong-gu Incheon:
+[23] ss4 44 67.6 true :Sasang-gu Sejong:
+[24] ww1 51 34.3 true :Kangnam-gu Seoul:
+[25] ww2 52 45.4 false :Dobong-gu Kwangju:
+[26] ww3 53 56.5 false :Dong-gu Incheon:
+[27] ww4 54 67.6 true :Sasang-gu Sejong:
+[28] aa1 61 56.5 false :Dong-gu Incheon:
+[29] aa2 62 67.6 true :Sasang-gu Sejong:
+[30] aa3 63 52.9 true :Buk-gu Daejeon:
+[31] aa4 64 67.6 false :Nam-gu Busan:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 6
+display(): count 64
+[0] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] s1 21 65.4 true :Jongno-gu Seoul:
+[5] s2 22 54.3 false :Yeonje-gu Busan:
+[6] s3 23 55.5 true :Dong-gu Incheon:
+[7] s4 24 66.6 false :Sasang-gu Sejong:
+[8] w1 31 33.3 false :Kangnam-gu Seoul:
+[9] w2 32 44.4 true :Dobong-gu Kwangju:
+[10] w3 33 55.5 true :Dong-gu Incheon:
+[11] w4 34 66.6 false :Sasang-gu Sejong:
+[12] a1 41 55.5 true :Dong-gu Incheon:
+[13] a2 42 66.6 false :Sasang-gu Sejong:
+[14] a3 43 51.9 false :Buk-gu Daejeon:
+[15] a4 44 66.6 true :Nam-gu Busan:
+[16] pp0 30 71 true :Gwangju Nam-gu Bongseon-dong 21:
+[17] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[18] pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[19] pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[20] ss1 41 66.4 false :Jongno-gu Seoul:
+[21] ss2 42 55.3 true :Yeonje-gu Busan:
+[22] ss3 43 56.5 false :Dong-gu Incheon:
+[23] ss4 44 67.6 true :Sasang-gu Sejong:
+[24] ww1 51 34.3 true :Kangnam-gu Seoul:
+[25] ww2 52 45.4 false :Dobong-gu Kwangju:
+[26] ww3 53 56.5 false :Dong-gu Incheon:
+[27] ww4 54 67.6 true :Sasang-gu Sejong:
+[28] aa1 61 56.5 false :Dong-gu Incheon:
+[29] aa2 62 67.6 true :Sasang-gu Sejong:
+[30] aa3 63 52.9 true :Buk-gu Daejeon:
+[31] aa4 64 67.6 false :Nam-gu Busan:
+[32] ppp0 50 72 false :Gwangju Nam-gu Bongseon-dong 21:
+[33] ppp1 51 63.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[34] ppp2 52 54.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[35] ppp3 53 85.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[36] sss1 61 67.4 true :Jongno-gu Seoul:
+[37] sss2 62 56.3 false :Yeonje-gu Busan:
+[38] sss3 63 57.5 true :Dong-gu Incheon:
+[39] sss4 64 68.6 false :Sasang-gu Sejong:
+[40] www1 71 35.3 false :Kangnam-gu Seoul:
+[41] www2 72 46.4 true :Dobong-gu Kwangju:
+[42] www3 73 57.5 true :Dong-gu Incheon:
+[43] www4 74 68.6 false :Sasang-gu Sejong:
+[44] aaa1 81 57.5 true :Dong-gu Incheon:
+[45] aaa2 82 68.6 false :Sasang-gu Sejong:
+[46] aaa3 83 53.9 false :Buk-gu Daejeon:
+[47] aaa4 84 68.6 true :Nam-gu Busan:
+[48] pppp0 70 73 true :Gwangju Nam-gu Bongseon-dong 21:
+[49] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[50] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[51] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[52] ssss1 81 68.4 false :Jongno-gu Seoul:
+[53] ssss2 82 57.3 true :Yeonje-gu Busan:
+[54] ssss3 83 58.5 false :Dong-gu Incheon:
+[55] ssss4 84 69.6 true :Sasang-gu Sejong:
+[56] wwww1 91 36.3 true :Kangnam-gu Seoul:
+[57] wwww2 92 47.4 false :Dobong-gu Kwangju:
+[58] wwww3 93 58.5 false :Dong-gu Incheon:
+[59] wwww4 94 69.6 true :Sasang-gu Sejong:
+[60] aaaa1 101 58.5 false :Dong-gu Incheon:
+[61] aaaa2 102 69.6 true :Sasang-gu Sejong:
+[62] aaaa3 103 54.9 true :Buk-gu Daejeon:
+[63] aaaa4 104 69.6 false :Nam-gu Busan:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 6
+display(): count 128
+[0] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] s1 21 65.4 true :Jongno-gu Seoul:
+[5] s2 22 54.3 false :Yeonje-gu Busan:
+[6] s3 23 55.5 true :Dong-gu Incheon:
+[7] s4 24 66.6 false :Sasang-gu Sejong:
+[8] w1 31 33.3 false :Kangnam-gu Seoul:
+[9] w2 32 44.4 true :Dobong-gu Kwangju:
+[10] w3 33 55.5 true :Dong-gu Incheon:
+[11] w4 34 66.6 false :Sasang-gu Sejong:
+[12] a1 41 55.5 true :Dong-gu Incheon:
+[13] a2 42 66.6 false :Sasang-gu Sejong:
+[14] a3 43 51.9 false :Buk-gu Daejeon:
+[15] a4 44 66.6 true :Nam-gu Busan:
+[16] pp0 30 71 true :Gwangju Nam-gu Bongseon-dong 21:
+[17] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[18] pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[19] pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[20] ss1 41 66.4 false :Jongno-gu Seoul:
+[21] ss2 42 55.3 true :Yeonje-gu Busan:
+[22] ss3 43 56.5 false :Dong-gu Incheon:
+[23] ss4 44 67.6 true :Sasang-gu Sejong:
+[24] ww1 51 34.3 true :Kangnam-gu Seoul:
+[25] ww2 52 45.4 false :Dobong-gu Kwangju:
+[26] ww3 53 56.5 false :Dong-gu Incheon:
+[27] ww4 54 67.6 true :Sasang-gu Sejong:
+[28] aa1 61 56.5 false :Dong-gu Incheon:
+[29] aa2 62 67.6 true :Sasang-gu Sejong:
+[30] aa3 63 52.9 true :Buk-gu Daejeon:
+[31] aa4 64 67.6 false :Nam-gu Busan:
+[32] ppp0 50 72 false :Gwangju Nam-gu Bongseon-dong 21:
+[33] ppp1 51 63.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[34] ppp2 52 54.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[35] ppp3 53 85.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[36] sss1 61 67.4 true :Jongno-gu Seoul:
+[37] sss2 62 56.3 false :Yeonje-gu Busan:
+[38] sss3 63 57.5 true :Dong-gu Incheon:
+[39] sss4 64 68.6 false :Sasang-gu Sejong:
+[40] www1 71 35.3 false :Kangnam-gu Seoul:
+[41] www2 72 46.4 true :Dobong-gu Kwangju:
+[42] www3 73 57.5 true :Dong-gu Incheon:
+[43] www4 74 68.6 false :Sasang-gu Sejong:
+[44] aaa1 81 57.5 true :Dong-gu Incheon:
+[45] aaa2 82 68.6 false :Sasang-gu Sejong:
+[46] aaa3 83 53.9 false :Buk-gu Daejeon:
+[47] aaa4 84 68.6 true :Nam-gu Busan:
+[48] pppp0 70 73 true :Gwangju Nam-gu Bongseon-dong 21:
+[49] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[50] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[51] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[52] ssss1 81 68.4 false :Jongno-gu Seoul:
+[53] ssss2 82 57.3 true :Yeonje-gu Busan:
+[54] ssss3 83 58.5 false :Dong-gu Incheon:
+[55] ssss4 84 69.6 true :Sasang-gu Sejong:
+[56] wwww1 91 36.3 true :Kangnam-gu Seoul:
+[57] wwww2 92 47.4 false :Dobong-gu Kwangju:
+[58] wwww3 93 58.5 false :Dong-gu Incheon:
+[59] wwww4 94 69.6 true :Sasang-gu Sejong:
+[60] aaaa1 101 58.5 false :Dong-gu Incheon:
+[61] aaaa2 102 69.6 true :Sasang-gu Sejong:
+[62] aaaa3 103 54.9 true :Buk-gu Daejeon:
+[63] aaaa4 104 69.6 false :Nam-gu Busan:
+[64] pppp0 70 73 true :Gwangju Nam-gu Bongseon-dong 21:
+[65] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[66] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[67] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[68] ssss1 81 68.4 false :Jongno-gu Seoul:
+[69] ssss2 82 57.3 true :Yeonje-gu Busan:
+[70] ssss3 83 58.5 false :Dong-gu Incheon:
+[71] ssss4 84 69.6 true :Sasang-gu Sejong:
+[72] wwww1 91 36.3 true :Kangnam-gu Seoul:
+[73] wwww2 92 47.4 false :Dobong-gu Kwangju:
+[74] wwww3 93 58.5 false :Dong-gu Incheon:
+[75] wwww4 94 69.6 true :Sasang-gu Sejong:
+[76] aaaa1 101 58.5 false :Dong-gu Incheon:
+[77] aaaa2 102 69.6 true :Sasang-gu Sejong:
+[78] aaaa3 103 54.9 true :Buk-gu Daejeon:
+[79] aaaa4 104 69.6 false :Nam-gu Busan:
+[80] ppppp0 90 74 false :Gwangju Nam-gu Bongseon-dong 21:
+[81] ppppp1 91 65.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[82] ppppp2 92 56.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[83] ppppp3 93 87.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[84] sssss1 101 69.4 true :Jongno-gu Seoul:
+[85] sssss2 102 58.3 false :Yeonje-gu Busan:
+[86] sssss3 103 59.5 true :Dong-gu Incheon:
+[87] sssss4 104 70.6 false :Sasang-gu Sejong:
+[88] wwwww1 111 37.3 false :Kangnam-gu Seoul:
+[89] wwwww2 112 48.4 true :Dobong-gu Kwangju:
+[90] wwwww3 113 59.5 true :Dong-gu Incheon:
+[91] wwwww4 114 70.6 false :Sasang-gu Sejong:
+[92] aaaaa1 121 59.5 true :Dong-gu Incheon:
+[93] aaaaa2 122 70.6 false :Sasang-gu Sejong:
+[94] aaaaa3 123 55.9 false :Buk-gu Daejeon:
+[95] aaaaa4 124 70.6 true :Nam-gu Busan:
+[96] pppppp0 110 75 true :Gwangju Nam-gu Bongseon-dong 21:
+[97] pppppp1 111 66.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[98] pppppp2 112 57.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[99] pppppp3 113 88.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[100] ssssss1 121 70.4 false :Jongno-gu Seoul:
+[101] ssssss2 122 59.3 true :Yeonje-gu Busan:
+[102] ssssss3 123 60.5 false :Dong-gu Incheon:
+[103] ssssss4 124 71.6 true :Sasang-gu Sejong:
+[104] wwwwww1 131 38.3 true :Kangnam-gu Seoul:
+[105] wwwwww2 132 49.4 false :Dobong-gu Kwangju:
+[106] wwwwww3 133 60.5 false :Dong-gu Incheon:
+[107] wwwwww4 134 71.6 true :Sasang-gu Sejong:
+[108] aaaaaa1 141 60.5 false :Dong-gu Incheon:
+[109] aaaaaa2 142 71.6 true :Sasang-gu Sejong:
+[110] aaaaaa3 143 56.9 true :Buk-gu Daejeon:
+[111] aaaaaa4 144 71.6 false :Nam-gu Busan:
+[112] ppppppp0 130 76 false :Gwangju Nam-gu Bongseon-dong 21:
+[113] ppppppp1 131 67.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[114] ppppppp2 132 58.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[115] ppppppp3 133 89.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[116] sssssss1 141 71.4 true :Jongno-gu Seoul:
+[117] sssssss2 142 60.3 false :Yeonje-gu Busan:
+[118] sssssss3 143 61.5 true :Dong-gu Incheon:
+[119] sssssss4 144 72.6 false :Sasang-gu Sejong:
+[120] wwwwwww1 151 39.3 false :Kangnam-gu Seoul:
+[121] wwwwwww2 152 50.4 true :Dobong-gu Kwangju:
+[122] wwwwwww3 153 61.5 true :Dong-gu Incheon:
+[123] wwwwwww4 154 72.6 false :Sasang-gu Sejong:
+[124] aaaaaaa1 161 61.5 true :Dong-gu Incheon:
+[125] aaaaaaa2 162 72.6 false :Sasang-gu Sejong:
+[126] aaaaaaa3 163 57.9 false :Buk-gu Daejeon:
+[127] aaaaaaa4 164 72.6 true :Nam-gu Busan:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 6
+display(): count 256
+[0] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] s1 21 65.4 true :Jongno-gu Seoul:
+[5] s2 22 54.3 false :Yeonje-gu Busan:
+[6] s3 23 55.5 true :Dong-gu Incheon:
+[7] s4 24 66.6 false :Sasang-gu Sejong:
+[8] w1 31 33.3 false :Kangnam-gu Seoul:
+[9] w2 32 44.4 true :Dobong-gu Kwangju:
+[10] w3 33 55.5 true :Dong-gu Incheon:
+[11] w4 34 66.6 false :Sasang-gu Sejong:
+[12] a1 41 55.5 true :Dong-gu Incheon:
+[13] a2 42 66.6 false :Sasang-gu Sejong:
+[14] a3 43 51.9 false :Buk-gu Daejeon:
+[15] a4 44 66.6 true :Nam-gu Busan:
+[16] pp0 30 71 true :Gwangju Nam-gu Bongseon-dong 21:
+[17] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[18] pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[19] pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[20] ss1 41 66.4 false :Jongno-gu Seoul:
+[21] ss2 42 55.3 true :Yeonje-gu Busan:
+[22] ss3 43 56.5 false :Dong-gu Incheon:
+[23] ss4 44 67.6 true :Sasang-gu Sejong:
+[24] ww1 51 34.3 true :Kangnam-gu Seoul:
+[25] ww2 52 45.4 false :Dobong-gu Kwangju:
+[26] ww3 53 56.5 false :Dong-gu Incheon:
+[27] ww4 54 67.6 true :Sasang-gu Sejong:
+[28] aa1 61 56.5 false :Dong-gu Incheon:
+[29] aa2 62 67.6 true :Sasang-gu Sejong:
+[30] aa3 63 52.9 true :Buk-gu Daejeon:
+[31] aa4 64 67.6 false :Nam-gu Busan:
+[32] ppp0 50 72 false :Gwangju Nam-gu Bongseon-dong 21:
+[33] ppp1 51 63.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[34] ppp2 52 54.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[35] ppp3 53 85.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[36] sss1 61 67.4 true :Jongno-gu Seoul:
+[37] sss2 62 56.3 false :Yeonje-gu Busan:
+[38] sss3 63 57.5 true :Dong-gu Incheon:
+[39] sss4 64 68.6 false :Sasang-gu Sejong:
+[40] www1 71 35.3 false :Kangnam-gu Seoul:
+[41] www2 72 46.4 true :Dobong-gu Kwangju:
+[42] www3 73 57.5 true :Dong-gu Incheon:
+[43] www4 74 68.6 false :Sasang-gu Sejong:
+[44] aaa1 81 57.5 true :Dong-gu Incheon:
+[45] aaa2 82 68.6 false :Sasang-gu Sejong:
+[46] aaa3 83 53.9 false :Buk-gu Daejeon:
+[47] aaa4 84 68.6 true :Nam-gu Busan:
+[48] pppp0 70 73 true :Gwangju Nam-gu Bongseon-dong 21:
+[49] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[50] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[51] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[52] ssss1 81 68.4 false :Jongno-gu Seoul:
+[53] ssss2 82 57.3 true :Yeonje-gu Busan:
+[54] ssss3 83 58.5 false :Dong-gu Incheon:
+[55] ssss4 84 69.6 true :Sasang-gu Sejong:
+[56] wwww1 91 36.3 true :Kangnam-gu Seoul:
+[57] wwww2 92 47.4 false :Dobong-gu Kwangju:
+[58] wwww3 93 58.5 false :Dong-gu Incheon:
+[59] wwww4 94 69.6 true :Sasang-gu Sejong:
+[60] aaaa1 101 58.5 false :Dong-gu Incheon:
+[61] aaaa2 102 69.6 true :Sasang-gu Sejong:
+[62] aaaa3 103 54.9 true :Buk-gu Daejeon:
+[63] aaaa4 104 69.6 false :Nam-gu Busan:
+[64] pppp0 70 73 true :Gwangju Nam-gu Bongseon-dong 21:
+[65] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[66] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[67] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[68] ssss1 81 68.4 false :Jongno-gu Seoul:
+[69] ssss2 82 57.3 true :Yeonje-gu Busan:
+[70] ssss3 83 58.5 false :Dong-gu Incheon:
+[71] ssss4 84 69.6 true :Sasang-gu Sejong:
+[72] wwww1 91 36.3 true :Kangnam-gu Seoul:
+[73] wwww2 92 47.4 false :Dobong-gu Kwangju:
+[74] wwww3 93 58.5 false :Dong-gu Incheon:
+[75] wwww4 94 69.6 true :Sasang-gu Sejong:
+[76] aaaa1 101 58.5 false :Dong-gu Incheon:
+[77] aaaa2 102 69.6 true :Sasang-gu Sejong:
+[78] aaaa3 103 54.9 true :Buk-gu Daejeon:
+[79] aaaa4 104 69.6 false :Nam-gu Busan:
+[80] ppppp0 90 74 false :Gwangju Nam-gu Bongseon-dong 21:
+[81] ppppp1 91 65.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[82] ppppp2 92 56.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[83] ppppp3 93 87.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[84] sssss1 101 69.4 true :Jongno-gu Seoul:
+[85] sssss2 102 58.3 false :Yeonje-gu Busan:
+[86] sssss3 103 59.5 true :Dong-gu Incheon:
+[87] sssss4 104 70.6 false :Sasang-gu Sejong:
+[88] wwwww1 111 37.3 false :Kangnam-gu Seoul:
+[89] wwwww2 112 48.4 true :Dobong-gu Kwangju:
+[90] wwwww3 113 59.5 true :Dong-gu Incheon:
+[91] wwwww4 114 70.6 false :Sasang-gu Sejong:
+[92] aaaaa1 121 59.5 true :Dong-gu Incheon:
+[93] aaaaa2 122 70.6 false :Sasang-gu Sejong:
+[94] aaaaa3 123 55.9 false :Buk-gu Daejeon:
+[95] aaaaa4 124 70.6 true :Nam-gu Busan:
+[96] pppppp0 110 75 true :Gwangju Nam-gu Bongseon-dong 21:
+[97] pppppp1 111 66.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[98] pppppp2 112 57.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[99] pppppp3 113 88.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[100] ssssss1 121 70.4 false :Jongno-gu Seoul:
+[101] ssssss2 122 59.3 true :Yeonje-gu Busan:
+[102] ssssss3 123 60.5 false :Dong-gu Incheon:
+[103] ssssss4 124 71.6 true :Sasang-gu Sejong:
+[104] wwwwww1 131 38.3 true :Kangnam-gu Seoul:
+[105] wwwwww2 132 49.4 false :Dobong-gu Kwangju:
+[106] wwwwww3 133 60.5 false :Dong-gu Incheon:
+[107] wwwwww4 134 71.6 true :Sasang-gu Sejong:
+[108] aaaaaa1 141 60.5 false :Dong-gu Incheon:
+[109] aaaaaa2 142 71.6 true :Sasang-gu Sejong:
+[110] aaaaaa3 143 56.9 true :Buk-gu Daejeon:
+[111] aaaaaa4 144 71.6 false :Nam-gu Busan:
+[112] ppppppp0 130 76 false :Gwangju Nam-gu Bongseon-dong 21:
+[113] ppppppp1 131 67.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[114] ppppppp2 132 58.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[115] ppppppp3 133 89.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[116] sssssss1 141 71.4 true :Jongno-gu Seoul:
+[117] sssssss2 142 60.3 false :Yeonje-gu Busan:
+[118] sssssss3 143 61.5 true :Dong-gu Incheon:
+[119] sssssss4 144 72.6 false :Sasang-gu Sejong:
+[120] wwwwwww1 151 39.3 false :Kangnam-gu Seoul:
+[121] wwwwwww2 152 50.4 true :Dobong-gu Kwangju:
+[122] wwwwwww3 153 61.5 true :Dong-gu Incheon:
+[123] wwwwwww4 154 72.6 false :Sasang-gu Sejong:
+[124] aaaaaaa1 161 61.5 true :Dong-gu Incheon:
+[125] aaaaaaa2 162 72.6 false :Sasang-gu Sejong:
+[126] aaaaaaa3 163 57.9 false :Buk-gu Daejeon:
+[127] aaaaaaa4 164 72.6 true :Nam-gu Busan:
+[128] ppppp0 90 74 false :Gwangju Nam-gu Bongseon-dong 21:
+[129] ppppp1 91 65.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[130] ppppp2 92 56.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[131] ppppp3 93 87.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[132] sssss1 101 69.4 true :Jongno-gu Seoul:
+[133] sssss2 102 58.3 false :Yeonje-gu Busan:
+[134] sssss3 103 59.5 true :Dong-gu Incheon:
+[135] sssss4 104 70.6 false :Sasang-gu Sejong:
+[136] wwwww1 111 37.3 false :Kangnam-gu Seoul:
+[137] wwwww2 112 48.4 true :Dobong-gu Kwangju:
+[138] wwwww3 113 59.5 true :Dong-gu Incheon:
+[139] wwwww4 114 70.6 false :Sasang-gu Sejong:
+[140] aaaaa1 121 59.5 true :Dong-gu Incheon:
+[141] aaaaa2 122 70.6 false :Sasang-gu Sejong:
+[142] aaaaa3 123 55.9 false :Buk-gu Daejeon:
+[143] aaaaa4 124 70.6 true :Nam-gu Busan:
+[144] pppppp0 110 75 true :Gwangju Nam-gu Bongseon-dong 21:
+[145] pppppp1 111 66.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[146] pppppp2 112 57.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[147] pppppp3 113 88.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[148] ssssss1 121 70.4 false :Jongno-gu Seoul:
+[149] ssssss2 122 59.3 true :Yeonje-gu Busan:
+[150] ssssss3 123 60.5 false :Dong-gu Incheon:
+[151] ssssss4 124 71.6 true :Sasang-gu Sejong:
+[152] wwwwww1 131 38.3 true :Kangnam-gu Seoul:
+[153] wwwwww2 132 49.4 false :Dobong-gu Kwangju:
+[154] wwwwww3 133 60.5 false :Dong-gu Incheon:
+[155] wwwwww4 134 71.6 true :Sasang-gu Sejong:
+[156] aaaaaa1 141 60.5 false :Dong-gu Incheon:
+[157] aaaaaa2 142 71.6 true :Sasang-gu Sejong:
+[158] aaaaaa3 143 56.9 true :Buk-gu Daejeon:
+[159] aaaaaa4 144 71.6 false :Nam-gu Busan:
+[160] ppppppp0 130 76 false :Gwangju Nam-gu Bongseon-dong 21:
+[161] ppppppp1 131 67.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[162] ppppppp2 132 58.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[163] ppppppp3 133 89.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[164] sssssss1 141 71.4 true :Jongno-gu Seoul:
+[165] sssssss2 142 60.3 false :Yeonje-gu Busan:
+[166] sssssss3 143 61.5 true :Dong-gu Incheon:
+[167] sssssss4 144 72.6 false :Sasang-gu Sejong:
+[168] wwwwwww1 151 39.3 false :Kangnam-gu Seoul:
+[169] wwwwwww2 152 50.4 true :Dobong-gu Kwangju:
+[170] wwwwwww3 153 61.5 true :Dong-gu Incheon:
+[171] wwwwwww4 154 72.6 false :Sasang-gu Sejong:
+[172] aaaaaaa1 161 61.5 true :Dong-gu Incheon:
+[173] aaaaaaa2 162 72.6 false :Sasang-gu Sejong:
+[174] aaaaaaa3 163 57.9 false :Buk-gu Daejeon:
+[175] aaaaaaa4 164 72.6 true :Nam-gu Busan:
+[176] pppppppp0 150 77 true :Gwangju Nam-gu Bongseon-dong 21:
+[177] pppppppp1 151 68.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[178] pppppppp2 152 59.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[179] pppppppp3 153 90.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[180] ssssssss1 161 72.4 false :Jongno-gu Seoul:
+[181] ssssssss2 162 61.3 true :Yeonje-gu Busan:
+[182] ssssssss3 163 62.5 false :Dong-gu Incheon:
+[183] ssssssss4 164 73.6 true :Sasang-gu Sejong:
+[184] wwwwwwww1 171 40.3 true :Kangnam-gu Seoul:
+[185] wwwwwwww2 172 51.4 false :Dobong-gu Kwangju:
+[186] wwwwwwww3 173 62.5 false :Dong-gu Incheon:
+[187] wwwwwwww4 174 73.6 true :Sasang-gu Sejong:
+[188] aaaaaaaa1 181 62.5 false :Dong-gu Incheon:
+[189] aaaaaaaa2 182 73.6 true :Sasang-gu Sejong:
+[190] aaaaaaaa3 183 58.9 true :Buk-gu Daejeon:
+[191] aaaaaaaa4 184 73.6 false :Nam-gu Busan:
+[192] pppppppp0 150 77 true :Gwangju Nam-gu Bongseon-dong 21:
+[193] pppppppp1 151 68.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[194] pppppppp2 152 59.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[195] pppppppp3 153 90.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[196] ssssssss1 161 72.4 false :Jongno-gu Seoul:
+[197] ssssssss2 162 61.3 true :Yeonje-gu Busan:
+[198] ssssssss3 163 62.5 false :Dong-gu Incheon:
+[199] ssssssss4 164 73.6 true :Sasang-gu Sejong:
+[200] wwwwwwww1 171 40.3 true :Kangnam-gu Seoul:
+[201] wwwwwwww2 172 51.4 false :Dobong-gu Kwangju:
+[202] wwwwwwww3 173 62.5 false :Dong-gu Incheon:
+[203] wwwwwwww4 174 73.6 true :Sasang-gu Sejong:
+[204] aaaaaaaa1 181 62.5 false :Dong-gu Incheon:
+[205] aaaaaaaa2 182 73.6 true :Sasang-gu Sejong:
+[206] aaaaaaaa3 183 58.9 true :Buk-gu Daejeon:
+[207] aaaaaaaa4 184 73.6 false :Nam-gu Busan:
+[208] ppppppppp0 170 78 false :Gwangju Nam-gu Bongseon-dong 21:
+[209] ppppppppp1 171 69.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[210] ppppppppp2 172 60.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[211] ppppppppp3 173 91.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[212] sssssssss1 181 73.4 true :Jongno-gu Seoul:
+[213] sssssssss2 182 62.3 false :Yeonje-gu Busan:
+[214] sssssssss3 183 63.5 true :Dong-gu Incheon:
+[215] sssssssss4 184 74.6 false :Sasang-gu Sejong:
+[216] wwwwwwwww1 191 41.3 false :Kangnam-gu Seoul:
+[217] wwwwwwwww2 192 52.4 true :Dobong-gu Kwangju:
+[218] wwwwwwwww3 193 63.5 true :Dong-gu Incheon:
+[219] wwwwwwwww4 194 74.6 false :Sasang-gu Sejong:
+[220] aaaaaaaaa1 201 63.5 true :Dong-gu Incheon:
+[221] aaaaaaaaa2 202 74.6 false :Sasang-gu Sejong:
+[222] aaaaaaaaa3 203 59.9 false :Buk-gu Daejeon:
+[223] aaaaaaaaa4 204 74.6 true :Nam-gu Busan:
+[224] pppppppppp0 190 79 true :Gwangju Nam-gu Bongseon-dong 21:
+[225] pppppppppp1 191 70.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[226] pppppppppp2 192 61.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[227] pppppppppp3 193 92.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[228] ssssssssss1 201 74.4 false :Jongno-gu Seoul:
+[229] ssssssssss2 202 63.3 true :Yeonje-gu Busan:
+[230] ssssssssss3 203 64.5 false :Dong-gu Incheon:
+[231] ssssssssss4 204 75.6 true :Sasang-gu Sejong:
+[232] wwwwwwwwww1 211 42.3 true :Kangnam-gu Seoul:
+[233] wwwwwwwwww2 212 53.4 false :Dobong-gu Kwangju:
+[234] wwwwwwwwww3 213 64.5 false :Dong-gu Incheon:
+[235] wwwwwwwwww4 214 75.6 true :Sasang-gu Sejong:
+[236] aaaaaaaaaa1 221 64.5 false :Dong-gu Incheon:
+[237] aaaaaaaaaa2 222 75.6 true :Sasang-gu Sejong:
+[238] aaaaaaaaaa3 223 60.9 true :Buk-gu Daejeon:
+[239] aaaaaaaaaa4 224 75.6 false :Nam-gu Busan:
+[240] ppppppppppp0 210 80 false :Gwangju Nam-gu Bongseon-dong 21:
+[241] ppppppppppp1 211 71.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[242] ppppppppppp2 212 62.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[243] ppppppppppp3 213 93.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[244] sssssssssss1 221 75.4 true :Jongno-gu Seoul:
+[245] sssssssssss2 222 64.3 false :Yeonje-gu Busan:
+[246] sssssssssss3 223 65.5 true :Dong-gu Incheon:
+[247] sssssssssss4 224 76.6 false :Sasang-gu Sejong:
+[248] wwwwwwwwwww1 231 43.3 false :Kangnam-gu Seoul:
+[249] wwwwwwwwwww2 232 54.4 true :Dobong-gu Kwangju:
+[250] wwwwwwwwwww3 233 65.5 true :Dong-gu Incheon:
+[251] wwwwwwwwwww4 234 76.6 false :Sasang-gu Sejong:
+[252] aaaaaaaaaaa1 241 65.5 true :Dong-gu Incheon:
+[253] aaaaaaaaaaa2 242 76.6 false :Sasang-gu Sejong:
+[254] aaaaaaaaaaa3 243 61.9 false :Buk-gu Daejeon:
+[255] aaaaaaaaaaa4 244 76.6 true :Nam-gu Busan:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 6
+display(): count 512
+[0] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] s1 21 65.4 true :Jongno-gu Seoul:
+[5] s2 22 54.3 false :Yeonje-gu Busan:
+[6] s3 23 55.5 true :Dong-gu Incheon:
+[7] s4 24 66.6 false :Sasang-gu Sejong:
+[8] w1 31 33.3 false :Kangnam-gu Seoul:
+[9] w2 32 44.4 true :Dobong-gu Kwangju:
+[10] w3 33 55.5 true :Dong-gu Incheon:
+[11] w4 34 66.6 false :Sasang-gu Sejong:
+[12] a1 41 55.5 true :Dong-gu Incheon:
+[13] a2 42 66.6 false :Sasang-gu Sejong:
+[14] a3 43 51.9 false :Buk-gu Daejeon:
+[15] a4 44 66.6 true :Nam-gu Busan:
+[16] pp0 30 71 true :Gwangju Nam-gu Bongseon-dong 21:
+[17] pp1 31 62.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[18] pp2 32 53.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[19] pp3 33 84.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[20] ss1 41 66.4 false :Jongno-gu Seoul:
+[21] ss2 42 55.3 true :Yeonje-gu Busan:
+[22] ss3 43 56.5 false :Dong-gu Incheon:
+[23] ss4 44 67.6 true :Sasang-gu Sejong:
+[24] ww1 51 34.3 true :Kangnam-gu Seoul:
+[25] ww2 52 45.4 false :Dobong-gu Kwangju:
+[26] ww3 53 56.5 false :Dong-gu Incheon:
+[27] ww4 54 67.6 true :Sasang-gu Sejong:
+[28] aa1 61 56.5 false :Dong-gu Incheon:
+[29] aa2 62 67.6 true :Sasang-gu Sejong:
+[30] aa3 63 52.9 true :Buk-gu Daejeon:
+[31] aa4 64 67.6 false :Nam-gu Busan:
+[32] ppp0 50 72 false :Gwangju Nam-gu Bongseon-dong 21:
+[33] ppp1 51 63.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[34] ppp2 52 54.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[35] ppp3 53 85.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[36] sss1 61 67.4 true :Jongno-gu Seoul:
+[37] sss2 62 56.3 false :Yeonje-gu Busan:
+[38] sss3 63 57.5 true :Dong-gu Incheon:
+[39] sss4 64 68.6 false :Sasang-gu Sejong:
+[40] www1 71 35.3 false :Kangnam-gu Seoul:
+[41] www2 72 46.4 true :Dobong-gu Kwangju:
+[42] www3 73 57.5 true :Dong-gu Incheon:
+[43] www4 74 68.6 false :Sasang-gu Sejong:
+[44] aaa1 81 57.5 true :Dong-gu Incheon:
+[45] aaa2 82 68.6 false :Sasang-gu Sejong:
+[46] aaa3 83 53.9 false :Buk-gu Daejeon:
+[47] aaa4 84 68.6 true :Nam-gu Busan:
+[48] pppp0 70 73 true :Gwangju Nam-gu Bongseon-dong 21:
+[49] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[50] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[51] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[52] ssss1 81 68.4 false :Jongno-gu Seoul:
+[53] ssss2 82 57.3 true :Yeonje-gu Busan:
+[54] ssss3 83 58.5 false :Dong-gu Incheon:
+[55] ssss4 84 69.6 true :Sasang-gu Sejong:
+[56] wwww1 91 36.3 true :Kangnam-gu Seoul:
+[57] wwww2 92 47.4 false :Dobong-gu Kwangju:
+[58] wwww3 93 58.5 false :Dong-gu Incheon:
+[59] wwww4 94 69.6 true :Sasang-gu Sejong:
+[60] aaaa1 101 58.5 false :Dong-gu Incheon:
+[61] aaaa2 102 69.6 true :Sasang-gu Sejong:
+[62] aaaa3 103 54.9 true :Buk-gu Daejeon:
+[63] aaaa4 104 69.6 false :Nam-gu Busan:
+[64] pppp0 70 73 true :Gwangju Nam-gu Bongseon-dong 21:
+[65] pppp1 71 64.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[66] pppp2 72 55.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[67] pppp3 73 86.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[68] ssss1 81 68.4 false :Jongno-gu Seoul:
+[69] ssss2 82 57.3 true :Yeonje-gu Busan:
+[70] ssss3 83 58.5 false :Dong-gu Incheon:
+[71] ssss4 84 69.6 true :Sasang-gu Sejong:
+[72] wwww1 91 36.3 true :Kangnam-gu Seoul:
+[73] wwww2 92 47.4 false :Dobong-gu Kwangju:
+[74] wwww3 93 58.5 false :Dong-gu Incheon:
+[75] wwww4 94 69.6 true :Sasang-gu Sejong:
+[76] aaaa1 101 58.5 false :Dong-gu Incheon:
+[77] aaaa2 102 69.6 true :Sasang-gu Sejong:
+[78] aaaa3 103 54.9 true :Buk-gu Daejeon:
+[79] aaaa4 104 69.6 false :Nam-gu Busan:
+[80] ppppp0 90 74 false :Gwangju Nam-gu Bongseon-dong 21:
+[81] ppppp1 91 65.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[82] ppppp2 92 56.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[83] ppppp3 93 87.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[84] sssss1 101 69.4 true :Jongno-gu Seoul:
+[85] sssss2 102 58.3 false :Yeonje-gu Busan:
+[86] sssss3 103 59.5 true :Dong-gu Incheon:
+[87] sssss4 104 70.6 false :Sasang-gu Sejong:
+[88] wwwww1 111 37.3 false :Kangnam-gu Seoul:
+[89] wwwww2 112 48.4 true :Dobong-gu Kwangju:
+[90] wwwww3 113 59.5 true :Dong-gu Incheon:
+[91] wwwww4 114 70.6 false :Sasang-gu Sejong:
+[92] aaaaa1 121 59.5 true :Dong-gu Incheon:
+[93] aaaaa2 122 70.6 false :Sasang-gu Sejong:
+[94] aaaaa3 123 55.9 false :Buk-gu Daejeon:
+[95] aaaaa4 124 70.6 true :Nam-gu Busan:
+[96] pppppp0 110 75 true :Gwangju Nam-gu Bongseon-dong 21:
+[97] pppppp1 111 66.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[98] pppppp2 112 57.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[99] pppppp3 113 88.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[100] ssssss1 121 70.4 false :Jongno-gu Seoul:
+[101] ssssss2 122 59.3 true :Yeonje-gu Busan:
+[102] ssssss3 123 60.5 false :Dong-gu Incheon:
+[103] ssssss4 124 71.6 true :Sasang-gu Sejong:
+[104] wwwwww1 131 38.3 true :Kangnam-gu Seoul:
+[105] wwwwww2 132 49.4 false :Dobong-gu Kwangju:
+[106] wwwwww3 133 60.5 false :Dong-gu Incheon:
+[107] wwwwww4 134 71.6 true :Sasang-gu Sejong:
+[108] aaaaaa1 141 60.5 false :Dong-gu Incheon:
+[109] aaaaaa2 142 71.6 true :Sasang-gu Sejong:
+[110] aaaaaa3 143 56.9 true :Buk-gu Daejeon:
+[111] aaaaaa4 144 71.6 false :Nam-gu Busan:
+[112] ppppppp0 130 76 false :Gwangju Nam-gu Bongseon-dong 21:
+[113] ppppppp1 131 67.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[114] ppppppp2 132 58.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[115] ppppppp3 133 89.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[116] sssssss1 141 71.4 true :Jongno-gu Seoul:
+[117] sssssss2 142 60.3 false :Yeonje-gu Busan:
+[118] sssssss3 143 61.5 true :Dong-gu Incheon:
+[119] sssssss4 144 72.6 false :Sasang-gu Sejong:
+[120] wwwwwww1 151 39.3 false :Kangnam-gu Seoul:
+[121] wwwwwww2 152 50.4 true :Dobong-gu Kwangju:
+[122] wwwwwww3 153 61.5 true :Dong-gu Incheon:
+[123] wwwwwww4 154 72.6 false :Sasang-gu Sejong:
+[124] aaaaaaa1 161 61.5 true :Dong-gu Incheon:
+[125] aaaaaaa2 162 72.6 false :Sasang-gu Sejong:
+[126] aaaaaaa3 163 57.9 false :Buk-gu Daejeon:
+[127] aaaaaaa4 164 72.6 true :Nam-gu Busan:
+[128] ppppp0 90 74 false :Gwangju Nam-gu Bongseon-dong 21:
+[129] ppppp1 91 65.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[130] ppppp2 92 56.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[131] ppppp3 93 87.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[132] sssss1 101 69.4 true :Jongno-gu Seoul:
+[133] sssss2 102 58.3 false :Yeonje-gu Busan:
+[134] sssss3 103 59.5 true :Dong-gu Incheon:
+[135] sssss4 104 70.6 false :Sasang-gu Sejong:
+[136] wwwww1 111 37.3 false :Kangnam-gu Seoul:
+[137] wwwww2 112 48.4 true :Dobong-gu Kwangju:
+[138] wwwww3 113 59.5 true :Dong-gu Incheon:
+[139] wwwww4 114 70.6 false :Sasang-gu Sejong:
+[140] aaaaa1 121 59.5 true :Dong-gu Incheon:
+[141] aaaaa2 122 70.6 false :Sasang-gu Sejong:
+[142] aaaaa3 123 55.9 false :Buk-gu Daejeon:
+[143] aaaaa4 124 70.6 true :Nam-gu Busan:
+[144] pppppp0 110 75 true :Gwangju Nam-gu Bongseon-dong 21:
+[145] pppppp1 111 66.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[146] pppppp2 112 57.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[147] pppppp3 113 88.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[148] ssssss1 121 70.4 false :Jongno-gu Seoul:
+[149] ssssss2 122 59.3 true :Yeonje-gu Busan:
+[150] ssssss3 123 60.5 false :Dong-gu Incheon:
+[151] ssssss4 124 71.6 true :Sasang-gu Sejong:
+[152] wwwwww1 131 38.3 true :Kangnam-gu Seoul:
+[153] wwwwww2 132 49.4 false :Dobong-gu Kwangju:
+[154] wwwwww3 133 60.5 false :Dong-gu Incheon:
+[155] wwwwww4 134 71.6 true :Sasang-gu Sejong:
+[156] aaaaaa1 141 60.5 false :Dong-gu Incheon:
+[157] aaaaaa2 142 71.6 true :Sasang-gu Sejong:
+[158] aaaaaa3 143 56.9 true :Buk-gu Daejeon:
+[159] aaaaaa4 144 71.6 false :Nam-gu Busan:
+[160] ppppppp0 130 76 false :Gwangju Nam-gu Bongseon-dong 21:
+[161] ppppppp1 131 67.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[162] ppppppp2 132 58.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[163] ppppppp3 133 89.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[164] sssssss1 141 71.4 true :Jongno-gu Seoul:
+[165] sssssss2 142 60.3 false :Yeonje-gu Busan:
+[166] sssssss3 143 61.5 true :Dong-gu Incheon:
+[167] sssssss4 144 72.6 false :Sasang-gu Sejong:
+[168] wwwwwww1 151 39.3 false :Kangnam-gu Seoul:
+[169] wwwwwww2 152 50.4 true :Dobong-gu Kwangju:
+[170] wwwwwww3 153 61.5 true :Dong-gu Incheon:
+[171] wwwwwww4 154 72.6 false :Sasang-gu Sejong:
+[172] aaaaaaa1 161 61.5 true :Dong-gu Incheon:
+[173] aaaaaaa2 162 72.6 false :Sasang-gu Sejong:
+[174] aaaaaaa3 163 57.9 false :Buk-gu Daejeon:
+[175] aaaaaaa4 164 72.6 true :Nam-gu Busan:
+[176] pppppppp0 150 77 true :Gwangju Nam-gu Bongseon-dong 21:
+[177] pppppppp1 151 68.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[178] pppppppp2 152 59.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[179] pppppppp3 153 90.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[180] ssssssss1 161 72.4 false :Jongno-gu Seoul:
+[181] ssssssss2 162 61.3 true :Yeonje-gu Busan:
+[182] ssssssss3 163 62.5 false :Dong-gu Incheon:
+[183] ssssssss4 164 73.6 true :Sasang-gu Sejong:
+[184] wwwwwwww1 171 40.3 true :Kangnam-gu Seoul:
+[185] wwwwwwww2 172 51.4 false :Dobong-gu Kwangju:
+[186] wwwwwwww3 173 62.5 false :Dong-gu Incheon:
+[187] wwwwwwww4 174 73.6 true :Sasang-gu Sejong:
+[188] aaaaaaaa1 181 62.5 false :Dong-gu Incheon:
+[189] aaaaaaaa2 182 73.6 true :Sasang-gu Sejong:
+[190] aaaaaaaa3 183 58.9 true :Buk-gu Daejeon:
+[191] aaaaaaaa4 184 73.6 false :Nam-gu Busan:
+[192] pppppppp0 150 77 true :Gwangju Nam-gu Bongseon-dong 21:
+[193] pppppppp1 151 68.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[194] pppppppp2 152 59.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[195] pppppppp3 153 90.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[196] ssssssss1 161 72.4 false :Jongno-gu Seoul:
+[197] ssssssss2 162 61.3 true :Yeonje-gu Busan:
+[198] ssssssss3 163 62.5 false :Dong-gu Incheon:
+[199] ssssssss4 164 73.6 true :Sasang-gu Sejong:
+[200] wwwwwwww1 171 40.3 true :Kangnam-gu Seoul:
+[201] wwwwwwww2 172 51.4 false :Dobong-gu Kwangju:
+[202] wwwwwwww3 173 62.5 false :Dong-gu Incheon:
+[203] wwwwwwww4 174 73.6 true :Sasang-gu Sejong:
+[204] aaaaaaaa1 181 62.5 false :Dong-gu Incheon:
+[205] aaaaaaaa2 182 73.6 true :Sasang-gu Sejong:
+[206] aaaaaaaa3 183 58.9 true :Buk-gu Daejeon:
+[207] aaaaaaaa4 184 73.6 false :Nam-gu Busan:
+[208] ppppppppp0 170 78 false :Gwangju Nam-gu Bongseon-dong 21:
+[209] ppppppppp1 171 69.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[210] ppppppppp2 172 60.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[211] ppppppppp3 173 91.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[212] sssssssss1 181 73.4 true :Jongno-gu Seoul:
+[213] sssssssss2 182 62.3 false :Yeonje-gu Busan:
+[214] sssssssss3 183 63.5 true :Dong-gu Incheon:
+[215] sssssssss4 184 74.6 false :Sasang-gu Sejong:
+[216] wwwwwwwww1 191 41.3 false :Kangnam-gu Seoul:
+[217] wwwwwwwww2 192 52.4 true :Dobong-gu Kwangju:
+[218] wwwwwwwww3 193 63.5 true :Dong-gu Incheon:
+[219] wwwwwwwww4 194 74.6 false :Sasang-gu Sejong:
+[220] aaaaaaaaa1 201 63.5 true :Dong-gu Incheon:
+[221] aaaaaaaaa2 202 74.6 false :Sasang-gu Sejong:
+[222] aaaaaaaaa3 203 59.9 false :Buk-gu Daejeon:
+[223] aaaaaaaaa4 204 74.6 true :Nam-gu Busan:
+[224] pppppppppp0 190 79 true :Gwangju Nam-gu Bongseon-dong 21:
+[225] pppppppppp1 191 70.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[226] pppppppppp2 192 61.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[227] pppppppppp3 193 92.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[228] ssssssssss1 201 74.4 false :Jongno-gu Seoul:
+[229] ssssssssss2 202 63.3 true :Yeonje-gu Busan:
+[230] ssssssssss3 203 64.5 false :Dong-gu Incheon:
+[231] ssssssssss4 204 75.6 true :Sasang-gu Sejong:
+[232] wwwwwwwwww1 211 42.3 true :Kangnam-gu Seoul:
+[233] wwwwwwwwww2 212 53.4 false :Dobong-gu Kwangju:
+[234] wwwwwwwwww3 213 64.5 false :Dong-gu Incheon:
+[235] wwwwwwwwww4 214 75.6 true :Sasang-gu Sejong:
+[236] aaaaaaaaaa1 221 64.5 false :Dong-gu Incheon:
+[237] aaaaaaaaaa2 222 75.6 true :Sasang-gu Sejong:
+[238] aaaaaaaaaa3 223 60.9 true :Buk-gu Daejeon:
+[239] aaaaaaaaaa4 224 75.6 false :Nam-gu Busan:
+[240] ppppppppppp0 210 80 false :Gwangju Nam-gu Bongseon-dong 21:
+[241] ppppppppppp1 211 71.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[242] ppppppppppp2 212 62.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[243] ppppppppppp3 213 93.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[244] sssssssssss1 221 75.4 true :Jongno-gu Seoul:
+[245] sssssssssss2 222 64.3 false :Yeonje-gu Busan:
+[246] sssssssssss3 223 65.5 true :Dong-gu Incheon:
+[247] sssssssssss4 224 76.6 false :Sasang-gu Sejong:
+[248] wwwwwwwwwww1 231 43.3 false :Kangnam-gu Seoul:
+[249] wwwwwwwwwww2 232 54.4 true :Dobong-gu Kwangju:
+[250] wwwwwwwwwww3 233 65.5 true :Dong-gu Incheon:
+[251] wwwwwwwwwww4 234 76.6 false :Sasang-gu Sejong:
+[252] aaaaaaaaaaa1 241 65.5 true :Dong-gu Incheon:
+[253] aaaaaaaaaaa2 242 76.6 false :Sasang-gu Sejong:
+[254] aaaaaaaaaaa3 243 61.9 false :Buk-gu Daejeon:
+[255] aaaaaaaaaaa4 244 76.6 true :Nam-gu Busan:
+[256] pppppp0 110 75 true :Gwangju Nam-gu Bongseon-dong 21:
+[257] pppppp1 111 66.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[258] pppppp2 112 57.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[259] pppppp3 113 88.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[260] ssssss1 121 70.4 false :Jongno-gu Seoul:
+[261] ssssss2 122 59.3 true :Yeonje-gu Busan:
+[262] ssssss3 123 60.5 false :Dong-gu Incheon:
+[263] ssssss4 124 71.6 true :Sasang-gu Sejong:
+[264] wwwwww1 131 38.3 true :Kangnam-gu Seoul:
+[265] wwwwww2 132 49.4 false :Dobong-gu Kwangju:
+[266] wwwwww3 133 60.5 false :Dong-gu Incheon:
+[267] wwwwww4 134 71.6 true :Sasang-gu Sejong:
+[268] aaaaaa1 141 60.5 false :Dong-gu Incheon:
+[269] aaaaaa2 142 71.6 true :Sasang-gu Sejong:
+[270] aaaaaa3 143 56.9 true :Buk-gu Daejeon:
+[271] aaaaaa4 144 71.6 false :Nam-gu Busan:
+[272] ppppppp0 130 76 false :Gwangju Nam-gu Bongseon-dong 21:
+[273] ppppppp1 131 67.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[274] ppppppp2 132 58.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[275] ppppppp3 133 89.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[276] sssssss1 141 71.4 true :Jongno-gu Seoul:
+[277] sssssss2 142 60.3 false :Yeonje-gu Busan:
+[278] sssssss3 143 61.5 true :Dong-gu Incheon:
+[279] sssssss4 144 72.6 false :Sasang-gu Sejong:
+[280] wwwwwww1 151 39.3 false :Kangnam-gu Seoul:
+[281] wwwwwww2 152 50.4 true :Dobong-gu Kwangju:
+[282] wwwwwww3 153 61.5 true :Dong-gu Incheon:
+[283] wwwwwww4 154 72.6 false :Sasang-gu Sejong:
+[284] aaaaaaa1 161 61.5 true :Dong-gu Incheon:
+[285] aaaaaaa2 162 72.6 false :Sasang-gu Sejong:
+[286] aaaaaaa3 163 57.9 false :Buk-gu Daejeon:
+[287] aaaaaaa4 164 72.6 true :Nam-gu Busan:
+[288] pppppppp0 150 77 true :Gwangju Nam-gu Bongseon-dong 21:
+[289] pppppppp1 151 68.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[290] pppppppp2 152 59.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[291] pppppppp3 153 90.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[292] ssssssss1 161 72.4 false :Jongno-gu Seoul:
+[293] ssssssss2 162 61.3 true :Yeonje-gu Busan:
+[294] ssssssss3 163 62.5 false :Dong-gu Incheon:
+[295] ssssssss4 164 73.6 true :Sasang-gu Sejong:
+[296] wwwwwwww1 171 40.3 true :Kangnam-gu Seoul:
+[297] wwwwwwww2 172 51.4 false :Dobong-gu Kwangju:
+[298] wwwwwwww3 173 62.5 false :Dong-gu Incheon:
+[299] wwwwwwww4 174 73.6 true :Sasang-gu Sejong:
+[300] aaaaaaaa1 181 62.5 false :Dong-gu Incheon:
+[301] aaaaaaaa2 182 73.6 true :Sasang-gu Sejong:
+[302] aaaaaaaa3 183 58.9 true :Buk-gu Daejeon:
+[303] aaaaaaaa4 184 73.6 false :Nam-gu Busan:
+[304] ppppppppp0 170 78 false :Gwangju Nam-gu Bongseon-dong 21:
+[305] ppppppppp1 171 69.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[306] ppppppppp2 172 60.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[307] ppppppppp3 173 91.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[308] sssssssss1 181 73.4 true :Jongno-gu Seoul:
+[309] sssssssss2 182 62.3 false :Yeonje-gu Busan:
+[310] sssssssss3 183 63.5 true :Dong-gu Incheon:
+[311] sssssssss4 184 74.6 false :Sasang-gu Sejong:
+[312] wwwwwwwww1 191 41.3 false :Kangnam-gu Seoul:
+[313] wwwwwwwww2 192 52.4 true :Dobong-gu Kwangju:
+[314] wwwwwwwww3 193 63.5 true :Dong-gu Incheon:
+[315] wwwwwwwww4 194 74.6 false :Sasang-gu Sejong:
+[316] aaaaaaaaa1 201 63.5 true :Dong-gu Incheon:
+[317] aaaaaaaaa2 202 74.6 false :Sasang-gu Sejong:
+[318] aaaaaaaaa3 203 59.9 false :Buk-gu Daejeon:
+[319] aaaaaaaaa4 204 74.6 true :Nam-gu Busan:
+[320] ppppppppp0 170 78 false :Gwangju Nam-gu Bongseon-dong 21:
+[321] ppppppppp1 171 69.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[322] ppppppppp2 172 60.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[323] ppppppppp3 173 91.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[324] sssssssss1 181 73.4 true :Jongno-gu Seoul:
+[325] sssssssss2 182 62.3 false :Yeonje-gu Busan:
+[326] sssssssss3 183 63.5 true :Dong-gu Incheon:
+[327] sssssssss4 184 74.6 false :Sasang-gu Sejong:
+[328] wwwwwwwww1 191 41.3 false :Kangnam-gu Seoul:
+[329] wwwwwwwww2 192 52.4 true :Dobong-gu Kwangju:
+[330] wwwwwwwww3 193 63.5 true :Dong-gu Incheon:
+[331] wwwwwwwww4 194 74.6 false :Sasang-gu Sejong:
+[332] aaaaaaaaa1 201 63.5 true :Dong-gu Incheon:
+[333] aaaaaaaaa2 202 74.6 false :Sasang-gu Sejong:
+[334] aaaaaaaaa3 203 59.9 false :Buk-gu Daejeon:
+[335] aaaaaaaaa4 204 74.6 true :Nam-gu Busan:
+[336] pppppppppp0 190 79 true :Gwangju Nam-gu Bongseon-dong 21:
+[337] pppppppppp1 191 70.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[338] pppppppppp2 192 61.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[339] pppppppppp3 193 92.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[340] ssssssssss1 201 74.4 false :Jongno-gu Seoul:
+[341] ssssssssss2 202 63.3 true :Yeonje-gu Busan:
+[342] ssssssssss3 203 64.5 false :Dong-gu Incheon:
+[343] ssssssssss4 204 75.6 true :Sasang-gu Sejong:
+[344] wwwwwwwwww1 211 42.3 true :Kangnam-gu Seoul:
+[345] wwwwwwwwww2 212 53.4 false :Dobong-gu Kwangju:
+[346] wwwwwwwwww3 213 64.5 false :Dong-gu Incheon:
+[347] wwwwwwwwww4 214 75.6 true :Sasang-gu Sejong:
+[348] aaaaaaaaaa1 221 64.5 false :Dong-gu Incheon:
+[349] aaaaaaaaaa2 222 75.6 true :Sasang-gu Sejong:
+[350] aaaaaaaaaa3 223 60.9 true :Buk-gu Daejeon:
+[351] aaaaaaaaaa4 224 75.6 false :Nam-gu Busan:
+[352] ppppppppppp0 210 80 false :Gwangju Nam-gu Bongseon-dong 21:
+[353] ppppppppppp1 211 71.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[354] ppppppppppp2 212 62.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[355] ppppppppppp3 213 93.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[356] sssssssssss1 221 75.4 true :Jongno-gu Seoul:
+[357] sssssssssss2 222 64.3 false :Yeonje-gu Busan:
+[358] sssssssssss3 223 65.5 true :Dong-gu Incheon:
+[359] sssssssssss4 224 76.6 false :Sasang-gu Sejong:
+[360] wwwwwwwwwww1 231 43.3 false :Kangnam-gu Seoul:
+[361] wwwwwwwwwww2 232 54.4 true :Dobong-gu Kwangju:
+[362] wwwwwwwwwww3 233 65.5 true :Dong-gu Incheon:
+[363] wwwwwwwwwww4 234 76.6 false :Sasang-gu Sejong:
+[364] aaaaaaaaaaa1 241 65.5 true :Dong-gu Incheon:
+[365] aaaaaaaaaaa2 242 76.6 false :Sasang-gu Sejong:
+[366] aaaaaaaaaaa3 243 61.9 false :Buk-gu Daejeon:
+[367] aaaaaaaaaaa4 244 76.6 true :Nam-gu Busan:
+[368] pppppppppppp0 230 81 true :Gwangju Nam-gu Bongseon-dong 21:
+[369] pppppppppppp1 231 72.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[370] pppppppppppp2 232 63.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[371] pppppppppppp3 233 94.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[372] ssssssssssss1 241 76.4 false :Jongno-gu Seoul:
+[373] ssssssssssss2 242 65.3 true :Yeonje-gu Busan:
+[374] ssssssssssss3 243 66.5 false :Dong-gu Incheon:
+[375] ssssssssssss4 244 77.6 true :Sasang-gu Sejong:
+[376] wwwwwwwwwwww1 251 44.3 true :Kangnam-gu Seoul:
+[377] wwwwwwwwwwww2 252 55.4 false :Dobong-gu Kwangju:
+[378] wwwwwwwwwwww3 253 66.5 false :Dong-gu Incheon:
+[379] wwwwwwwwwwww4 254 77.6 true :Sasang-gu Sejong:
+[380] aaaaaaaaaaaa1 261 66.5 false :Dong-gu Incheon:
+[381] aaaaaaaaaaaa2 262 77.6 true :Sasang-gu Sejong:
+[382] aaaaaaaaaaaa3 263 62.9 true :Buk-gu Daejeon:
+[383] aaaaaaaaaaaa4 264 77.6 false :Nam-gu Busan:
+[384] pppppppppp0 190 79 true :Gwangju Nam-gu Bongseon-dong 21:
+[385] pppppppppp1 191 70.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[386] pppppppppp2 192 61.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[387] pppppppppp3 193 92.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[388] ssssssssss1 201 74.4 false :Jongno-gu Seoul:
+[389] ssssssssss2 202 63.3 true :Yeonje-gu Busan:
+[390] ssssssssss3 203 64.5 false :Dong-gu Incheon:
+[391] ssssssssss4 204 75.6 true :Sasang-gu Sejong:
+[392] wwwwwwwwww1 211 42.3 true :Kangnam-gu Seoul:
+[393] wwwwwwwwww2 212 53.4 false :Dobong-gu Kwangju:
+[394] wwwwwwwwww3 213 64.5 false :Dong-gu Incheon:
+[395] wwwwwwwwww4 214 75.6 true :Sasang-gu Sejong:
+[396] aaaaaaaaaa1 221 64.5 false :Dong-gu Incheon:
+[397] aaaaaaaaaa2 222 75.6 true :Sasang-gu Sejong:
+[398] aaaaaaaaaa3 223 60.9 true :Buk-gu Daejeon:
+[399] aaaaaaaaaa4 224 75.6 false :Nam-gu Busan:
+[400] ppppppppppp0 210 80 false :Gwangju Nam-gu Bongseon-dong 21:
+[401] ppppppppppp1 211 71.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[402] ppppppppppp2 212 62.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[403] ppppppppppp3 213 93.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[404] sssssssssss1 221 75.4 true :Jongno-gu Seoul:
+[405] sssssssssss2 222 64.3 false :Yeonje-gu Busan:
+[406] sssssssssss3 223 65.5 true :Dong-gu Incheon:
+[407] sssssssssss4 224 76.6 false :Sasang-gu Sejong:
+[408] wwwwwwwwwww1 231 43.3 false :Kangnam-gu Seoul:
+[409] wwwwwwwwwww2 232 54.4 true :Dobong-gu Kwangju:
+[410] wwwwwwwwwww3 233 65.5 true :Dong-gu Incheon:
+[411] wwwwwwwwwww4 234 76.6 false :Sasang-gu Sejong:
+[412] aaaaaaaaaaa1 241 65.5 true :Dong-gu Incheon:
+[413] aaaaaaaaaaa2 242 76.6 false :Sasang-gu Sejong:
+[414] aaaaaaaaaaa3 243 61.9 false :Buk-gu Daejeon:
+[415] aaaaaaaaaaa4 244 76.6 true :Nam-gu Busan:
+[416] pppppppppppp0 230 81 true :Gwangju Nam-gu Bongseon-dong 21:
+[417] pppppppppppp1 231 72.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[418] pppppppppppp2 232 63.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[419] pppppppppppp3 233 94.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[420] ssssssssssss1 241 76.4 false :Jongno-gu Seoul:
+[421] ssssssssssss2 242 65.3 true :Yeonje-gu Busan:
+[422] ssssssssssss3 243 66.5 false :Dong-gu Incheon:
+[423] ssssssssssss4 244 77.6 true :Sasang-gu Sejong:
+[424] wwwwwwwwwwww1 251 44.3 true :Kangnam-gu Seoul:
+[425] wwwwwwwwwwww2 252 55.4 false :Dobong-gu Kwangju:
+[426] wwwwwwwwwwww3 253 66.5 false :Dong-gu Incheon:
+[427] wwwwwwwwwwww4 254 77.6 true :Sasang-gu Sejong:
+[428] aaaaaaaaaaaa1 261 66.5 false :Dong-gu Incheon:
+[429] aaaaaaaaaaaa2 262 77.6 true :Sasang-gu Sejong:
+[430] aaaaaaaaaaaa3 263 62.9 true :Buk-gu Daejeon:
+[431] aaaaaaaaaaaa4 264 77.6 false :Nam-gu Busan:
+[432] ppppppppppppp0 250 82 false :Gwangju Nam-gu Bongseon-dong 21:
+[433] ppppppppppppp1 251 73.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[434] ppppppppppppp2 252 64.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[435] ppppppppppppp3 253 95.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[436] sssssssssssss1 261 77.4 true :Jongno-gu Seoul:
+[437] sssssssssssss2 262 66.3 false :Yeonje-gu Busan:
+[438] sssssssssssss3 263 67.5 true :Dong-gu Incheon:
+[439] sssssssssssss4 264 78.6 false :Sasang-gu Sejong:
+[440] wwwwwwwwwwwww1 271 45.3 false :Kangnam-gu Seoul:
+[441] wwwwwwwwwwwww2 272 56.4 true :Dobong-gu Kwangju:
+[442] wwwwwwwwwwwww3 273 67.5 true :Dong-gu Incheon:
+[443] wwwwwwwwwwwww4 274 78.6 false :Sasang-gu Sejong:
+[444] aaaaaaaaaaaaa1 281 67.5 true :Dong-gu Incheon:
+[445] aaaaaaaaaaaaa2 282 78.6 false :Sasang-gu Sejong:
+[446] aaaaaaaaaaaaa3 283 63.9 false :Buk-gu Daejeon:
+[447] aaaaaaaaaaaaa4 284 78.6 true :Nam-gu Busan:
+[448] ppppppppppppp0 250 82 false :Gwangju Nam-gu Bongseon-dong 21:
+[449] ppppppppppppp1 251 73.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[450] ppppppppppppp2 252 64.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[451] ppppppppppppp3 253 95.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[452] sssssssssssss1 261 77.4 true :Jongno-gu Seoul:
+[453] sssssssssssss2 262 66.3 false :Yeonje-gu Busan:
+[454] sssssssssssss3 263 67.5 true :Dong-gu Incheon:
+[455] sssssssssssss4 264 78.6 false :Sasang-gu Sejong:
+[456] wwwwwwwwwwwww1 271 45.3 false :Kangnam-gu Seoul:
+[457] wwwwwwwwwwwww2 272 56.4 true :Dobong-gu Kwangju:
+[458] wwwwwwwwwwwww3 273 67.5 true :Dong-gu Incheon:
+[459] wwwwwwwwwwwww4 274 78.6 false :Sasang-gu Sejong:
+[460] aaaaaaaaaaaaa1 281 67.5 true :Dong-gu Incheon:
+[461] aaaaaaaaaaaaa2 282 78.6 false :Sasang-gu Sejong:
+[462] aaaaaaaaaaaaa3 283 63.9 false :Buk-gu Daejeon:
+[463] aaaaaaaaaaaaa4 284 78.6 true :Nam-gu Busan:
+[464] pppppppppppppp0 270 83 true :Gwangju Nam-gu Bongseon-dong 21:
+[465] pppppppppppppp1 271 74.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[466] pppppppppppppp2 272 65.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[467] pppppppppppppp3 273 96.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[468] ssssssssssssss1 281 78.4 false :Jongno-gu Seoul:
+[469] ssssssssssssss2 282 67.3 true :Yeonje-gu Busan:
+[470] ssssssssssssss3 283 68.5 false :Dong-gu Incheon:
+[471] ssssssssssssss4 284 79.6 true :Sasang-gu Sejong:
+[472] wwwwwwwwwwwwww1 291 46.3 true :Kangnam-gu Seoul:
+[473] wwwwwwwwwwwwww2 292 57.4 false :Dobong-gu Kwangju:
+[474] wwwwwwwwwwwwww3 293 68.5 false :Dong-gu Incheon:
+[475] wwwwwwwwwwwwww4 294 79.6 true :Sasang-gu Sejong:
+[476] aaaaaaaaaaaaaa1 301 68.5 false :Dong-gu Incheon:
+[477] aaaaaaaaaaaaaa2 302 79.6 true :Sasang-gu Sejong:
+[478] aaaaaaaaaaaaaa3 303 64.9 true :Buk-gu Daejeon:
+[479] aaaaaaaaaaaaaa4 304 79.6 false :Nam-gu Busan:
+[480] ppppppppppppppp0 290 84 false :Gwangju Nam-gu Bongseon-dong 21:
+[481] ppppppppppppppp1 291 75.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[482] ppppppppppppppp2 292 66.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[483] ppppppppppppppp3 293 97.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[484] sssssssssssssss1 301 79.4 true :Jongno-gu Seoul:
+[485] sssssssssssssss2 302 68.3 false :Yeonje-gu Busan:
+[486] sssssssssssssss3 303 69.5 true :Dong-gu Incheon:
+[487] sssssssssssssss4 304 80.6 false :Sasang-gu Sejong:
+[488] wwwwwwwwwwwwwww1 311 47.3 false :Kangnam-gu Seoul:
+[489] wwwwwwwwwwwwwww2 312 58.4 true :Dobong-gu Kwangju:
+[490] wwwwwwwwwwwwwww3 313 69.5 true :Dong-gu Incheon:
+[491] wwwwwwwwwwwwwww4 314 80.6 false :Sasang-gu Sejong:
+[492] aaaaaaaaaaaaaaa1 321 69.5 true :Dong-gu Incheon:
+[493] aaaaaaaaaaaaaaa2 322 80.6 false :Sasang-gu Sejong:
+[494] aaaaaaaaaaaaaaa3 323 65.9 false :Buk-gu Daejeon:
+[495] aaaaaaaaaaaaaaa4 324 80.6 true :Nam-gu Busan:
+[496] pppppppppppppppp0 310 85 true :Gwangju Nam-gu Bongseon-dong 21:
+[497] pppppppppppppppp1 311 76.1 false :Jong-ro 1-gil, Jongno-gu, Seoul:
+[498] pppppppppppppppp2 312 67.2 true :1001, Jungang-daero, Yeonje-gu, Busan:
+[499] pppppppppppppppp3 313 98.3 false :100 Dunsan-ro Seo-gu Daejeon:
+[500] ssssssssssssssss1 321 80.4 false :Jongno-gu Seoul:
+[501] ssssssssssssssss2 322 69.3 true :Yeonje-gu Busan:
+[502] ssssssssssssssss3 323 70.5 false :Dong-gu Incheon:
+[503] ssssssssssssssss4 324 81.6 true :Sasang-gu Sejong:
+[504] wwwwwwwwwwwwwwww1 331 48.3 true :Kangnam-gu Seoul:
+[505] wwwwwwwwwwwwwwww2 332 59.4 false :Dobong-gu Kwangju:
+[506] wwwwwwwwwwwwwwww3 333 70.5 false :Dong-gu Incheon:
+[507] wwwwwwwwwwwwwwww4 334 81.6 true :Sasang-gu Sejong:
+[508] aaaaaaaaaaaaaaaa1 341 70.5 false :Dong-gu Incheon:
+[509] aaaaaaaaaaaaaaaa2 342 81.6 true :Sasang-gu Sejong:
+[510] aaaaaaaaaaaaaaaa3 343 66.9 true :Buk-gu Daejeon:
+[511] aaaaaaaaaaaaaaaa4 344 81.6 false :Nam-gu Busan:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 0
+
+******************************* Main Menu *********************************
+* 0.Exit 1.PersonManager(ch3_2, 4, 6, 7_2, 8, 9, 10)                      *
+* 2.Class:Object(ch3_1) 3.CopyConstructor(ch5_1) 4.AllocatedMember(ch5_2) *
+* 5.OperatorOverload(ch7_1) 6.Inheritance(ch8) 7.PMbyVector               *
+***************************************************************************
+Menu item number? 0
+Good bye!!

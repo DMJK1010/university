@@ -1,0 +1,121 @@
+
+******************************* Main Menu *********************************
+* 0.Exit 1.PersonManager(ch3_2, 4, 6, 7_2, 8, 9, 10)                      *
+* 2.Class:Object(ch3_1) 3.CopyConstructor(ch5_1) 4.AllocatedMember(ch5_2) *
+* 5.OperatorOverload(ch7_1) 6.Inheritance(ch8) 7.PMbyVector               *
+***************************************************************************
+Menu item number? 7
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 1
+display(): count 16
+[0] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[2] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[3] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[4] s1 21 65.4 true :Jongno-gu Seoul:
+[5] s2 22 54.3 false :Yeonje-gu Busan:
+[6] s3 23 55.5 true :Dong-gu Incheon:
+[7] s4 24 66.6 false :Sasang-gu Sejong:
+[8] w1 31 33.3 false :Kangnam-gu Seoul:
+[9] w2 32 44.4 true :Dobong-gu Kwangju:
+[10] w3 33 55.5 true :Dong-gu Incheon:
+[11] w4 34 66.6 false :Sasang-gu Sejong:
+[12] a1 41 55.5 true :Dong-gu Incheon:
+[13] a2 42 66.6 false :Sasang-gu Sejong:
+[14] a3 43 51.9 false :Buk-gu Daejeon:
+[15] a4 44 66.6 true :Nam-gu Busan:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 4
+Index to insert in front? 0
+Input [delimiter(P, S, W, or A)] [person information] to insert:
+P p5 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+display(): count 17
+[0] p5 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[1] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[2] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[3] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[4] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[5] s1 21 65.4 true :Jongno-gu Seoul:
+[6] s2 22 54.3 false :Yeonje-gu Busan:
+[7] s3 23 55.5 true :Dong-gu Incheon:
+[8] s4 24 66.6 false :Sasang-gu Sejong:
+[9] w1 31 33.3 false :Kangnam-gu Seoul:
+[10] w2 32 44.4 true :Dobong-gu Kwangju:
+[11] w3 33 55.5 true :Dong-gu Incheon:
+[12] w4 34 66.6 false :Sasang-gu Sejong:
+[13] a1 41 55.5 true :Dong-gu Incheon:
+[14] a2 42 66.6 false :Sasang-gu Sejong:
+[15] a3 43 51.9 false :Buk-gu Daejeon:
+[16] a4 44 66.6 true :Nam-gu Busan:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 4
+Index to insert in front? 17
+Input [delimiter(P, S, W, or A)] [person information] to insert:
+A a5 17 88 true :Kangdong-gu, Daejeon: Electronics 3.4 2 NC Developer :CU, GS: false
+display(): count 18
+[0] p5 11 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[1] p0 10 70 false :Gwangju Nam-gu Bongseon-dong 21:
+[2] p1 11 61.1 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+[3] p2 12 52.2 false :1001, Jungang-daero, Yeonje-gu, Busan:
+[4] p3 13 83.3 true :100 Dunsan-ro Seo-gu Daejeon:
+[5] s1 21 65.4 true :Jongno-gu Seoul:
+[6] s2 22 54.3 false :Yeonje-gu Busan:
+[7] s3 23 55.5 true :Dong-gu Incheon:
+[8] s4 24 66.6 false :Sasang-gu Sejong:
+[9] w1 31 33.3 false :Kangnam-gu Seoul:
+[10] w2 32 44.4 true :Dobong-gu Kwangju:
+[11] w3 33 55.5 true :Dong-gu Incheon:
+[12] w4 34 66.6 false :Sasang-gu Sejong:
+[13] a1 41 55.5 true :Dong-gu Incheon:
+[14] a2 42 66.6 false :Sasang-gu Sejong:
+[15] a3 43 51.9 false :Buk-gu Daejeon:
+[16] a4 44 66.6 true :Nam-gu Busan:
+[17] a5 17 88 true :Kangdong-gu, Daejeon:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 3
+display(): count 0
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 4
+Input [delimiter(P, S, W, or A)] [person information] to insert:
+S s5 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21: Computer 3.3 2
+display(): count 1
+[0] s5 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 4
+Index to insert in front? 1
+Input [delimiter(P, S, W, or A)] [person information] to insert:
+W w5 13 65 true :Jong-ro 1-gil, Jongno-gu, Seoul: Kia CEO
+display(): count 2
+[0] s5 12 71.5 false :Gwangju Nam-gu Bongseon-dong 21:
+[1] w5 13 65 true :Jong-ro 1-gil, Jongno-gu, Seoul:
+
+============================ PMbyVector Menu =========================
+= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =
+======================================================================
+Menu item number? 0
+
+******************************* Main Menu *********************************
+* 0.Exit 1.PersonManager(ch3_2, 4, 6, 7_2, 8, 9, 10)                      *
+* 2.Class:Object(ch3_1) 3.CopyConstructor(ch5_1) 4.AllocatedMember(ch5_2) *
+* 5.OperatorOverload(ch7_1) 6.Inheritance(ch8) 7.PMbyVector               *
+***************************************************************************
+Menu item number? 0
+Good bye!!
