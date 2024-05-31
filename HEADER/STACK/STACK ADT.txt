@@ -1,0 +1,7 @@
+ * STACK ADT
+ * int type STACK
+ * init(Stack) 초기화
+ * is_empty(Stack) 비어있는지 체크
+ * push(Stack, item) item을 push
+ * pop(Stack) item을 하나 꺼내기
+ * print_stack(Stack) 스택에 모든 item을 출력
