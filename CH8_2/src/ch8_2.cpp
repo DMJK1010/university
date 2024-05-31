@@ -1,7 +1,7 @@
 /*
- * CH8_1: ch8_1.cpp
+ * CH8_2: ch8_2.cpp
  *
- *  Created on: 2024. 5.11.(20:40) - 초기 설정 완료
+ *  Created on: 2024. 5.11.(20:40) - 완료
  *      Author: Junha Kim
  *
  *
@@ -259,7 +259,7 @@ Person& Person::operator >> (char* name){
  * ch8_1: Student class
  ******************************************************************************/
 
-class Student : public Person {
+class Student : virtual public Person {
     string department; // 학과
     double GPA;        // 평균평점
     int    year;       // 학년
@@ -356,14 +356,14 @@ void Student::study() {
 }
 
 void Student::takeClass() {
-	cout<<Person::getName()<<"took several courses and got GPA "<<GPA<<endl;
+	cout<<Person::getName()<<" took several courses and got GPA "<<GPA<<endl;
 }
 
 /******************************************************************************
  * ch8_1: Worker class
  ******************************************************************************/
 
-class Worker : public Person {
+class Worker : virtual public Person {
     string company;    // 회사명
     string position;   // 직급
 
@@ -458,13 +458,14 @@ void Worker::goOnVacation() {
 /******************************************************************************
  * ch8_2: StudentWorker class
  ******************************************************************************/
+/*
 //                   Person
 //                  /      \
 //              Student  Worker
 //                  \      /
 //                 StudentWorker
-
-class StudentWorker /* TODO: [문제 1]Student와 Worker 클래스들을 다중 상속 받아라. */
+*/
+class StudentWorker : public Student, public Worker
 {
     string career;      // 알바경력
     bool   male;        // 남:true, 여:false
@@ -484,14 +485,14 @@ public:
 
     StudentWorker(const StudentWorker& a); // copy constructor
     ~StudentWorker();
-    Person* clone();
+    Person* clone() { return new StudentWorker(*this); }
 
     // Getter and Setter
-    const string& getCareer()  const;
-    bool          getMale()    const;
+    const string& getCareer()  const { return career; }
+    bool          getMale()    const { return male; }
 
-    void setCareer(const string& career);
-    void setMale(bool male);
+    void setCareer(const string& career)	{ this->career = career; }
+    void setMale(bool male)					{ this->male = male; }
 
     // Redefined member functions
     void input(istream& in);
@@ -507,15 +508,19 @@ StudentWorker::StudentWorker(
     bool married, const char* address,
     const string& department, double GPA, int year,
     const string& company, const string& position,
-    const string& career, bool male)
-    /* TODO: 함수 서두에서 Person, Student, Worker 생성자 호출하기, 각 멤버 초기화 */ {
+    const string& career, bool male):
+    Person(name, id, weight, married, address),
+	Student(name, id, weight, married, address, department, GPA, year),
+	Worker(name, id, weight, married, address, company, position),
+	career(career), male{male}
+     {
     cout << "StudentWorker::StudentWorker(...):";
     printMembers(cout); cout << endl;
 }
 
-StudentWorker::StudentWorker(const StudentWorker& a)
-    /* TODO: 함수 서두에서 Person, Student, Worker의 [복사 생성자] 호출하기,
-             a의 각 멤버를 this의 멤버에 복사하여 초기화 */ { // 기존의 복사 생성자 참고할 것
+StudentWorker::StudentWorker(const StudentWorker& a) : Person(a), Student(a), Worker(a), career(a.career), male{a.male}
+{ // 기존의 복사 생성자 참고할 것
+
     cout << "StudentWorker::StudentWorker(const StudentWorker& a):";
     printMembers(cout); cout << endl;
 }
@@ -530,6 +535,10 @@ void StudentWorker::inputMembers(istream& in) {
     // career에 문자열을 읽어 들이기 위해 전역함수인 getline()을 사용함
     // 아래 문장은 경력의 앞쪽 ':'까지 모든 문자들을 읽어 들임(읽은 문자열은 그냥 버림)
     getline(cin, career, ':');
+    getline(cin, career, ':');
+
+    cin>>male;
+    if (!(in)) return;
     /* TODO: 이번엔 경력의 뒤쪽 ':'까지 또 읽어서 career에 저장
              (':'는 입력 버퍼에서는 읽어 내지만 career에는 저장되지 않아 자동 제거됨)
              남여 성별 값을 읽어 male에 저장; */
@@ -539,9 +548,38 @@ void StudentWorker::printMembers(ostream& out)   {
     out << " :" << career << ": " << male;
 }
 
+void StudentWorker::input(istream& in){
+	 Person::inputMembers(in);
+	 if(!in) return;
+	 Student::inputMembers(in);
+	 if(!in) return;
+	 Worker::inputMembers(in);
+	 if(!in) return;
+	 StudentWorker::inputMembers(in);
+	 if(!in) return;
+}
+
+void StudentWorker::print(ostream& out){
+	Person::printMembers(cout);
+	Student::printMembers(cout);
+	Worker::printMembers(cout);
+	StudentWorker::printMembers(cout);
+}
+
+bool StudentWorker::operator==(const StudentWorker& a){
+	if((*(Student*)this == a) && (*(Worker*)this == a) && (this->male == a.male))
+		return true;
+	else
+		return false;
+}
+
 void StudentWorker::whatAreYouDoing() {
     cout << "########### StudentWorker::whatAreYouDoing() ##############\n";
     /* TODO: 출력결과를 참고하여 Student와 Worker의 적절한 함수를 순서적으로 호출하라. */
+    Student::study();
+    Worker::work();
+    Student::takeClass();
+    Worker::goOnVacation();
     cout << "###########################################################\n";
 }
 
@@ -1241,13 +1279,47 @@ public:
     // 동적으로 Person 객체를 할당 받은 후 키보드로부터 새로 추가하고자 하는 사람의
     // 인적정보를 읽어 들여 해당 객체에 저장한 후 그 객체의 포인터를 반환한다.
     static Person* inputPerson(istream& in) {
-        Person* p = new Person();
-        p->input(in);  // 멤버들을 입력 받음
+        Person* p;
+        string delimiter;
+
+        in >> delimiter;              // 입력장치에서 사람구분자를 입력 받음
+
+        if (in.eof())                 // 파일(입력장치가 파일인 경우)의 끝일 경우
+        	return nullptr;
+        else if (delimiter == "P") {
+            p = new Person();  p->input(in);
+        }
+        else if (delimiter == "S") {
+            Student* s = new Student();
+            s->input(in);
+            p = s;
+        }
+        else if (delimiter == "W") {
+            Worker* w = new Worker();
+            w->input(in);
+            p = w;
+        }
+        else if (delimiter == "A") {
+            StudentWorker* sw = new StudentWorker();
+            sw->input(in);
+            p = sw;
+        }
+        else {
+            cout << delimiter << ": WRONG delimiter" << endl;
+            getline(in, delimiter); // 엉뚱한 구분자일 경우 행 전체를 읽어서 버림
+            return nullptr;
+        }
+
+        // p->input(in);  // 멤버들을 입력 받음: 9장에서 이 주석을 다시 해제할 예정이다.
+
         if (UI::checkDataFormatError(in)) { // 정수입력할 곳에 일반 문자 입력한 경우
-            delete p;         // 할당한 메모리 반납
+            delete p;         // 할당된 메모리 반납
             return nullptr;   // nullptr 반환은 에러가 발생했다는 의미임
         }
-        if (UI::echo_input) p->println(); // 자동체크에서 사용됨
+        if (UI::echo_input) {  // 자동체크에서 사용됨
+            cout << delimiter << " ";
+            p->println();
+        }
         return p;
     }
 };
@@ -1287,7 +1359,7 @@ public:
 PersonManager::PersonManager(Person* array[], int len):array{array}, arrLen{len}, cpCount{} {
     //cout << "PersonManager::PersonManager(array[], len)" << endl;
 	pushArray();
-	display();
+	//display();
 }
 
 PersonManager::~PersonManager() {
@@ -1296,7 +1368,7 @@ PersonManager::~PersonManager() {
 
 void PersonManager::pushArray(){
     for(int i=0; i<arrLen; i++){
-    	Person *n_person = new Person(*array[i]);
+    	//Person *n_person = new Person(*array[i]); //지금까지 필요없는 코드였음
     	persons.push_back(array[i]->clone());
     }
 }
@@ -1304,7 +1376,7 @@ void PersonManager::pushArray(){
 void PersonManager::deleteElemets() {
     /* TODO 문제 [5] */
 	for(int i=0; i<persons.size(); i++){
-		delete persons[i];
+		/* delete persons[i]; */
 	}
 	persons.clear();
 	cpCount = 0;
@@ -1374,7 +1446,7 @@ void PersonManager::run() {
 
 void PersonManager::printNotice(const string& preMessage, const string& postMessage) {
     cout << preMessage;
-    cout << " [person information] ";
+    cout << " [delimiter(P, S, W, or A)] [person information] ";
     cout << postMessage << endl;
 }
 
@@ -1451,9 +1523,32 @@ class MultiManager
     };
     // new를 이용해 동적으로 할당할 경우 소멸자 함수를 만들어 거기서 delete 해 주어야 함
 
-    static const int allPersonCount = personCount;
+    static const int studentCount = 2;
+    Student students[studentCount] = {
+        Student("s1", 1, 65.4, true,  "Jongno-gu Seoul", "Physics", 3.8, 1),
+        Student("s2", 2, 54.3, false, "Yeonje-gu Busan", "Electronics", 2.5, 4),
+    };
+
+    static const int workerCount = 2;
+    Worker workers[workerCount] = {
+        Worker("w1", 3, 33.3, false, "Kangnam-gu Seoul",  "Samsung", "Director"),
+        Worker("w2", 4, 44.4, true,  "Dobong-gu Kwangju", "Hyundai", "Manager"),
+    };
+
+    static const int albaCount = 2;
+    StudentWorker albas[albaCount] = {
+        StudentWorker("a1", 5, 55.5, true, "Dong-gu Incheon",
+                      "Computer", 3.5, 2, "Hyundai", "Labor",
+                      "CU KangNam,Seven Eleven,GSStore Suwon", false),
+        StudentWorker("a2", 6, 66.6, false, "Sasang-gu Sejong",
+                      "History", 3.1, 1, "Kia", "CEO",
+                      "Seven Eveven,eMart Jinju,CU Bongsun", true),
+    };
+
+    static const int allPersonCount = 8;
     Person* allPersons[allPersonCount] = {
-        &persons[0], &persons[1], &persons[2], &persons[3], &persons[4],
+            &persons[0], &persons[1], &students[0], &students[1],
+            &workers[0], &workers[1], &albas[0],    &albas[1],
     };
 
     PersonManager personMng { allPersons, allPersonCount };
@@ -2611,9 +2706,6 @@ class Inheritance
                        "Computer", 3.5, 2, "Hyundai", "Labor",
                        "CU KangNam,Seven Eleven,GSStore Suwon", false };
 
-    void studentWorker() {
-    }
-
     void student() {
         Student s1(s); // 복사생성자 호출
         cout << "s1: "; s1.println();
@@ -2673,6 +2765,45 @@ class Inheritance
         cout << "w2: "; w2.println();
         cout << "w1: "; w1.println();;
         cout << "w2 == w1 : " << (w2 == w1) << endl;
+    }
+
+    void studentWorker() {
+        StudentWorker sw1(sw); // 복사생성자
+        cout << "sw1: " ; sw1.println();
+        StudentWorker sw2 = sw1; // 묵시적으로 복사생성자 호출
+        cout << "sw2: "; sw2.println();
+        cout << "sw1 == sw2 : " << (sw1 == sw2) << endl;
+        // Person 조부모 클래스의 멤버 함수 호출
+        sw2.set("a2", sw1.getId()+1, sw1.getWeight()*1.1, !sw1.getMarried(), sw1.getAddress());
+        // Student 부모 클래스의 멤버 함수 호출
+        sw2.setDepartment(sw1.getDepartment()+"-Electronics");
+        sw2.setGPA(sw1.getGPA()+1);
+        sw2.setYear(sw1.getYear()+1);
+        // Worker 부모 클래스의 멤버 함수 호출
+        sw2.setCompany(sw1.getCompany()+"-Hyundai");
+        sw2.setPosition(sw1.getPosition()+"-Manager");
+        // sw2 객체의 멤버 값 얻어오기 및 수정하기
+        sw2.setCareer(sw1.getCareer()+", Hi-Mart");
+        sw2.setMale(!sw1.getMale());
+        cout << "sw2: "; sw2.println();;
+        cout << "sw1: "; sw1.println();
+        cout << "sw1 == sw2 : " << (sw1 == sw2) << endl;
+        sw2.whatAreYouDoing();
+        Person* p3 = sw1.clone();
+        cout << "p3 : "; p3->println();
+        cout << "sw1: "; sw1.println();
+        cout << "p3 == sw1 : " << (*p3 == sw1) << endl; // Person 정보만 비교함
+        // 위의 경우 p3가 Person* 이므로 Person 클래스의 ==연산자가 호출된다.
+        //delete p3;
+        // 위 문장의 주석은 p3가 Person에 대한 포인터이므로 메모리 반납시 프로그램이 비 정상적으로
+        // 종료될 수 있어서 주석 처리한 것임; 9장에서 해결
+        cout << "input alba: ";
+        sw2.input(cin);
+// a1 5 66.6 false :Nam-gu Busan: Computer 2.0 2 Hyundai Labor :CU,Emart,GS: true
+        if (UI::echo_input) sw2.println(); // 자동체크에서 사용됨
+        cout << "sw2: "; sw2.println();
+        cout << "sw1: "; sw1.println();
+        cout << "sw2 == sw1 : " << (sw2 == sw1) << endl; // Person의 == 연산자 호출
     }
 
 public:
