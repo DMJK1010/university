@@ -1,7 +1,7 @@
 /*
- * CH9_2: ch9_2.cpp
+ * CH10_1: ch10_1.cpp
  *
- *  Created on: 2024. 5.25.(19:17) - 해결
+ *  Created on: 2024. 5.31.(18:67) - 해결
  *      Author: Junha Kim
  *
  *
@@ -1478,9 +1478,9 @@ public:
     int     size()        const { return count; }
 
     // pVector 배열에 마지막 삽입된 원소 뒤에 새로운 원소 p를 삽입하고 현재 삽입된 객체 개수를 증가
-    void push_back(Person* p); /* TODO 문제 [4, 7] */
+    void push_back(T p); /* TODO 문제 [4, 7] */
     void erase(int index);
-    void insert(int index, Person* p);
+    void insert(int index, T p);
 
     T operator [] (int index)const;
     bool operator ! ();
@@ -1496,12 +1496,12 @@ Vector< T >::Vector(int capacity) : count{}, allocSize{ capacity } {
     // allocSize = capacity, count = 0; 초기화를 위 함수 서두(위 /* */ 주석 사이)에서 할 것
     // 함수 서두에서 초기화하는 방법은 Person 클래스 참고할 것
     //cout << "VectorPerson::VectorPerson(" << allocSize << ")" << endl;
-    pVector = new Person*[allocSize]; // Person* 들의 배열을 위한 동적 메모리 할당
+    pVector = new T[allocSize]; // Person* 들의 배열을 위한 동적 메모리 할당
 }
 
 template < typename T >
 Vector< T >::Vector(const Vector& vp){
-	cout << "Vector::Vector(const Vector& vp)" << endl;
+	//cout << "Vector::Vector(const Vector& vp)" << endl;
 	this->allocSize = vp.allocSize;
 	this->count = vp.count;
 
@@ -1519,7 +1519,7 @@ Vector< T >::~Vector() {
 }
 
 template < typename T >
-void Vector< T >::push_back(Person* p){
+void Vector< T >::push_back(T p){
 	if(count >= allocSize){
 		extend_capacity(allocSize*2);
 	}
@@ -1528,9 +1528,9 @@ void Vector< T >::push_back(Person* p){
 
 template < typename T >
 void Vector< T >::extend_capacity(int capacity){
-	Person **saved_persons = pVector;
+	T *saved_persons = pVector;
 	allocSize = capacity;
-	pVector = new Person*[allocSize];
+	pVector = new T[allocSize];
 
 	for(int i=0; i<count; i++){
 		pVector[i] = saved_persons[i];
@@ -1551,7 +1551,7 @@ void Vector< T >::erase(int index) {
 }
 
 template < typename T >
-void Vector< T >::insert(int index, Person* p) {
+void Vector< T >::insert(int index, T p) {
 	if(count >= allocSize){
 			extend_capacity(allocSize*2);
 	}
@@ -1582,7 +1582,7 @@ Vector< T >& Vector< T >::operator = (const Vector& vp){
 	if(vp.count > this->allocSize){
 		delete [] pVector;
 		this->allocSize = vp.allocSize;
-		pVector = new Person*[allocSize];
+		pVector = new T[allocSize];
 		//cout << "VectorPerson::operator = : capacity extended to " << allocSize << endl;
 	}
 	this->count = vp.count;
@@ -1721,7 +1721,6 @@ void PersonManager::pushArray(){
 }
 
 void PersonManager::deleteElemets() {
-    /* TODO 문제 [5] */
 	for(int i=0; i<persons.size(); i++){
 		delete persons[i];
 	}
@@ -1922,9 +1921,9 @@ public:
     PersonManager personMng { allPersons, allPersonCount };
 
     void run() {
-        cout << "PersonManager::run() starts" << endl;
+        //cout << "PersonManager::run() starts" << endl;
         personMng.run();
-        cout << "PersonManager::run() returned" << endl;
+        //cout << "PersonManager::run() returned" << endl;
     }
 }; // ch3_2, 4_1, 4_2, ch8_2: MultiManager class
 
@@ -2761,7 +2760,7 @@ class VectorOperator
     };
     int pa_len = sizeof(pa) / sizeof(pa[0]);
 
-    Vector< Person* > pv1, pv2;
+    Vector<Person*> pv1, pv2;
 
     void disp_vector(const Vector< Person* >& pv) {
         int count = pv.size();
@@ -2778,7 +2777,7 @@ class VectorOperator
     }
 
     void operatorNot() { // Memu item 2
-    	Vector< Person* > pv;
+    	Vector<Person*> pv;
         disp_vector(pv);
 
         // operator bool() 호출
@@ -2811,7 +2810,7 @@ class VectorOperator
     }
 
     void copyConstructor() { // Memu item 3
-        cout << "Vector< Person* > pv3 = pv2" << endl;
+        cout << "Vector<Person*> pv3 = pv2" << endl;
         Vector< Person* > pv3 = pv2;  // 묵시적 복사생성자 호출; VectorPerson pv3(pv2)와 동일
         cout << "pv3: "; disp_vector(pv3);
         pv3.erase(0);
@@ -2827,7 +2826,7 @@ class VectorOperator
     }
 
     void operatorAssign() { // Memu item 4
-        cout << "Vector< Person* > pv3 = pv2" << endl;
+        cout << "Vector<Person*> pv3 = pv2" << endl;
         Vector< Person* > pv3 = pv2;
         cout << "pv3: "; disp_vector(pv3);
         cout << "pv3 = pv1" << endl;
@@ -2854,7 +2853,7 @@ class VectorOperator
     }
 
     void operatorAddAssign() { // Memu item 6
-        cout << "Vector< Person* > pv4 = pv1: " << endl;
+        cout << "Vector<Person*> pv4 = pv1: " << endl;
         Vector< Person* > pv4 = pv1;   // 묵시적 복사생성자 호출
         cout << "pv4: "; disp_vector(pv4);
         cout << "pv4 += pv2" << endl;
@@ -3247,7 +3246,207 @@ public:
 };
 // ch8_1, ch8_2: Inheritance class
 
+class PMbyVector
+{
+    // 아래의 Vector들은 Person 객체의 멤버들을 저장하기 위함임
+    Vector< string > name;
+    Vector< int >    id;
+    Vector< double > weight;
+    Vector< bool >   married;
+    Vector< char* >  address;
+    int cpCount;   // copy() 시 사용할 복사 횟수: 새로운 사람 이름 생성용
 
+    void pushArray();
+    void pushPerson(Person* p);
+    char* copyAddress(const char* addr);
+    void printNotice(const string& preMessage, const string& postMessage);
+    void clearVectors();
+    void insertPerson(int index, Person* p);
+    void erasePerson(int index);
+
+
+public:
+    PMbyVector();
+    ~PMbyVector();
+    void display();
+    void append();
+    void clear();
+    void remove();
+    void insert();
+    void copy();
+    void reset();
+    void run();
+};
+
+// cpCount{}는 cpCount(0) 또는 cpCount=0와 같은 의미
+PMbyVector::PMbyVector(): cpCount{} { pushArray(); }
+
+PMbyVector::~PMbyVector() {
+	clearVectors();
+}
+
+// Person, Student, Worker, StudentWorker 객체들의 정보를 Vector들에 추가
+void PMbyVector::pushArray() {
+    for (int i = 0; i < MultiManager::allPersonCount; ++i)
+        pushPerson(MultiManager::allPersons[i]);
+}
+
+// Person 객체의 각 멤버를 상응하는 Vector에 추가
+// Person, Student, Worker, StudentWorker 객체들의 종류에 상관없이
+// 아래 정보만 저장함
+void PMbyVector::pushPerson(Person* p) {
+    name   .push_back(p->getName());
+    id     .push_back(p->getId());
+    weight .push_back(p->getWeight());
+    married.push_back(p->getMarried());
+    address.push_back(copyAddress(p->getAddress()));
+}
+
+// address 멤버의 경우 문자열을 저장하기 위한 메모리를 할당 받은 후 기존 주소
+// 문자열을 복사함; 새로 할당받은 메모리 주소를 반환함
+char* PMbyVector::copyAddress(const char* addr) {
+    if (addr == nullptr) return nullptr;
+    char *newAddr = new char[strlen(addr)+1]; // +1은 문자열 끝의 '\0' 널 문자용
+    strcpy(newAddr, addr);  // addr 문자열을 newAddr로 복사
+    return newAddr;
+}
+
+void PMbyVector::printNotice(const string& preMessage, const string& postMessage) {
+    cout << preMessage;
+    cout << " [delimiter(P, S, W, or A)] [person information] ";
+    cout << postMessage << endl;
+}
+
+void PMbyVector::clearVectors(){
+	for(int i=0; i<address.size(); i++){
+			delete [] address[i];
+	}
+	name.clear();
+	id.clear();
+	weight.clear();
+	married.clear();
+	address.clear();
+	cpCount = 0;
+}
+
+void PMbyVector::insertPerson(int index, Person* p){
+    name   .insert(index, p->getName());
+    id     .insert(index, p->getId());
+    weight .insert(index, p->getWeight());
+    married.insert(index, p->getMarried());
+    address.insert(index, copyAddress(p->getAddress()));
+}
+
+void PMbyVector::erasePerson(int index){
+	delete [] address[index];
+    name   .erase(index);
+    id     .erase(index);
+    weight .erase(index);
+    married.erase(index);
+    address.erase(index);
+}
+
+void PMbyVector::display() { // Menu item 1
+    int count = name.size();
+    cout << "display(): count " << count << endl;
+    for (int i = 0; i < count; ++i) {
+        cout << "[" << i << "] " << name[i] << " ";
+        cout << id[i] << " " << weight[i] << " " << married[i] << " :";
+        cout << ((address[i]==nullptr)?"":address[i]) << ":" << endl;
+    }
+}
+
+void PMbyVector::append(){ // Menu item 2
+	int count = UI::getPositiveInt("The number of persons to append? ");
+	// to_string(10) 함수: 정수 10을 문자열 "10"으로 변환
+	// stoi("10") 함수: 문자열 "10"을 정수 10으로 변환
+	printNotice("Input "+to_string(count), ":");
+	for (int i = 0; i < count; ++i) {
+	    Person* p = Factory::inputPerson(cin); // 한 사람 정보 입력 받음
+	    if (p){
+	    	pushPerson(p);
+	    	delete p;
+	    }
+	    // 만약 p가 nullptr이면 이는 입력 시 에러가 발생한 것임
+	    // (즉, 정수를 입력해야 하는 곳에 일반 문자를 입력한 경우)
+	}
+	display();
+}
+
+void PMbyVector::clear(){ // Menu item 3
+	clearVectors();
+    display();
+}
+
+void PMbyVector::remove(){ // Menu item 5
+	if(name.empty()){
+		cout << "No entry to remove" << endl;
+		return;
+	}
+	int index = UI::getIndex("Index to delete? ", name.size());
+	erasePerson(index);
+	display();
+}
+
+void PMbyVector::insert(){ // Menu item 4
+	int index;
+	if(name.empty())
+		index = 0;
+	else
+		index = UI::getIndex("Index to insert in front? ", name.size() + 1);
+	printNotice("Input", "to insert:");
+	Person* p = Factory::inputPerson(cin);
+	if (p == nullptr) return;
+	insertPerson(index, p);
+	delete p;
+	display();
+}
+
+void PMbyVector::copy(){ // Menu item 6
+    cpCount++;
+    for (unsigned i = 0, size = name.size(); i < size; ++i) {
+        string newName = name[i];
+        for (int j = 0; j < cpCount; ++j)
+            newName = newName[0] + newName;  // 이름 변경
+        name.push_back(newName);
+        id.push_back(id[i]+(20*cpCount));
+        weight.push_back(weight[i]+cpCount);
+
+        //if(cpCount %2)
+        //	married.push_back(!married[i]);
+        married.push_back((cpCount % 2)? !married[i] : married[i] );
+
+        address.push_back(copyAddress(address[i]));
+    }
+    display();
+}
+
+void PMbyVector::reset(){
+	clearVectors();
+	cpCount = 0;
+	pushArray();
+	display();
+}
+
+void PMbyVector::run() {
+    using func_t = void (PMbyVector::*)();
+    func_t func_arr[] = {
+        nullptr, &PMbyVector::display, &PMbyVector::append, &PMbyVector::clear,
+		&PMbyVector::insert, &PMbyVector::remove, &PMbyVector::copy,
+		&PMbyVector::reset
+    };
+    int menuCount = sizeof(func_arr) / sizeof(func_arr[0]); // func_arr[] 길이
+    string menuStr =
+    "============================ PMbyVector Menu =========================\n"
+    "= 0.Exit 1.Display 2.Append 3.Clear 4.Insert 5.Delete 6.Copy 7.Reset =\n"
+    "======================================================================\n";
+
+    while (true) {
+        int menuItem = UI::selectMenu(menuStr, menuCount);
+        if (menuItem == 0) return;
+        (this->*func_arr[menuItem])();
+    }
+} // 10_1: PMbyVector class
 
 
 /******************************************************************************
@@ -3258,7 +3457,7 @@ class MainMenu
 {
 public:
     void run() {
-        int menuCount = 7; // 상수 정의
+        int menuCount = 8; // 상수 정의
         string menuStr =
         		"******************************* Main Menu *********************************\n"
         		"* 0.Exit 1.PersonManager(ch3_2, 4, 6, 7_2, 8, 9, 10)                      *\n"
@@ -3276,6 +3475,7 @@ public:
             case 4: AllocatedMember().run();		  break;
             case 5: OperatorOverload().run();		  break;
             case 6: Inheritance().run();			  break;
+            case 7: PMbyVector().run();				  break;
             }
         }
         cout << "Good bye!!" << endl;
