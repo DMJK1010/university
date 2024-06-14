@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Person {
+    char* name;
+    int age;
+    bool married;
+
+public:
+    Person() : age{}, married{} { name = nullptr; }
+    ~Person() { delete[] name; }
+
+    .........이곳에 새로운 함수 정의
+};
+
+
+
+operator << 연산자 재정의{ // 매개변수는 const으로 받을 것
+출력 결과에 맞게 코드를 작성할 것
+}
+
+
+operator >> 연산자 재정의 {
+출력 결과를 보고 코드를 작성할 것
+"input info (name, age, married)" 출력
+name 입력 받을 때 100크기의 temp char를 선언후 이곳에 입력 받은후 strcpy를 이용하여 복사할것
+이때 매개변수의 name이 비어있지 않다면 메모리 해제
+}
+
+Person 의 = 연산자 매개변수는 const로 가져옴{
+만약 덮어 쓸 객체의 name이 비어있다면
+배열 name 메모리 해제
+매개변수 객체의 name의 길이만큼 할당하고 이를 name이 가르키게 함
+strcpy를 이용하여 매개변수 객체의 name을 복사함
+age = p.age;
+married = p.married;
+자신의 객체를 반환함
+}
+
+
+
+int main() {
+    Person p1, p2;
+    cin >> p1 >> p2;
+    cout << p1 << endl << p2 << endl;
+    cout << "===================================" << endl;
+    cout << "p1 = p2 is called()" << endl;
+    cout << "===================================" << endl;
+    p1 = p2;
+    cout << p1 << endl << p2 << endl;
+    cout << true << "234" << endl;
+
+    return 0;
+}
+
+///////////////////////////////////////////
+출력 결과
+input info (name, age, married)
+hong 32 true(사용자 입력)
+input info (name, age, married)
+dong 25 false(사용자 입력)
+Person info
+name: hong, age: 32, married: true
+Person info
+name: dong, age: 25, married: false
+===================================
+p1 = p2 is called()
+===================================
+Person info
+name: dong, age: 25, married: false
+Person info
+name: dong, age: 25, married: false
+1234 (무조건 이렇게 출력 되어야 함)
